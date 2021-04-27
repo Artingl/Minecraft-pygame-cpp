@@ -1,0 +1,117 @@
+{
+	"BUILD_DIR" : "C:/Users/WildPC/Documents/GitHub/Minecraft-pygame-cpp/cmake-build-debug/3D_Engine_autogen",
+	"CMAKE_BINARY_DIR" : "C:/Users/WildPC/Documents/GitHub/Minecraft-pygame-cpp/cmake-build-debug",
+	"CMAKE_CURRENT_BINARY_DIR" : "C:/Users/WildPC/Documents/GitHub/Minecraft-pygame-cpp/cmake-build-debug",
+	"CMAKE_CURRENT_SOURCE_DIR" : "C:/Users/WildPC/Documents/GitHub/Minecraft-pygame-cpp",
+	"CMAKE_EXECUTABLE" : "C:/Users/WildPC/AppData/Local/JetBrains/Toolbox/apps/CLion/ch-0/211.6693.114/bin/cmake/win/bin/cmake.exe",
+	"CMAKE_LIST_FILES" : 
+	[
+		"C:/Users/WildPC/Documents/GitHub/Minecraft-pygame-cpp/CMakeLists.txt",
+		"C:/Users/WildPC/Documents/GitHub/Minecraft-pygame-cpp/cmake-build-debug/CMakeFiles/3.19.2/CMakeSystem.cmake",
+		"C:/Users/WildPC/AppData/Local/JetBrains/Toolbox/apps/CLion/ch-0/211.6693.114/bin/cmake/win/share/cmake-3.19/Modules/CMakeSystemSpecificInitialize.cmake",
+		"C:/Users/WildPC/Documents/GitHub/Minecraft-pygame-cpp/cmake-build-debug/CMakeFiles/3.19.2/CMakeCCompiler.cmake",
+		"C:/Users/WildPC/Documents/GitHub/Minecraft-pygame-cpp/cmake-build-debug/CMakeFiles/3.19.2/CMakeCXXCompiler.cmake",
+		"C:/Users/WildPC/AppData/Local/JetBrains/Toolbox/apps/CLion/ch-0/211.6693.114/bin/cmake/win/share/cmake-3.19/Modules/CMakeSystemSpecificInformation.cmake",
+		"C:/Users/WildPC/AppData/Local/JetBrains/Toolbox/apps/CLion/ch-0/211.6693.114/bin/cmake/win/share/cmake-3.19/Modules/CMakeGenericSystem.cmake",
+		"C:/Users/WildPC/AppData/Local/JetBrains/Toolbox/apps/CLion/ch-0/211.6693.114/bin/cmake/win/share/cmake-3.19/Modules/CMakeInitializeConfigs.cmake",
+		"C:/Users/WildPC/AppData/Local/JetBrains/Toolbox/apps/CLion/ch-0/211.6693.114/bin/cmake/win/share/cmake-3.19/Modules/Platform/Windows.cmake",
+		"C:/Users/WildPC/AppData/Local/JetBrains/Toolbox/apps/CLion/ch-0/211.6693.114/bin/cmake/win/share/cmake-3.19/Modules/Platform/WindowsPaths.cmake",
+		"C:/Users/WildPC/AppData/Local/JetBrains/Toolbox/apps/CLion/ch-0/211.6693.114/bin/cmake/win/share/cmake-3.19/Modules/CMakeFindCodeBlocks.cmake",
+		"C:/Users/WildPC/AppData/Local/JetBrains/Toolbox/apps/CLion/ch-0/211.6693.114/bin/cmake/win/share/cmake-3.19/Modules/CMakeExtraGeneratorDetermineCompilerMacrosAndIncludeDirs.cmake",
+		"C:/Users/WildPC/AppData/Local/JetBrains/Toolbox/apps/CLion/ch-0/211.6693.114/bin/cmake/win/share/cmake-3.19/Modules/ProcessorCount.cmake",
+		"C:/Users/WildPC/AppData/Local/JetBrains/Toolbox/apps/CLion/ch-0/211.6693.114/bin/cmake/win/share/cmake-3.19/Modules/CMakeCInformation.cmake",
+		"C:/Users/WildPC/AppData/Local/JetBrains/Toolbox/apps/CLion/ch-0/211.6693.114/bin/cmake/win/share/cmake-3.19/Modules/CMakeLanguageInformation.cmake",
+		"C:/Users/WildPC/AppData/Local/JetBrains/Toolbox/apps/CLion/ch-0/211.6693.114/bin/cmake/win/share/cmake-3.19/Modules/Compiler/GNU-C.cmake",
+		"C:/Users/WildPC/AppData/Local/JetBrains/Toolbox/apps/CLion/ch-0/211.6693.114/bin/cmake/win/share/cmake-3.19/Modules/Compiler/GNU.cmake",
+		"C:/Users/WildPC/AppData/Local/JetBrains/Toolbox/apps/CLion/ch-0/211.6693.114/bin/cmake/win/share/cmake-3.19/Modules/Compiler/CMakeCommonCompilerMacros.cmake",
+		"C:/Users/WildPC/AppData/Local/JetBrains/Toolbox/apps/CLion/ch-0/211.6693.114/bin/cmake/win/share/cmake-3.19/Modules/Platform/Windows-GNU-C.cmake",
+		"C:/Users/WildPC/AppData/Local/JetBrains/Toolbox/apps/CLion/ch-0/211.6693.114/bin/cmake/win/share/cmake-3.19/Modules/Platform/Windows-GNU.cmake",
+		"C:/Users/WildPC/Documents/GitHub/Minecraft-pygame-cpp/cmake-build-debug/CMakeFiles/3.19.2/CMakeRCCompiler.cmake",
+		"C:/Users/WildPC/AppData/Local/JetBrains/Toolbox/apps/CLion/ch-0/211.6693.114/bin/cmake/win/share/cmake-3.19/Modules/CMakeRCInformation.cmake",
+		"C:/Users/WildPC/AppData/Local/JetBrains/Toolbox/apps/CLion/ch-0/211.6693.114/bin/cmake/win/share/cmake-3.19/Modules/Platform/Windows-windres.cmake",
+		"C:/Users/WildPC/AppData/Local/JetBrains/Toolbox/apps/CLion/ch-0/211.6693.114/bin/cmake/win/share/cmake-3.19/Modules/Platform/Windows-GNU-C-ABI.cmake",
+		"C:/Users/WildPC/AppData/Local/JetBrains/Toolbox/apps/CLion/ch-0/211.6693.114/bin/cmake/win/share/cmake-3.19/Modules/CMakeCommonLanguageInclude.cmake",
+		"C:/Users/WildPC/AppData/Local/JetBrains/Toolbox/apps/CLion/ch-0/211.6693.114/bin/cmake/win/share/cmake-3.19/Modules/CMakeCXXInformation.cmake",
+		"C:/Users/WildPC/AppData/Local/JetBrains/Toolbox/apps/CLion/ch-0/211.6693.114/bin/cmake/win/share/cmake-3.19/Modules/CMakeLanguageInformation.cmake",
+		"C:/Users/WildPC/AppData/Local/JetBrains/Toolbox/apps/CLion/ch-0/211.6693.114/bin/cmake/win/share/cmake-3.19/Modules/Compiler/GNU-CXX.cmake",
+		"C:/Users/WildPC/AppData/Local/JetBrains/Toolbox/apps/CLion/ch-0/211.6693.114/bin/cmake/win/share/cmake-3.19/Modules/Compiler/GNU.cmake",
+		"C:/Users/WildPC/AppData/Local/JetBrains/Toolbox/apps/CLion/ch-0/211.6693.114/bin/cmake/win/share/cmake-3.19/Modules/Platform/Windows-GNU-CXX.cmake",
+		"C:/Users/WildPC/AppData/Local/JetBrains/Toolbox/apps/CLion/ch-0/211.6693.114/bin/cmake/win/share/cmake-3.19/Modules/Platform/Windows-GNU.cmake",
+		"C:/Users/WildPC/AppData/Local/JetBrains/Toolbox/apps/CLion/ch-0/211.6693.114/bin/cmake/win/share/cmake-3.19/Modules/Platform/Windows-GNU-CXX-ABI.cmake",
+		"C:/Users/WildPC/AppData/Local/JetBrains/Toolbox/apps/CLion/ch-0/211.6693.114/bin/cmake/win/share/cmake-3.19/Modules/CMakeCommonLanguageInclude.cmake",
+		"C:/Users/WildPC/AppData/Local/JetBrains/Toolbox/apps/CLion/ch-0/211.6693.114/bin/cmake/win/share/cmake-3.19/Modules/FindBoost.cmake",
+		"C:/Users/WildPC/AppData/Local/JetBrains/Toolbox/apps/CLion/ch-0/211.6693.114/bin/cmake/win/share/cmake-3.19/Modules/FindPackageHandleStandardArgs.cmake",
+		"C:/Users/WildPC/AppData/Local/JetBrains/Toolbox/apps/CLion/ch-0/211.6693.114/bin/cmake/win/share/cmake-3.19/Modules/FindPackageMessage.cmake",
+		"D:/libs/cpp/QT/5.15.2/mingw81_64/lib/cmake/Qt5/Qt5ConfigVersion.cmake",
+		"D:/libs/cpp/QT/5.15.2/mingw81_64/lib/cmake/Qt5/Qt5Config.cmake",
+		"D:/libs/cpp/QT/5.15.2/mingw81_64/lib/cmake/Qt5/Qt5ModuleLocation.cmake",
+		"D:/libs/cpp/QT/5.15.2/mingw81_64/lib/cmake/Qt5Core/Qt5CoreConfigVersion.cmake",
+		"D:/libs/cpp/QT/5.15.2/mingw81_64/lib/cmake/Qt5Core/Qt5CoreConfig.cmake",
+		"D:/libs/cpp/QT/5.15.2/mingw81_64/lib/cmake/Qt5Core/Qt5CoreConfigExtras.cmake",
+		"D:/libs/cpp/QT/5.15.2/mingw81_64/lib/cmake/Qt5Core/Qt5CoreConfigExtrasMkspecDir.cmake",
+		"D:/libs/cpp/QT/5.15.2/mingw81_64/lib/cmake/Qt5Core/Qt5CoreMacros.cmake",
+		"C:/Users/WildPC/AppData/Local/JetBrains/Toolbox/apps/CLion/ch-0/211.6693.114/bin/cmake/win/share/cmake-3.19/Modules/CMakeParseArguments.cmake"
+	],
+	"CMAKE_SOURCE_DIR" : "C:/Users/WildPC/Documents/GitHub/Minecraft-pygame-cpp",
+	"DEP_FILE" : "",
+	"DEP_FILE_RULE_NAME" : "",
+	"HEADERS" : [],
+	"HEADER_EXTENSIONS" : [ "h", "hh", "h++", "hm", "hpp", "hxx", "in", "txx" ],
+	"INCLUDE_DIR" : "C:/Users/WildPC/Documents/GitHub/Minecraft-pygame-cpp/cmake-build-debug/3D_Engine_autogen/include",
+	"MOC_COMPILATION_FILE" : "C:/Users/WildPC/Documents/GitHub/Minecraft-pygame-cpp/cmake-build-debug/3D_Engine_autogen/mocs_compilation.cpp",
+	"MOC_DEFINITIONS" : [ "QT_CORE_LIB" ],
+	"MOC_DEPEND_FILTERS" : 
+	[
+		[
+			"Q_PLUGIN_METADATA",
+			"[\n][ \t]*Q_PLUGIN_METADATA[ \t]*\\([^\\)]*FILE[ \t]*\"([^\"]+)\""
+		]
+	],
+	"MOC_INCLUDES" : 
+	[
+		"D:/libs/cpp/mingw_nuwen/MinGW/include",
+		"D:/libs/cpp/QT/5.15.2/mingw81_64/include",
+		"D:/libs/cpp/QT/5.15.2/mingw81_64/include/QtCore",
+		"D:/libs/cpp/QT/5.15.2/mingw81_64/mkspecs/win32-g++",
+		"D:/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++",
+		"D:/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/x86_64-w64-mingw32",
+		"D:/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/backward",
+		"D:/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include",
+		"D:/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include-fixed",
+		"D:/mingw/mingw64/x86_64-w64-mingw32/include"
+	],
+	"MOC_MACRO_NAMES" : [ "Q_OBJECT", "Q_GADGET", "Q_NAMESPACE", "Q_NAMESPACE_EXPORT" ],
+	"MOC_OPTIONS" : [],
+	"MOC_PATH_PREFIX" : false,
+	"MOC_PREDEFS_CMD" : 
+	[
+		"D:/mingw/mingw64/bin/g++.exe",
+		"-dM",
+		"-E",
+		"-c",
+		"C:/Users/WildPC/AppData/Local/JetBrains/Toolbox/apps/CLion/ch-0/211.6693.114/bin/cmake/win/share/cmake-3.19/Modules/CMakeCXXCompilerABI.cpp"
+	],
+	"MOC_PREDEFS_FILE" : "C:/Users/WildPC/Documents/GitHub/Minecraft-pygame-cpp/cmake-build-debug/3D_Engine_autogen/moc_predefs.h",
+	"MOC_RELAXED_MODE" : false,
+	"MOC_SKIP" : [],
+	"MULTI_CONFIG" : false,
+	"PARALLEL" : 4,
+	"PARSE_CACHE_FILE" : "C:/Users/WildPC/Documents/GitHub/Minecraft-pygame-cpp/cmake-build-debug/CMakeFiles/3D_Engine_autogen.dir/ParseCache.txt",
+	"QT_MOC_EXECUTABLE" : "D:/libs/cpp/QT/5.15.2/mingw81_64/bin/moc.exe",
+	"QT_UIC_EXECUTABLE" : "",
+	"QT_VERSION_MAJOR" : 5,
+	"QT_VERSION_MINOR" : 15,
+	"SETTINGS_FILE" : "C:/Users/WildPC/Documents/GitHub/Minecraft-pygame-cpp/cmake-build-debug/CMakeFiles/3D_Engine_autogen.dir/AutogenUsed.txt",
+	"SOURCES" : 
+	[
+		[
+			"C:/Users/WildPC/Documents/GitHub/Minecraft-pygame-cpp/cpp-src/main.cpp",
+			"MU"
+		]
+	],
+	"UIC_OPTIONS" : [],
+	"UIC_SEARCH_PATHS" : [],
+	"UIC_SKIP" : [],
+	"UIC_UI_FILES" : [],
+	"VERBOSITY" : 0
+}

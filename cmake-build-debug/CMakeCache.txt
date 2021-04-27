@@ -20,6 +20,69 @@
 //Value Computed by CMake
 3D_Engine_SOURCE_DIR:STATIC=C:/Users/WildPC/Documents/GitHub/Minecraft-pygame-cpp
 
+//Boost 3.9.4 library (debug)
+Boost_3.9.4_LIBRARY_DEBUG:FILEPATH=Boost_3.9.4_LIBRARY_DEBUG-NOTFOUND
+
+//Boost 3.9.4 library (release)
+Boost_3.9.4_LIBRARY_RELEASE:FILEPATH=Boost_3.9.4_LIBRARY_RELEASE-NOTFOUND
+
+//Boost 39 library (debug)
+Boost_39_LIBRARY_DEBUG:FILEPATH=Boost_39_LIBRARY_DEBUG-NOTFOUND
+
+//Boost 39 library (release)
+Boost_39_LIBRARY_RELEASE:FILEPATH=Boost_39_LIBRARY_RELEASE-NOTFOUND
+
+//Boost 3 library (debug)
+Boost_3_LIBRARY_DEBUG:FILEPATH=Boost_3_LIBRARY_DEBUG-NOTFOUND
+
+//Boost 3 library (release)
+Boost_3_LIBRARY_RELEASE:FILEPATH=Boost_3_LIBRARY_RELEASE-NOTFOUND
+
+//The directory containing a CMake configuration file for Boost.
+Boost_DIR:PATH=Boost_DIR-NOTFOUND
+
+//Boost filesystem library (debug)
+Boost_FILESYSTEM_LIBRARY_DEBUG:FILEPATH=Boost_FILESYSTEM_LIBRARY_DEBUG-NOTFOUND
+
+//Boost filesystem library (release)
+Boost_FILESYSTEM_LIBRARY_RELEASE:FILEPATH=Boost_FILESYSTEM_LIBRARY_RELEASE-NOTFOUND
+
+//Boost python3.6 library (debug)
+Boost_PYTHON3.6_LIBRARY_DEBUG:FILEPATH=Boost_PYTHON3.6_LIBRARY_DEBUG-NOTFOUND
+
+//Boost python3.6 library (release)
+Boost_PYTHON3.6_LIBRARY_RELEASE:FILEPATH=Boost_PYTHON3.6_LIBRARY_RELEASE-NOTFOUND
+
+//Boost python3.9.4 library (debug)
+Boost_PYTHON3.9.4_LIBRARY_DEBUG:FILEPATH=Boost_PYTHON3.9.4_LIBRARY_DEBUG-NOTFOUND
+
+//Boost python3.9.4 library (release)
+Boost_PYTHON3.9.4_LIBRARY_RELEASE:FILEPATH=Boost_PYTHON3.9.4_LIBRARY_RELEASE-NOTFOUND
+
+//Boost python37 library (debug)
+Boost_PYTHON37_LIBRARY_DEBUG:FILEPATH=Boost_PYTHON37_LIBRARY_DEBUG-NOTFOUND
+
+//Boost python37 library (release)
+Boost_PYTHON37_LIBRARY_RELEASE:FILEPATH=Boost_PYTHON37_LIBRARY_RELEASE-NOTFOUND
+
+//Boost python394 library (debug)
+Boost_PYTHON394_LIBRARY_DEBUG:FILEPATH=Boost_PYTHON394_LIBRARY_DEBUG-NOTFOUND
+
+//Boost python394 library (release)
+Boost_PYTHON394_LIBRARY_RELEASE:FILEPATH=Boost_PYTHON394_LIBRARY_RELEASE-NOTFOUND
+
+//Boost python library (debug)
+Boost_PYTHON_LIBRARY_DEBUG:FILEPATH=Boost_PYTHON_LIBRARY_DEBUG-NOTFOUND
+
+//Boost python library (release)
+Boost_PYTHON_LIBRARY_RELEASE:FILEPATH=Boost_PYTHON_LIBRARY_RELEASE-NOTFOUND
+
+//Boost system library (debug)
+Boost_SYSTEM_LIBRARY_DEBUG:FILEPATH=Boost_SYSTEM_LIBRARY_DEBUG-NOTFOUND
+
+//Boost system library (release)
+Boost_SYSTEM_LIBRARY_RELEASE:FILEPATH=Boost_SYSTEM_LIBRARY_RELEASE-NOTFOUND
+
 //Path to a program.
 CMAKE_ADDR2LINE:FILEPATH=D:/mingw/mingw64/bin/addr2line.exe
 
@@ -250,14 +313,92 @@ CMAKE_STRIP:FILEPATH=D:/mingw/mingw64/bin/strip.exe
 // Studio IDE projects all commands are done without /nologo.
 CMAKE_VERBOSE_MAKEFILE:BOOL=FALSE
 
+//Path to a library.
+PYTHON_DEBUG_LIBRARY:FILEPATH=PYTHON_DEBUG_LIBRARY-NOTFOUND
+
+//Add module hello
+PYTHON_ENABLE_MODULE_hello:BOOL=ON
+
+//Add module main
+PYTHON_ENABLE_MODULE_main:BOOL=ON
+
+//Path to a program.
+PYTHON_EXECUTABLE:FILEPATH=C:/Users/WildPC/AppData/Local/Programs/Python/Python39/python.exe
+
+//Path to a file.
+PYTHON_INCLUDE_DIR:PATH=C:/Users/WildPC/AppData/Local/Programs/Python/Python39/include
+
+//Path to a library.
+PYTHON_LIBRARY:FILEPATH=C:/Users/WildPC/AppData/Local/Programs/Python/Python39/libs/python39.lib
+
+//Path to a library.
+PYTHON_LIBRARY_DEBUG:FILEPATH=PYTHON_LIBRARY_DEBUG-NOTFOUND
+
+//Add module hello shared
+PYTHON_MODULE_hello_BUILD_SHARED:BOOL=ON
+
+//Add module main shared
+PYTHON_MODULE_main_BUILD_SHARED:BOOL=ON
+
+//The directory containing a CMake configuration file for Python3.9.4.
+Python3.9.4_DIR:PATH=Python3.9.4_DIR-NOTFOUND
+
+//The directory containing a CMake configuration file for Qt5Core.
+Qt5Core_DIR:PATH=D:/libs/cpp/QT/5.15.2/mingw81_64/lib/cmake/Qt5Core
+
 //The directory containing a CMake configuration file for Qt5.
-Qt5_DIR:PATH=Qt5_DIR-NOTFOUND
+Qt5_DIR:PATH=D:/libs/cpp/QT/5.15.2/mingw81_64/lib/cmake/Qt5
+
+//Dependencies for the target
+hello_LIB_DEPENDS:STATIC=general;C:/Users/WildPC/AppData/Local/Programs/Python/Python39/libs/python39.lib;
 
 
 ########################
 # INTERNAL cache entries
 ########################
 
+//ADVANCED property for variable: Boost_3.9.4_LIBRARY_DEBUG
+Boost_3.9.4_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Boost_3.9.4_LIBRARY_RELEASE
+Boost_3.9.4_LIBRARY_RELEASE-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Boost_39_LIBRARY_DEBUG
+Boost_39_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Boost_39_LIBRARY_RELEASE
+Boost_39_LIBRARY_RELEASE-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Boost_3_LIBRARY_DEBUG
+Boost_3_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Boost_3_LIBRARY_RELEASE
+Boost_3_LIBRARY_RELEASE-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Boost_DIR
+Boost_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Boost_FILESYSTEM_LIBRARY_DEBUG
+Boost_FILESYSTEM_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Boost_FILESYSTEM_LIBRARY_RELEASE
+Boost_FILESYSTEM_LIBRARY_RELEASE-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Boost_PYTHON3.6_LIBRARY_DEBUG
+Boost_PYTHON3.6_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Boost_PYTHON3.6_LIBRARY_RELEASE
+Boost_PYTHON3.6_LIBRARY_RELEASE-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Boost_PYTHON3.9.4_LIBRARY_DEBUG
+Boost_PYTHON3.9.4_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Boost_PYTHON3.9.4_LIBRARY_RELEASE
+Boost_PYTHON3.9.4_LIBRARY_RELEASE-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Boost_PYTHON37_LIBRARY_DEBUG
+Boost_PYTHON37_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Boost_PYTHON37_LIBRARY_RELEASE
+Boost_PYTHON37_LIBRARY_RELEASE-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Boost_PYTHON394_LIBRARY_DEBUG
+Boost_PYTHON394_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Boost_PYTHON394_LIBRARY_RELEASE
+Boost_PYTHON394_LIBRARY_RELEASE-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Boost_PYTHON_LIBRARY_DEBUG
+Boost_PYTHON_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Boost_PYTHON_LIBRARY_RELEASE
+Boost_PYTHON_LIBRARY_RELEASE-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Boost_SYSTEM_LIBRARY_DEBUG
+Boost_SYSTEM_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Boost_SYSTEM_LIBRARY_RELEASE
+Boost_SYSTEM_LIBRARY_RELEASE-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_ADDR2LINE
 CMAKE_ADDR2LINE-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_AR
@@ -420,4 +561,57 @@ CMAKE_STATIC_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 CMAKE_STRIP-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_VERBOSE_MAKEFILE
 CMAKE_VERBOSE_MAKEFILE-ADVANCED:INTERNAL=1
+//Details about finding Boost
+FIND_PACKAGE_MESSAGE_DETAILS_Boost:INTERNAL=[D:/libs/cpp/boost_1_76_0/][c ][v1.76.0(1.76.0)]
+//Details about finding Python
+FIND_PACKAGE_MESSAGE_DETAILS_Python:INTERNAL=[C:/Users/WildPC/AppData/Local/Programs/Python/Python39/python.exe][C:/Users/WildPC/AppData/Local/Programs/Python/Python39/libs/python39.lib][C:/Users/WildPC/AppData/Local/Programs/Python/Python39/include][cfound components: Interpreter Development Development.Module Development.Embed ][v3.9.4(3.9.4)]
+//Details about finding PythonInterp
+FIND_PACKAGE_MESSAGE_DETAILS_PythonInterp:INTERNAL=[C:/Users/WildPC/AppData/Local/Programs/Python/Python39/python.exe][v3.9.4(3)]
+//Details about finding PythonLibs
+FIND_PACKAGE_MESSAGE_DETAILS_PythonLibs:INTERNAL=[C:/Users/WildPC/AppData/Local/Programs/Python/Python39/libs/python39.lib][C:/Users/WildPC/AppData/Local/Programs/Python/Python39/include][v3.9.4()]
+//ADVANCED property for variable: PYTHON_DEBUG_LIBRARY
+PYTHON_DEBUG_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: PYTHON_ENABLE_MODULE_hello
+PYTHON_ENABLE_MODULE_hello-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: PYTHON_ENABLE_MODULE_main
+PYTHON_ENABLE_MODULE_main-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: PYTHON_EXECUTABLE
+PYTHON_EXECUTABLE-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: PYTHON_INCLUDE_DIR
+PYTHON_INCLUDE_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: PYTHON_LIBRARY
+PYTHON_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: PYTHON_LIBRARY_DEBUG
+PYTHON_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: PYTHON_MODULE_hello_BUILD_SHARED
+PYTHON_MODULE_hello_BUILD_SHARED-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: PYTHON_MODULE_main_BUILD_SHARED
+PYTHON_MODULE_main_BUILD_SHARED-ADVANCED:INTERNAL=1
+//Components requested for this build tree.
+_Boost_COMPONENTS_SEARCHED:INTERNAL=python
+//Last used Boost_INCLUDE_DIR value.
+_Boost_INCLUDE_DIR_LAST:INTERNAL=D:/libs/cpp/boost_1_76_0/
+//Last used Boost_LIBRARY_DIR_DEBUG value.
+_Boost_LIBRARY_DIR_DEBUG_LAST:INTERNAL=D:/libs/cpp/boost_1_76_0/stage/lib/
+//Last used Boost_LIBRARY_DIR_RELEASE value.
+_Boost_LIBRARY_DIR_RELEASE_LAST:INTERNAL=D:/libs/cpp/boost_1_76_0/stage/lib/
+//Last used Boost_NAMESPACE value.
+_Boost_NAMESPACE_LAST:INTERNAL=boost
+//Last used Boost_USE_MULTITHREADED value.
+_Boost_USE_MULTITHREADED_LAST:INTERNAL=TRUE
+_Python_DEVELOPMENT_EMBED_SIGNATURE:INTERNAL=c45d65919fbd55fdf0d87e5f0463b5db
+_Python_DEVELOPMENT_MODULE_SIGNATURE:INTERNAL=c45d65919fbd55fdf0d87e5f0463b5db
+//Path to a program.
+_Python_EXECUTABLE:INTERNAL=C:/Users/WildPC/AppData/Local/Programs/Python/Python39/python.exe
+//Path to a file.
+_Python_INCLUDE_DIR:INTERNAL=C:/Users/WildPC/AppData/Local/Programs/Python/Python39/include
+//Python Properties
+_Python_INTERPRETER_PROPERTIES:INTERNAL=Python;3;9;4;64;;cp39-win_amd64;C:\Users\WildPC\AppData\Local\Programs\Python\Python39\Lib;C:\Users\WildPC\AppData\Local\Programs\Python\Python39\Lib;C:\Users\WildPC\AppData\Local\Programs\Python\Python39\Lib\site-packages;C:\Users\WildPC\AppData\Local\Programs\Python\Python39\Lib\site-packages
+_Python_INTERPRETER_SIGNATURE:INTERNAL=9852f2d49783e692eb7bc366160354cc
+//Path to a library.
+_Python_LIBRARY_DEBUG:INTERNAL=_Python_LIBRARY_DEBUG-NOTFOUND
+//Path to a library.
+_Python_LIBRARY_RELEASE:INTERNAL=C:/Users/WildPC/AppData/Local/Programs/Python/Python39/libs/python39.lib
+//Path to a library.
+_Python_RUNTIME_LIBRARY_RELEASE:INTERNAL=C:/Users/WildPC/AppData/Local/Programs/Python/Python39/python39.dll
 

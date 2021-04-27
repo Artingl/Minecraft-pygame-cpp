@@ -1,0 +1,1 @@
+  -LD:/libs/cpp/boost_1_76_0/stage/lib  -LC:/Users/WildPC/AppData/Local/Programs/Python/Python39/libs/python39.lib  C:/Users/WildPC/AppData/Local/Programs/Python/Python39/libs/python39.lib -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32 
