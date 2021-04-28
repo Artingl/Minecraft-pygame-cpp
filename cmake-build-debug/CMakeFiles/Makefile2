@@ -71,7 +71,7 @@ CMAKE_BINARY_DIR = C:\Users\WildPC\Documents\GitHub\Minecraft-pygame-cpp\cmake-b
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
-all: CMakeFiles/Minecraft-pygame-cpp.dir/all
+all: CMakeFiles/game.dir/all
 
 .PHONY : all
 
@@ -81,36 +81,36 @@ preinstall:
 .PHONY : preinstall
 
 # The main recursive "clean" target.
-clean: CMakeFiles/Minecraft-pygame-cpp.dir/clean
+clean: CMakeFiles/game.dir/clean
 
 .PHONY : clean
 
 #=============================================================================
-# Target rules for target CMakeFiles/Minecraft-pygame-cpp.dir
+# Target rules for target CMakeFiles/game.dir
 
 # All Build rule for target.
-CMakeFiles/Minecraft-pygame-cpp.dir/all:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Minecraft-pygame-cpp.dir\build.make CMakeFiles/Minecraft-pygame-cpp.dir/depend
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Minecraft-pygame-cpp.dir\build.make CMakeFiles/Minecraft-pygame-cpp.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=C:\Users\WildPC\Documents\GitHub\Minecraft-pygame-cpp\cmake-build-debug\CMakeFiles --progress-num=1,2 "Built target Minecraft-pygame-cpp"
-.PHONY : CMakeFiles/Minecraft-pygame-cpp.dir/all
+CMakeFiles/game.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\game.dir\build.make CMakeFiles/game.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\game.dir\build.make CMakeFiles/game.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=C:\Users\WildPC\Documents\GitHub\Minecraft-pygame-cpp\cmake-build-debug\CMakeFiles --progress-num=1,2 "Built target game"
+.PHONY : CMakeFiles/game.dir/all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/Minecraft-pygame-cpp.dir/rule: cmake_check_build_system
+CMakeFiles/game.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\WildPC\Documents\GitHub\Minecraft-pygame-cpp\cmake-build-debug\CMakeFiles 2
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 CMakeFiles/Minecraft-pygame-cpp.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 CMakeFiles/game.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\WildPC\Documents\GitHub\Minecraft-pygame-cpp\cmake-build-debug\CMakeFiles 0
-.PHONY : CMakeFiles/Minecraft-pygame-cpp.dir/rule
+.PHONY : CMakeFiles/game.dir/rule
 
 # Convenience name for target.
-Minecraft-pygame-cpp: CMakeFiles/Minecraft-pygame-cpp.dir/rule
+game: CMakeFiles/game.dir/rule
 
-.PHONY : Minecraft-pygame-cpp
+.PHONY : game
 
 # clean rule for target.
-CMakeFiles/Minecraft-pygame-cpp.dir/clean:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Minecraft-pygame-cpp.dir\build.make CMakeFiles/Minecraft-pygame-cpp.dir/clean
-.PHONY : CMakeFiles/Minecraft-pygame-cpp.dir/clean
+CMakeFiles/game.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\game.dir\build.make CMakeFiles/game.dir/clean
+.PHONY : CMakeFiles/game.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

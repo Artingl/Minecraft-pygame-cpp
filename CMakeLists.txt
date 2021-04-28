@@ -35,9 +35,13 @@ if(PYTHONLIBS_FOUND)
     link_directories(${PYTHON_LIBRARIES})
 endif()
 
-add_library(${PROJECT_NAME} SHARED cpp-src/main.cpp)
+enable_testing()
 
-if(Boost_FOUND AND PYTHONLIBS_FOUND)
-    target_include_directories(${PROJECT_NAME} SYSTEM PRIVATE  ${Boost_INCLUDE_DIRS} ${PYTHON_INCLUDE_DIRS})
-    target_link_libraries(${PROJECT_NAME} ${Boost_LIBRARIES} ${PYTHON_LIBRARIES})
-endif()
+message(STATUS "Copying *.py files...")
+file(COPY ${PYTHON_FILES} DESTINATION .)
+
+# add_library(game SHARED cpp-src/main.cpp)
+PYTHON_ADD_MODULE(game cpp-src/game.cpp)
+ADD_TEST(NAME ${PROJECT_NAME} COMMAND ../compile.exe)
+target_include_directories(game SYSTEM PRIVATE  ${Boost_INCLUDE_DIRS} ${PYTHON_INCLUDE_DIRS})
+target_link_libraries(game ${Boost_LIBRARIES} ${PYTHON_LIBRARIES})

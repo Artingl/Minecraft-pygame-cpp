@@ -74,17 +74,6 @@ CMAKE_BINARY_DIR = C:\Users\WildPC\Documents\GitHub\Minecraft-pygame-cpp\cmake-b
 #=============================================================================
 # Targets provided globally by CMake.
 
-# Special rule for the target edit_cache
-edit_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
-	C:\Users\WildPC\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\211.6693.114\bin\cmake\win\bin\cmake.exe -E echo "No interactive CMake dialog available."
-.PHONY : edit_cache
-
-# Special rule for the target edit_cache
-edit_cache/fast: edit_cache
-
-.PHONY : edit_cache/fast
-
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
@@ -95,6 +84,28 @@ rebuild_cache:
 rebuild_cache/fast: rebuild_cache
 
 .PHONY : rebuild_cache/fast
+
+# Special rule for the target test
+test:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running tests..."
+	C:\Users\WildPC\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\211.6693.114\bin\cmake\win\bin\ctest.exe --force-new-ctest-process $(ARGS)
+.PHONY : test
+
+# Special rule for the target test
+test/fast: test
+
+.PHONY : test/fast
+
+# Special rule for the target edit_cache
+edit_cache:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
+	C:\Users\WildPC\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\211.6693.114\bin\cmake\win\bin\cmake.exe -E echo "No interactive CMake dialog available."
+.PHONY : edit_cache
+
+# Special rule for the target edit_cache
+edit_cache/fast: edit_cache
+
+.PHONY : edit_cache/fast
 
 # The main all target
 all: cmake_check_build_system
@@ -129,44 +140,44 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named Minecraft-pygame-cpp
+# Target rules for targets named game
 
 # Build rule for target.
-Minecraft-pygame-cpp: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 Minecraft-pygame-cpp
-.PHONY : Minecraft-pygame-cpp
+game: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 game
+.PHONY : game
 
 # fast build rule for target.
-Minecraft-pygame-cpp/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Minecraft-pygame-cpp.dir\build.make CMakeFiles/Minecraft-pygame-cpp.dir/build
-.PHONY : Minecraft-pygame-cpp/fast
+game/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\game.dir\build.make CMakeFiles/game.dir/build
+.PHONY : game/fast
 
-cpp-src/main.obj: cpp-src/main.cpp.obj
+cpp-src/game.obj: cpp-src/game.cpp.obj
 
-.PHONY : cpp-src/main.obj
+.PHONY : cpp-src/game.obj
 
 # target to build an object file
-cpp-src/main.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Minecraft-pygame-cpp.dir\build.make CMakeFiles/Minecraft-pygame-cpp.dir/cpp-src/main.cpp.obj
-.PHONY : cpp-src/main.cpp.obj
+cpp-src/game.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\game.dir\build.make CMakeFiles/game.dir/cpp-src/game.cpp.obj
+.PHONY : cpp-src/game.cpp.obj
 
-cpp-src/main.i: cpp-src/main.cpp.i
+cpp-src/game.i: cpp-src/game.cpp.i
 
-.PHONY : cpp-src/main.i
+.PHONY : cpp-src/game.i
 
 # target to preprocess a source file
-cpp-src/main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Minecraft-pygame-cpp.dir\build.make CMakeFiles/Minecraft-pygame-cpp.dir/cpp-src/main.cpp.i
-.PHONY : cpp-src/main.cpp.i
+cpp-src/game.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\game.dir\build.make CMakeFiles/game.dir/cpp-src/game.cpp.i
+.PHONY : cpp-src/game.cpp.i
 
-cpp-src/main.s: cpp-src/main.cpp.s
+cpp-src/game.s: cpp-src/game.cpp.s
 
-.PHONY : cpp-src/main.s
+.PHONY : cpp-src/game.s
 
 # target to generate assembly for a file
-cpp-src/main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Minecraft-pygame-cpp.dir\build.make CMakeFiles/Minecraft-pygame-cpp.dir/cpp-src/main.cpp.s
-.PHONY : cpp-src/main.cpp.s
+cpp-src/game.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\game.dir\build.make CMakeFiles/game.dir/cpp-src/game.cpp.s
+.PHONY : cpp-src/game.cpp.s
 
 # Help Target
 help:
@@ -176,10 +187,11 @@ help:
 	@echo ... depend
 	@echo ... edit_cache
 	@echo ... rebuild_cache
-	@echo ... Minecraft-pygame-cpp
-	@echo ... cpp-src/main.obj
-	@echo ... cpp-src/main.i
-	@echo ... cpp-src/main.s
+	@echo ... test
+	@echo ... game
+	@echo ... cpp-src/game.obj
+	@echo ... cpp-src/game.i
+	@echo ... cpp-src/game.s
 .PHONY : help
 
 

@@ -58,5 +58,5 @@ set(CMAKE_MAKEFILE_PRODUCTS
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
-  "CMakeFiles/Minecraft-pygame-cpp.dir/DependInfo.cmake"
+  "CMakeFiles/game.dir/DependInfo.cmake"
   )

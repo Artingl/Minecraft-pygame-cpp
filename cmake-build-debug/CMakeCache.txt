@@ -136,7 +136,7 @@ CMAKE_EXE_LINKER_FLAGS_RELWITHDEBINFO:STRING=
 CMAKE_GNUtoMS:BOOL=OFF
 
 //Install path prefix, prepended onto install directories.
-CMAKE_INSTALL_PREFIX:PATH=C:/Program Files (x86)/Project
+CMAKE_INSTALL_PREFIX:PATH=C:/Program Files (x86)/Minecraft-pygame-cpp
 
 //Path to a program.
 CMAKE_LINKER:FILEPATH=D:/mingw/mingw64/bin/ld.exe
@@ -271,6 +271,9 @@ Minecraft-pygame-cpp_SOURCE_DIR:STATIC=C:/Users/WildPC/Documents/GitHub/Minecraf
 //Path to a library.
 PYTHON_DEBUG_LIBRARY:FILEPATH=PYTHON_DEBUG_LIBRARY-NOTFOUND
 
+//Add module game
+PYTHON_ENABLE_MODULE_game:BOOL=ON
+
 //Path to a program.
 PYTHON_EXECUTABLE:FILEPATH=C:/Users/WildPC/AppData/Local/Programs/Python/Python39/python.exe
 
@@ -283,11 +286,8 @@ PYTHON_LIBRARY:FILEPATH=C:/Users/WildPC/AppData/Local/Programs/Python/Python39/l
 //Path to a library.
 PYTHON_LIBRARY_DEBUG:FILEPATH=PYTHON_LIBRARY_DEBUG-NOTFOUND
 
-//Value Computed by CMake
-Project_BINARY_DIR:STATIC=C:/Users/WildPC/Documents/GitHub/Minecraft-pygame-cpp/cmake-build-debug
-
-//Value Computed by CMake
-Project_SOURCE_DIR:STATIC=C:/Users/WildPC/Documents/GitHub/Minecraft-pygame-cpp
+//Add module game shared
+PYTHON_MODULE_game_BUILD_SHARED:BOOL=ON
 
 
 ########################
@@ -476,6 +476,8 @@ FIND_PACKAGE_MESSAGE_DETAILS_PythonInterp:INTERNAL=[C:/Users/WildPC/AppData/Loca
 FIND_PACKAGE_MESSAGE_DETAILS_PythonLibs:INTERNAL=[C:/Users/WildPC/AppData/Local/Programs/Python/Python39/libs/python39.lib][C:/Users/WildPC/AppData/Local/Programs/Python/Python39/include][v3.9.4(3.9)]
 //ADVANCED property for variable: PYTHON_DEBUG_LIBRARY
 PYTHON_DEBUG_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: PYTHON_ENABLE_MODULE_game
+PYTHON_ENABLE_MODULE_game-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: PYTHON_EXECUTABLE
 PYTHON_EXECUTABLE-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: PYTHON_INCLUDE_DIR
@@ -484,6 +486,8 @@ PYTHON_INCLUDE_DIR-ADVANCED:INTERNAL=1
 PYTHON_LIBRARY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: PYTHON_LIBRARY_DEBUG
 PYTHON_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: PYTHON_MODULE_game_BUILD_SHARED
+PYTHON_MODULE_game_BUILD_SHARED-ADVANCED:INTERNAL=1
 //Components requested for this build tree.
 _Boost_COMPONENTS_SEARCHED:INTERNAL=python39
 //Last used Boost_INCLUDE_DIR value.

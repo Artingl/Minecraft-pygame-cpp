@@ -42,6 +42,7 @@ C:\Users\WildPC\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\211.6693.114\bin
 -- PYTHON_LIBRARIES = C:/Users/WildPC/AppData/Local/Programs/Python/Python39/libs/python39.lib
 -- PYTHON_EXECUTABLE = C:/Users/WildPC/AppData/Local/Programs/Python/Python39/python.exe
 -- PYTHON_INCLUDE_DIRS = C:/Users/WildPC/AppData/Local/Programs/Python/Python39/include
+-- Copying *.py files...
 -- Configuring done
 -- Generating done
 -- Build files have been written to: C:/Users/WildPC/Documents/GitHub/Minecraft-pygame-cpp/cmake-build-debug
