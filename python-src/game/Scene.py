@@ -2,6 +2,7 @@ import gc
 import threading
 
 from OpenGL.GLU import *
+from OpenGL.GL import *
 from pyglet.gl import *
 
 from functions import *
@@ -80,16 +81,16 @@ class Scene:
         glClearColor(0.5, 0.7, 1, 1)
         glClearDepth(1.0)
         glEnable(GL_DEPTH_TEST)
-        glDepthFunc(GL_LESS)
-        glShadeModel(GL_SMOOTH)
-        glMatrixMode(GL_PROJECTION)
-        glDepthFunc(GL_LEQUAL)
-        glAlphaFunc(GL_GEQUAL, 1)
-        glEnable(GL_BLEND)
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
-        glEnable(GL_FOG)
-        glHint(GL_FOG_HINT, GL_DONT_CARE)
-        glFogi(GL_FOG_MODE, GL_LINEAR)
+        # glDepthFunc(GL_LESS)
+        # glShadeModel(GL_SMOOTH)
+        # glMatrixMode(GL_PROJECTION)
+        # glDepthFunc(GL_LEQUAL)
+        # glAlphaFunc(GL_GEQUAL, 1)
+        # glEnable(GL_BLEND)
+        # glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
+        # glEnable(GL_FOG)
+        # glHint(GL_FOG_HINT, GL_DONT_CARE)
+        # glFogi(GL_FOG_MODE, GL_LINEAR)
         glEnable(GL_TEXTURE_2D)
 
         glLoadIdentity()
@@ -192,7 +193,8 @@ class Scene:
         glLoadIdentity()
 
         self.player.update()
-        funct()
+        funct(int(self.texture['brick']), int(self.player.x()), int(self.player.y()), int(self.player.z()))
+
         # self.draw()
 
         # self.clouds.update()

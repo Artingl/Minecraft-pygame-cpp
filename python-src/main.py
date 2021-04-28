@@ -328,7 +328,8 @@ gui = GUI(scene)
 blockSound = BlockSound(scene)
 player = Player(gl=scene)
 
-player.position = [0, -9000, 0]
+# player.position = [0, -9000, 0]
+player.position = [0, 70, 0]
 
 scene.blockSound = blockSound
 scene.gui = gui
@@ -339,11 +340,11 @@ scene.deathScreen = deathScreen
 scene.initScene()
 
 print("Loading sounds...")
-sound.BLOCKS_SOUND["pickUp"] = pygame.mixer.Sound("sounds/pick.mp3")
+sound.BLOCKS_SOUND["pickUp"] = pygame.mixer.Sound("../src/sounds/pick.mp3")
 
 print("Loading step sounds...")
 sound.BLOCKS_SOUND["step"] = {}
-for e, i in enumerate(os.listdir("sounds/step/")):
+for e, i in enumerate(os.listdir("../src/sounds/step/")):
     soundName = i.split(".")[0][:-1]
     soundNum = i.split(".")[0][-1]
 
@@ -355,7 +356,7 @@ for e, i in enumerate(os.listdir("sounds/step/")):
 
 print("Loading dig sounds...")
 sound.BLOCKS_SOUND["dig"] = {}
-for e, i in enumerate(os.listdir("sounds/dig/")):
+for e, i in enumerate(os.listdir("../src/sounds/dig/")):
     soundName = i.split(".")[0][:-1]
     soundNum = i.split(".")[0][-1]
 
@@ -367,7 +368,7 @@ for e, i in enumerate(os.listdir("sounds/dig/")):
 
 print("Loading explode sounds...")
 sound.BLOCKS_SOUND["explode"] = []
-for e, i in enumerate(os.listdir("sounds/explode/")):
+for e, i in enumerate(os.listdir("../src/sounds/explode/")):
     soundName = i.split(".")[0][:-1]
     soundNum = i.split(".")[0][-1]
 
@@ -376,7 +377,7 @@ for e, i in enumerate(os.listdir("sounds/explode/")):
 
 print("Loading damage sounds...")
 sound.SOUNDS["damage"] = {}
-for e, i in enumerate(os.listdir("sounds/damage/")):
+for e, i in enumerate(os.listdir("../src/sounds/damage/")):
     soundName = i.split(".")[0][:-1]
     soundNum = i.split(".")[0][-1]
 
@@ -388,7 +389,7 @@ for e, i in enumerate(os.listdir("sounds/damage/")):
 
 print("Loading GUI sounds...")
 sound.SOUNDS["GUI"] = {}
-for e, i in enumerate(os.listdir("sounds/gui/")):
+for e, i in enumerate(os.listdir("../src/sounds/gui/")):
     soundName = i.split(".")[0][:-1]
     soundNum = i.split(".")[0][-1]
 
@@ -399,12 +400,12 @@ for e, i in enumerate(os.listdir("sounds/gui/")):
     print("Successful loaded", soundName, "#" + soundNum, "sound!")
 
 print("Loading menu music...")
-for e, i in enumerate(os.listdir("sounds/music/menu")):
+for e, i in enumerate(os.listdir("../src/sounds/music/menu")):
     sound.MENU_MUSIC.append("sounds/music/menu/" + i)
     print("Successful loaded", i, "music!")
 
 print("Loading game music...")
-for e, i in enumerate(os.listdir("sounds/music/game")):
+for e, i in enumerate(os.listdir("../src/sounds/music/game")):
     sound.MUSIC.append("sounds/music/game/" + i)
     print("Successful loaded", i, "music!")
 sound.initMusic(False)
@@ -500,12 +501,12 @@ texture.height *= 2
 
 gui.addGuiElement("crosshair", (scene.WIDTH // 2 - 9, scene.HEIGHT // 2 - 9))
 
-player.inventory.initWindow()
+# player.inventory.initWindow()
 
 showInfoLabel = False
 
 print("Loading splashes...")
-splfile = open("gui/splashes.txt", "r", encoding='utf-8')
+splfile = open("../src/gui/splashes.txt", "r", encoding='utf-8')
 splash = splfile.read().split("\n")
 splash = splash[randint(0, len(splash) - 1)]
 splfile.close()
@@ -548,8 +549,10 @@ print("Loading complete!")
 mainMenuRotation = [50, 180, True]
 
 mainFunction = drawMainMenu
+opengl_main_cpp._gl_engine_init()
 
 while True:
+    pygame.mouse.set_visible(False)
     # if scene.allowEvents["keyboardAndMouse"] and not PAUSE:
     #     if pygame.mouse.get_pressed(3)[0]:
     #         player.mouseEvent(1)
@@ -579,11 +582,11 @@ while True:
     #                                                 pygame.DOUBLEBUF | pygame.OPENGL | pygame.RESIZABLE)
     #                scene.resizeCGL(WIDTH, HEIGHT)
     #                resizeEvent = True
-    #    if event.type == pygame.VIDEORESIZE:
-    #        WIDTH = event.w
-    #        HEIGHT = event.h
-    #        scene.resizeCGL(WIDTH, HEIGHT)
-    #        resizeEvent = True
+        if event.type == pygame.VIDEORESIZE:
+            WIDTH = event.w
+            HEIGHT = event.h
+            scene.resizeCGL(WIDTH, HEIGHT)
+            resizeEvent = True
     #    if event.type == pygame.MOUSEBUTTONDOWN:
     #        mbclicked = event.button
     #    if not IN_MENU:
@@ -653,7 +656,7 @@ while True:
         #     gui.shows["crosshair"][1] = (-100, -100)
         # if scene.allowEvents["grabMouse"] and pygame.mouse.get_focused():
         pygame.mouse.set_pos((scene.WIDTH // 2, scene.HEIGHT // 2))
-        scene.updateScene(opengl_main_cpp.drawRectangle)
+        scene.updateScene(opengl_main_cpp.drawCube)
 
         # player.inventory.draw()
         # gui.update()
@@ -670,6 +673,9 @@ while True:
         #                          f"Count of chunks: {scene.worldGen.start - len(scene.worldGen.queue)} "
         #                          f"({scene.worldGen.start})",
         #                   shadow=False, label_color=(224, 224, 224), xx=3)
+
+        pygame.display.set_caption("A, X, Y, Z,: %f %f %f %f ; FPS: %d" %
+                                   (round(player.rotation[1], 3), round(player.x(), 3), round(player.y(), 5), round(player.z(), 3), int(clock.get_fps())))
         pygame.display.flip()
         clock.tick(MAX_FPS)
     # elif PAUSE and not IN_MENU:

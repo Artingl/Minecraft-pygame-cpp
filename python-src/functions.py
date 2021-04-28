@@ -1,8 +1,12 @@
 import os
 import time
 from random import randint
+
+import numpy
 import pyglet
 from OpenGL.GL import *
+from PIL import Image
+
 from settings import *
 
 
@@ -21,33 +25,21 @@ def load_textures(self):
                     continue
 
                 n = file.split('.')[0]
-                self.texture_dir[n] = d
-                image = pyglet.image.load(d + '/' + file)
-                texture = image.get_mipmapped_texture()
-                self.texture[n] = pyglet.graphics.TextureGroup(texture)
+                path = d + '/' + file
+
+                img = pygame.image.load(path)
+                textureData = pygame.image.tostring(img, "RGB", 1)
+                width = img.get_width()
+                height = img.get_height()
+                bgImgGL = glGenTextures(1)
+                glBindTexture(GL_TEXTURE_2D, bgImgGL)
+                glTexImage2D(GL_TEXTURE_2D, 0, 3, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, textureData)
                 glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST)
+                glGenerateMipmap(GL_TEXTURE_2D)
+
+                self.texture[n] = bgImgGL
 
                 print("Successful loaded", n, "texture!")
-    done = []
-    items = sorted(self.texture_dir.items(), key=lambda i: i[0])
-    for n1, d in items:
-        n = n1.split(' ')[0]
-        if n in done:
-            continue
-        done += [n]
-        if d.startswith('textures/blocks'):
-            if d == 'textures/blocks':
-                self.inventory_textures[n] = pyglet.resource.image(f"{d}/{n}.png")
-                self.block[n] = t[n], t[n], t[n], t[n], t[n], t[n]
-            elif d == 'textures/blocks/tbs':
-                self.inventory_textures[n] = pyglet.resource.image(f"{d}/{n} s.png")
-                self.block[n] = t[n + ' s'], t[n + ' s'], t[n + ' b'], t[n + ' t'], t[n + ' s'], t[n + ' s']
-            elif d == 'textures/blocks/ts':
-                self.inventory_textures[n] = pyglet.resource.image(f"{d}/{n} s.png")
-                self.block[n] = t[n + ' s'], t[n + ' s'], t[n + ' t'], t[n + ' t'], t[n + ' s'], t[n + ' s']
-            if n in self.inventory_textures:
-                self.inventory_textures[n].width = 22
-                self.inventory_textures[n].height = 22
 
 
 def translateSeed(seed):

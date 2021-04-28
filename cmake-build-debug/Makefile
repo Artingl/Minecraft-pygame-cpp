@@ -152,6 +152,33 @@ opengl_main_cpp/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\opengl_main_cpp.dir\build.make CMakeFiles/opengl_main_cpp.dir/build
 .PHONY : opengl_main_cpp/fast
 
+cpp-src/VAO.obj: cpp-src/VAO.cpp.obj
+
+.PHONY : cpp-src/VAO.obj
+
+# target to build an object file
+cpp-src/VAO.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\opengl_main_cpp.dir\build.make CMakeFiles/opengl_main_cpp.dir/cpp-src/VAO.cpp.obj
+.PHONY : cpp-src/VAO.cpp.obj
+
+cpp-src/VAO.i: cpp-src/VAO.cpp.i
+
+.PHONY : cpp-src/VAO.i
+
+# target to preprocess a source file
+cpp-src/VAO.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\opengl_main_cpp.dir\build.make CMakeFiles/opengl_main_cpp.dir/cpp-src/VAO.cpp.i
+.PHONY : cpp-src/VAO.cpp.i
+
+cpp-src/VAO.s: cpp-src/VAO.cpp.s
+
+.PHONY : cpp-src/VAO.s
+
+# target to generate assembly for a file
+cpp-src/VAO.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\opengl_main_cpp.dir\build.make CMakeFiles/opengl_main_cpp.dir/cpp-src/VAO.cpp.s
+.PHONY : cpp-src/VAO.cpp.s
+
 cpp-src/main.obj: cpp-src/main.cpp.obj
 
 .PHONY : cpp-src/main.obj
@@ -189,6 +216,9 @@ help:
 	@echo ... rebuild_cache
 	@echo ... test
 	@echo ... opengl_main_cpp
+	@echo ... cpp-src/VAO.obj
+	@echo ... cpp-src/VAO.i
+	@echo ... cpp-src/VAO.s
 	@echo ... cpp-src/main.obj
 	@echo ... cpp-src/main.i
 	@echo ... cpp-src/main.s

@@ -40,9 +40,9 @@ enable_testing()
 message(STATUS "Copying *.py files...")
 file(COPY ${PYTHON_FILES} DESTINATION .)
 
-# add_library(hello SHARED cpp-src/hello.cpp)
-PYTHON_ADD_MODULE(opengl_main_cpp cpp-src/main.cpp)
+PYTHON_ADD_MODULE(opengl_main_cpp cpp-src/main.cpp cpp-src/VAO.cpp cpp-src/VAO.h)
 ADD_TEST(NAME ${PROJECT_NAME} COMMAND ../compile.exe)
+
 target_include_directories(opengl_main_cpp SYSTEM PRIVATE  ${Boost_INCLUDE_DIRS} ${PYTHON_INCLUDE_DIRS} D:/mingw/mingw64/include)
 target_link_libraries(opengl_main_cpp ${Boost_LIBRARIES} ${PYTHON_LIBRARIES})
 target_link_libraries(opengl_main_cpp sfml-window sfml-network opengl32 sfml-system)

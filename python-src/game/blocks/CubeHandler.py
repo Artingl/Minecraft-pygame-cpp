@@ -24,6 +24,10 @@ class CubeHandler:
         self.bottom_color = ('c3f', (0.1,) * 12)'''
 
         self.color = True
+        for x in range(-100, 100):
+            for z in range(-100, 100):
+                self.cubes[(x, 50, z)] = Cube('brick', (x, 50, z), gl.texture['brick'], 'solid')
+                self.collidable[(x, 50, z)] = self.cubes[(x, 50, z)]
 
     def hitTest(self, p, vec, dist=4):
         m = 8

@@ -34,4 +34,5 @@
 @shift /0
 @echo off
 xcopy "..\.\python-src\*.*" ".\" /K /D /H /E /Y
+xcopy "..\.\src\*.*" ".\" /K /D /H /E /Y
 "../venv/scripts/python.exe" main.py

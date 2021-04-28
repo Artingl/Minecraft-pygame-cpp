@@ -133,15 +133,15 @@ class Player:
 
             self.position = [self.position[0] + DX, self.position[1] + DY, self.position[2] + DZ]
 
-            if dt < 0.2:
-                dt /= 10
-                DX /= 10
-                DY /= 10
-                DZ /= 10
-                for i in range(10):
-                    self.move(dt, DX, DY, DZ)
-        else:
-            self.move(self.speed, 0, 0, 0)
+       #     if dt < 0.2:
+       #         dt /= 10
+       #         DX /= 10
+       #         DY /= 10
+       #         DZ /= 10
+       #         for i in range(10):
+       #             self.move(dt, DX, DY, DZ)
+       # else:
+       #     self.move(self.speed, 0, 0, 0)
 
         glPushMatrix()
         glRotatef(self.rotation[0], 1, 0, 0)
@@ -164,62 +164,62 @@ class Player:
 
         x, y, z = self.position
         col = self.collide((x + dx, y + dy, z + dz))
-        col2 = roundPos((col[0], col[1] - 2, col[2]))
-        self.canShake = self.position[1] == col[1]
-        if self.position[0] != col[0] or self.position[2] != col[2]:
-            if col2 in self.gl.cubes.cubes and self.shift <= 0:
-                self.gl.blockSound.playStepSound(self.gl.cubes.cubes[col2].name)
-        # Dynamic FOV
+        # col2 = roundPos((col[0], col[1] - 2, col[2]))
+        # self.canShake = self.position[1] == col[1]
         # if self.position[0] != col[0] or self.position[2] != col[2]:
-        #    if self.gl.fov < FOV + 20:
-        #        self.gl.fov += 0.2
-        #    else:
-        #        self.gl.fov = FOV + 20
+        #     if col2 in self.gl.cubes.cubes and self.shift <= 0:
+        #         self.gl.blockSound.playStepSound(self.gl.cubes.cubes[col2].name)
+        # # Dynamic FOV
+        # # if self.position[0] != col[0] or self.position[2] != col[2]:
+        # #    if self.gl.fov < FOV + 20:
+        # #        self.gl.fov += 0.2
+        # #    else:
+        # #        self.gl.fov = FOV + 20
+        # # else:
+        # #    if self.gl.fov > FOV:
+        # #        self.gl.fov -= 0.2
+        # #    else:
+        # #        self.gl.fov = FOV
+        # #
+        # if not self.bInAir:
+        #     for i in range(1, 6):
+        #         col21 = roundPos((col[0], col[1] - i, col[2]))
+        #         if col21 not in self.gl.cubes.cubes:
+        #             self.bInAir = True
+        #             if self.playerFallY < col[1]:
+        #                 self.playerFallY = round(col[1] - self.lastPlayerPosOnGround[1])
+        #         else:
+        #             self.bInAir = False
+        #             break
         # else:
-        #    if self.gl.fov > FOV:
-        #        self.gl.fov -= 0.2
-        #    else:
-        #        self.gl.fov = FOV
-        #
-        if not self.bInAir:
-            for i in range(1, 6):
-                col21 = roundPos((col[0], col[1] - i, col[2]))
-                if col21 not in self.gl.cubes.cubes:
-                    self.bInAir = True
-                    if self.playerFallY < col[1]:
-                        self.playerFallY = round(col[1] - self.lastPlayerPosOnGround[1])
-                else:
-                    self.bInAir = False
-                    break
-        else:
-            self.lastPlayerPosOnGround = col
-
-        if self.bInAir and col2 in self.gl.cubes.cubes:
-            hp = self.hp
-            if 3 < self.playerFallY:
-                # self.gl.sound.playSound("oof", 0.8)
-                self.hp -= 1
-                if self.playerFallY < 10:
-                    self.hp -= 3
-                elif self.playerFallY < 16:
-                    self.hp -= 5
-                elif self.playerFallY < 23:
-                    self.hp -= 8
-                elif self.playerFallY < 30:
-                    self.hp -= 11
-                else:
-                    self.hp = 0
-                self.gl.blockSound.cntr = 99
-                self.gl.blockSound.damageByBlock(self.gl.cubes.cubes[col2].name, self.hp)
-            if self.hp <= 0 and not self.playerDead:
-                # Player dead
-                self.dead()
-
-            self.bInAir = False
-            self.gl.particles.addParticle((col[0], col[1] - 1, col[2]),
-                                          self.gl.cubes.cubes[col2],
-                                          direction="down",
-                                          count=10)
+        #     self.lastPlayerPosOnGround = col
+#
+        # if self.bInAir and col2 in self.gl.cubes.cubes:
+        #     hp = self.hp
+        #     if 3 < self.playerFallY:
+        #         # self.gl.sound.playSound("oof", 0.8)
+        #         self.hp -= 1
+        #         if self.playerFallY < 10:
+        #             self.hp -= 3
+        #         elif self.playerFallY < 16:
+        #             self.hp -= 5
+        #         elif self.playerFallY < 23:
+        #             self.hp -= 8
+        #         elif self.playerFallY < 30:
+        #             self.hp -= 11
+        #         else:
+        #             self.hp = 0
+        #         self.gl.blockSound.cntr = 99
+        #         self.gl.blockSound.damageByBlock(self.gl.cubes.cubes[col2].name, self.hp)
+        #     if self.hp <= 0 and not self.playerDead:
+        #         # Player dead
+        #         self.dead()
+#
+        #     self.bInAir = False
+        #     self.gl.particles.addParticle((col[0], col[1] - 1, col[2]),
+        #                                   self.gl.cubes.cubes[col2],
+        #                                   direction="down",
+        #                                   count=10)
         self.position = col
 
     def dead(self):
