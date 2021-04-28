@@ -1,5 +1,5 @@
 import os
-
+import debug_module
 import pyglet
 from OpenGL.GL import *
 
@@ -14,7 +14,7 @@ class DestroyBlock:
         self.loadTextures()
 
     def loadTextures(self):
-        print("Loading block destroy textures...")
+        debug_module._gl_engine_info("_DestroyBlock_python", "Loading block destroy textures...")
         for e, i in enumerate(os.listdir("textures/blocks/block_destroy")):
             self.textures[e] = \
                 pyglet.graphics.TextureGroup(pyglet.image.load("textures/blocks/block_destroy/" + i)

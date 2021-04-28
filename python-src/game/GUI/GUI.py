@@ -1,10 +1,11 @@
 import pyglet
 from settings import *
+import debug_module
 
 
 class GUI:
     def __init__(self, gl):
-        print("Init GUI class...")
+        debug_module._gl_engine_info("_GUI_python", "Init GUI class...")
 
         self.GUI_TEXTURES = {}
         self.shows = {}

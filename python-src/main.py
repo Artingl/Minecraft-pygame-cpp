@@ -5,7 +5,7 @@ from random import randint
 import pyglet
 from OpenGL.GL import *
 from OpenGL.raw.GLU import gluOrtho2D
-
+import debug_module
 from functions import drawInfoLabel, getElpsTime, translateSeed
 from game.GUI.Button import Button
 from game.GUI.Editarea import Editarea
@@ -299,7 +299,7 @@ def drawMainMenu(mc):
     mainMenuRotation[1] += 0.02
 
 
-print("Loading the game...")
+debug_module._gl_engine_info("_main_python", "Loading the game...")
 
 resizeEvent = False
 LAST_SAVED_RESOLUTION = [WIDTH, HEIGHT]
@@ -339,10 +339,10 @@ scene.player = player
 scene.deathScreen = deathScreen
 scene.initScene()
 
-print("Loading sounds...")
+debug_module._gl_engine_info("_main_python", "Loading sounds...")
 sound.BLOCKS_SOUND["pickUp"] = pygame.mixer.Sound("../src/sounds/pick.mp3")
 
-print("Loading step sounds...")
+debug_module._gl_engine_info("_main_python", "Loading step sounds...")
 sound.BLOCKS_SOUND["step"] = {}
 for e, i in enumerate(os.listdir("../src/sounds/step/")):
     soundName = i.split(".")[0][:-1]
@@ -352,9 +352,9 @@ for e, i in enumerate(os.listdir("../src/sounds/step/")):
         sound.BLOCKS_SOUND["step"][soundName] = []
 
     sound.BLOCKS_SOUND["step"][soundName].append(pygame.mixer.Sound("sounds/step/" + i))
-    print("Successful loaded", soundName, "#" + soundNum, "sound!")
+    debug_module._gl_engine_info("_main_python", "Successful loaded " + soundName + " #" + soundNum + " sound!")
 
-print("Loading dig sounds...")
+debug_module._gl_engine_info("_main_python", "Loading dig sounds...")
 sound.BLOCKS_SOUND["dig"] = {}
 for e, i in enumerate(os.listdir("../src/sounds/dig/")):
     soundName = i.split(".")[0][:-1]
@@ -364,18 +364,18 @@ for e, i in enumerate(os.listdir("../src/sounds/dig/")):
         sound.BLOCKS_SOUND["dig"][soundName] = []
 
     sound.BLOCKS_SOUND["dig"][soundName].append(pygame.mixer.Sound("sounds/dig/" + i))
-    print("Successful loaded", soundName, "#" + soundNum, "sound!")
+    debug_module._gl_engine_info("_main_python", "Successful loaded " + soundName + " #" + soundNum + " sound!")
 
-print("Loading explode sounds...")
+debug_module._gl_engine_info("_main_python", "Loading explode sounds...")
 sound.BLOCKS_SOUND["explode"] = []
 for e, i in enumerate(os.listdir("../src/sounds/explode/")):
     soundName = i.split(".")[0][:-1]
     soundNum = i.split(".")[0][-1]
 
     sound.BLOCKS_SOUND["explode"].append(pygame.mixer.Sound("sounds/explode/" + i))
-    print("Successful loaded", soundName, "#" + soundNum, "sound!")
+    debug_module._gl_engine_info("_main_python", "Successful loaded " + soundName + "#" + soundNum + " sound!")
 
-print("Loading damage sounds...")
+debug_module._gl_engine_info("_main_python", "Loading damage sounds...")
 sound.SOUNDS["damage"] = {}
 for e, i in enumerate(os.listdir("../src/sounds/damage/")):
     soundName = i.split(".")[0][:-1]
@@ -385,9 +385,9 @@ for e, i in enumerate(os.listdir("../src/sounds/damage/")):
         sound.SOUNDS["damage"][soundName] = []
 
     sound.SOUNDS["damage"][soundName].append(pygame.mixer.Sound("sounds/damage/" + i))
-    print("Successful loaded", soundName, "#" + soundNum, "sound!")
+    debug_module._gl_engine_info("_main_python", "Successful loaded " + soundName + " #" + soundNum + " sound!")
 
-print("Loading GUI sounds...")
+debug_module._gl_engine_info("_main_python", "Loading GUI sounds...")
 sound.SOUNDS["GUI"] = {}
 for e, i in enumerate(os.listdir("../src/sounds/gui/")):
     soundName = i.split(".")[0][:-1]
@@ -397,22 +397,22 @@ for e, i in enumerate(os.listdir("../src/sounds/gui/")):
         sound.SOUNDS["GUI"][soundName] = []
 
     sound.SOUNDS["GUI"][soundName].append(pygame.mixer.Sound("sounds/gui/" + i))
-    print("Successful loaded", soundName, "#" + soundNum, "sound!")
+    debug_module._gl_engine_info("_main_python", "Successful loaded " + soundName + " #" + soundNum + " sound!")
 
-print("Loading menu music...")
+debug_module._gl_engine_info("_main_python", "Loading menu music...")
 for e, i in enumerate(os.listdir("../src/sounds/music/menu")):
     sound.MENU_MUSIC.append("sounds/music/menu/" + i)
-    print("Successful loaded", i, "music!")
+    debug_module._gl_engine_info("_main_python", "Successful loaded " + i + " music!")
 
-print("Loading game music...")
+debug_module._gl_engine_info("_main_python", "Loading game music...")
 for e, i in enumerate(os.listdir("../src/sounds/music/game")):
     sound.MUSIC.append("sounds/music/game/" + i)
-    print("Successful loaded", i, "music!")
+    debug_module._gl_engine_info("_main_python", "Successful loaded " + i + " music!")
 sound.initMusic(False)
 
-print("Music loaded successful!")
+debug_module._gl_engine_info("_main_python", "Music loaded successful!")
 
-print("Loading GUI textures...")
+debug_module._gl_engine_info("_main_python", "Loading GUI textures...")
 gui.GUI_TEXTURES = {
     "crafting_table": pyglet.resource.image("gui/crafting_table.png"),
     "inventory_window": pyglet.resource.image("gui/inventory_window.png"),
@@ -505,7 +505,7 @@ gui.addGuiElement("crosshair", (scene.WIDTH // 2 - 9, scene.HEIGHT // 2 - 9))
 
 showInfoLabel = False
 
-print("Loading splashes...")
+debug_module._gl_engine_info("_main_python", "Loading splashes...")
 splfile = open("../src/gui/splashes.txt", "r", encoding='utf-8')
 splash = splfile.read().split("\n")
 splash = splash[randint(0, len(splash) - 1)]
@@ -545,7 +545,7 @@ respawnButton = Button(scene, "Respawn", 0, 0)
 respawnButton.setEvent(respawn)
 #
 
-print("Loading complete!")
+debug_module._gl_engine_info("_main_python", "Loading complete!")
 mainMenuRotation = [50, 180, True]
 
 mainFunction = drawMainMenu
@@ -656,7 +656,7 @@ while True:
         #     gui.shows["crosshair"][1] = (-100, -100)
         # if scene.allowEvents["grabMouse"] and pygame.mouse.get_focused():
         pygame.mouse.set_pos((scene.WIDTH // 2, scene.HEIGHT // 2))
-        scene.updateScene(opengl_main_cpp.drawCube)
+        scene.updateScene(opengl_main_cpp._gl_engine_draw)
 
         # player.inventory.draw()
         # gui.update()

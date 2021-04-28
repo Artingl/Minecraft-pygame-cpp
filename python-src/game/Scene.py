@@ -4,7 +4,7 @@ import threading
 from OpenGL.GLU import *
 from OpenGL.GL import *
 from pyglet.gl import *
-
+import debug_module
 from functions import *
 from game.Lighting.Light import Light
 from game.Particles import Particles
@@ -19,7 +19,7 @@ from game.blocks.CubeHandler import CubeHandler
 
 class Scene:
     def __init__(self):
-        print("Init Scene class...")
+        debug_module._gl_engine_info("_Scene_python", "Init Scene class...")
 
         self.WIDTH, self.HEIGHT = WIDTH, HEIGHT
 
@@ -61,7 +61,7 @@ class Scene:
         self.startPlayerPos = [0, -9000, 0]
 
     def loadPanoramaTextures(self):
-        print("Loading panorama textures...")
+        debug_module._gl_engine_info("_Scene_python", "Loading panorama textures...")
         for e, i in enumerate(os.listdir("gui/bg/")):
             self.panorama[e] = \
                 pyglet.graphics.TextureGroup(pyglet.image.load("gui/bg/" + i).get_mipmapped_texture())
@@ -76,7 +76,7 @@ class Scene:
                                                    ('c3f', (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)))
 
     def initScene(self):
-        print("Init OpenGL scene...")
+        debug_module._gl_engine_info("_Scene_python", "Init OpenGL scene...")
 
         glClearColor(0.5, 0.7, 1, 1)
         glClearDepth(1.0)
@@ -174,7 +174,7 @@ class Scene:
             self.drawCounter = 0
             self.worldGen.genChunk(self.player)
 
-    def updateScene(self, funct):
+    def updateScene(self, _gl_engine_draw, _gl_update_vao_position):
 
         # self.genWorld()
         if self.in_water:
@@ -193,7 +193,7 @@ class Scene:
         glLoadIdentity()
 
         self.player.update()
-        funct(int(self.texture['brick']), int(self.player.x()), int(self.player.y()), int(self.player.z()))
+        _gl_engine_draw()
 
         # self.draw()
 

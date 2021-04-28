@@ -47,7 +47,7 @@ ADD_TEST(NAME ${PROJECT_NAME} COMMAND ../compile.exe)
 
 target_include_directories(opengl_main_cpp SYSTEM PRIVATE  ${Boost_INCLUDE_DIRS} ${PYTHON_INCLUDE_DIRS} D:/mingw/mingw64/include)
 target_link_libraries(opengl_main_cpp ${Boost_LIBRARIES} ${PYTHON_LIBRARIES})
-target_link_libraries(opengl_main_cpp sfml-window sfml-network opengl32 sfml-system glew32 glew32s)
+target_link_libraries(opengl_main_cpp sfml-window sfml-network opengl32 sfml-system glew32.dll)
 
 
 target_include_directories(debug_module SYSTEM PRIVATE  ${Boost_INCLUDE_DIRS} ${PYTHON_INCLUDE_DIRS} D:/mingw/mingw64/include)

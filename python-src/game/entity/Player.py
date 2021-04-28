@@ -1,6 +1,6 @@
 import math
 from random import randint
-
+import debug_module
 import pyglet
 from OpenGL.GL import *
 
@@ -12,7 +12,7 @@ from settings import *
 
 class Player:
     def __init__(self, x=0, y=0, z=0, rotation=[0, 0], gl=None):
-        print("Init Player class...")
+        debug_module._gl_engine_info("_Player_python", "Init Player class...")
 
         self.position, self.rotation = [x, y, z], rotation
         self.speed = 0.03

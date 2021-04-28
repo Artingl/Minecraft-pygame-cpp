@@ -6,12 +6,12 @@ import numpy
 import pyglet
 from OpenGL.GL import *
 from PIL import Image
-
+import debug_module
 from settings import *
 
 
 def load_textures(self):
-    print("Loading textures...")
+    debug_module._gl_engine_info("_functions_python", "Loading textures...")
     t = self.texture
     dirs = ['textures']
     while dirs:
@@ -39,7 +39,7 @@ def load_textures(self):
 
                 self.texture[n] = bgImgGL
 
-                print("Successful loaded", n, "texture!")
+                debug_module._gl_engine_info("_functions_python", "Successful loaded " + n + " texture!")
 
 
 def translateSeed(seed):

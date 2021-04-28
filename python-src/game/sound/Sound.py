@@ -1,11 +1,11 @@
 from random import randint
-
+import debug_module
 import pygame
 
 
 class Sound:
     def __init__(self):
-        print("Init Sound class...")
+        debug_module._gl_engine_info("_Sound_python", "Init Sound class...")
         self.BLOCKS_SOUND = {}
         self.SOUNDS = {}
         self.MUSIC = []
