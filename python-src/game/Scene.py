@@ -173,9 +173,9 @@ class Scene:
             self.drawCounter = 0
             self.worldGen.genChunk(self.player)
 
-    def updateScene(self):
+    def updateScene(self, funct):
 
-        self.genWorld()
+        # self.genWorld()
         if self.in_water:
             glFogfv(GL_FOG_COLOR, (GLfloat * 4)(0, 0, 0, 1))
             glFogf(GL_FOG_START, 10)
@@ -192,40 +192,41 @@ class Scene:
         glLoadIdentity()
 
         self.player.update()
-        self.draw()
+        funct()
+        # self.draw()
 
-        self.clouds.update()
-        self.droppedBlock.update()
+        # self.clouds.update()
+        # self.droppedBlock.update()
 
-        for i in self.entity:
-            i.update()
+        # for i in self.entity:
+        #     i.update()
 
-        self.particles.drawParticles()
-        self.light.update()
+        # self.particles.drawParticles()
+        # self.light.update()
 
-        blockByVec = self.cubes.hitTest(self.player.position, self.player.get_sight_vector())
-        if blockByVec[0]:
-            self.destroy.drawDestroy(*blockByVec[0])
+        # blockByVec = self.cubes.hitTest(self.player.position, self.player.get_sight_vector())
+        # if blockByVec[0]:
+        #     self.destroy.drawDestroy(*blockByVec[0])
 
-            glPolygonMode(GL_FRONT_AND_BACK, GL_LINE)
-            glColor3d(0, 0, 0)
-            pyglet.graphics.draw(24, GL_QUADS, ('v3f/static', flatten(cube_vertices(blockByVec[0], 0.51))))
-            glPolygonMode(GL_FRONT_AND_BACK, GL_FILL)
-            glColor3d(1, 1, 1)
+        #     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE)
+        #     glColor3d(0, 0, 0)
+        #     pyglet.graphics.draw(24, GL_QUADS, ('v3f/static', flatten(cube_vertices(blockByVec[0], 0.51))))
+        #     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL)
+        #     glColor3d(1, 1, 1)
 
-            self.lookingAt = f"{blockByVec[0][0]} {blockByVec[0][1]} {blockByVec[0][2]} " \
-                             f"({self.cubes.cubes[blockByVec[0]].name})"
-        else:
-            self.lookingAt = "Nothing"
+        #     self.lookingAt = f"{blockByVec[0][0]} {blockByVec[0][1]} {blockByVec[0][2]} " \
+        #                      f"({self.cubes.cubes[blockByVec[0]].name})"
+        # else:
+        #     self.lookingAt = "Nothing"
 
-        glColor3d(1, 1, 1)
+        # glColor3d(1, 1, 1)
         glPopMatrix()
         self.set2d()
 
-        self.blockSound.pickUpAlreadyPlayed = False
+        # self.blockSound.pickUpAlreadyPlayed = False
 
-        for i in self.updateEvents:
-            i()
+        # for i in self.updateEvents:
+        #    i()
 
     def draw(self):
         glEnable(GL_ALPHA_TEST)

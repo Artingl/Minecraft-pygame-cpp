@@ -78,54 +78,56 @@ class Player:
                      (self.speed + self.acceleration - 0.008) * math.cos(rotY)
 
             key = pygame.key.get_pressed()
-            if key[pygame.K_LCTRL]:
-                self.acceleration = 0.009
+            # if key[pygame.K_LCTRL]:
+            #     self.acceleration = 0.009
             if self.kW > 0 or key[pygame.K_w]:
                 DX += dx
                 DZ -= dz
-                self.setCameraShake()
-                if self.kW > 0:
-                    self.kW -= minKd
-            else:
-                self.acceleration = 0
+                # self.setCameraShake()
+                # if self.kW > 0:
+                #     self.kW -= minKd
+            # else:
+            #     self.acceleration = 0
             if self.kS > 0 or key[pygame.K_s]:
                 DX -= dx
                 DZ += dz
-                self.setCameraShake()
-                self.acceleration = 0
-                if self.kS > 0:
-                    self.kS -= minKd
+            #     self.setCameraShake()
+            #     self.acceleration = 0
+            #     if self.kS > 0:
+            #         self.kS -= minKd
             if self.kA > 0 or key[pygame.K_a]:
                 DX -= dz
                 DZ -= dx
-                self.setCameraShake()
-                self.acceleration = 0
-                if self.kA > 0:
-                    self.kA -= minKd
+            #    self.setCameraShake()
+            #    self.acceleration = 0
+            #    if self.kA > 0:
+            #        self.kA -= minKd
             if self.kD > 0 or key[pygame.K_d]:
                 DX += dz
                 DZ += dx
-                self.setCameraShake()
-                self.acceleration = 0
-                if self.kD > 0:
-                    self.kD -= minKd
+            #    self.setCameraShake()
+            #    self.acceleration = 0
+            #    if self.kD > 0:
+            #        self.kD -= minKd
             if key[pygame.K_SPACE]:
-                self.jump()
-                if key[pygame.K_w]:
-                    self.kW = 1
-                if key[pygame.K_a]:
-                    self.kA = 1
-                if key[pygame.K_s]:
-                    self.kS = 1
-                if key[pygame.K_d]:
-                    self.kD = 1
+                DY += self.speed
+            #    self.jump()
+            #    if key[pygame.K_w]:
+            #        self.kW = 1
+            #    if key[pygame.K_a]:
+            #        self.kA = 1
+            #    if key[pygame.K_s]:
+            #        self.kS = 1
+            #    if key[pygame.K_d]:
+            #        self.kD = 1
             if key[pygame.K_LSHIFT]:
-                self.setShift(True)
-                self.acceleration = -0.01
-            else:
-                self.setShift(False)
-                if self.acceleration == -0.01:
-                    self.acceleration = 0
+                DY -= self.speed
+            #     self.setShift(True)
+            #     self.acceleration = -0.01
+            # else:
+            #     self.setShift(False)
+            #     if self.acceleration == -0.01:
+            #         self.acceleration = 0
 
             dt = self.speed
 

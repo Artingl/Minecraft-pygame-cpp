@@ -1,9 +1,9 @@
 ### What is it?
-This repository is a clone of game Minecraft created with C++ and Python 3.9
+This repository is a clone of game Minecraft created with C++ and Python 3.7
 
 ### How to run?
 To build this project you have to download boost 1.68.0 and compile boost.python by yourself for your os.
-Next you have to add location of compiled libs into your system path. Before that you need to install Python 3.9.
+Next you have to add location of compiled libs into your system path. Before that you need to install Python 3.7.
 
 ### Example how to compile boost.python x64 for windows and mingw
 This worked for me, but it may not work for you. So if it is, you have to find the way to compile it.

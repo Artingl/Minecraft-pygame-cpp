@@ -1,5 +1,6 @@
 C:\Users\WildPC\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\211.6693.114\bin\cmake\win\bin\cmake.exe -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - MinGW Makefiles" C:\Users\WildPC\Documents\GitHub\Minecraft-pygame-cpp
 -- start running cmake...
+-- Found SFML 2.5.1 in D:/mingw/mingw64/lib/cmake/SFML
 -- [ C:/Users/WildPC/AppData/Local/JetBrains/Toolbox/apps/CLion/ch-0/211.6693.114/bin/cmake/win/share/cmake-3.19/Modules/FindBoost.cmake:1507 ] _boost_TEST_VERSIONS = "1.74.0;1.74;1.73.0;1.73;1.72.0;1.72;1.71.0;1.71;1.70.0;1.70;1.69.0;1.69;1.68.0;1.68"
 -- [ C:/Users/WildPC/AppData/Local/JetBrains/Toolbox/apps/CLion/ch-0/211.6693.114/bin/cmake/win/share/cmake-3.19/Modules/FindBoost.cmake:1508 ] Boost_USE_MULTITHREADED = "ON"
 -- [ C:/Users/WildPC/AppData/Local/JetBrains/Toolbox/apps/CLion/ch-0/211.6693.114/bin/cmake/win/share/cmake-3.19/Modules/FindBoost.cmake:1509 ] Boost_USE_STATIC_LIBS = "ON"

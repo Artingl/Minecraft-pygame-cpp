@@ -3,7 +3,6 @@ project(Minecraft-pygame-cpp)
 
 set(CMAKE_CXX_STANDARD 14)
 
-
 set(GCC_COVERAGE_COMPILE_FLAGS "-march=native -O2 -m64 -D_hypot=hypot -Wall")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${GCC_COVERAGE_COMPILE_FLAGS}" )
 
@@ -14,6 +13,7 @@ set(Boost_USE_STATIC_LIBS       ON)
 set(Boost_USE_MULTITHREADED     ON)
 set(Boost_USE_STATIC_RUNTIME    ON)
 
+find_package(SFML 2.5 COMPONENTS audio graphics window system REQUIRED)
 find_package(Boost 1.68.0 COMPONENTS python37 REQUIRED)
 
 if(Boost_FOUND)
@@ -41,7 +41,9 @@ message(STATUS "Copying *.py files...")
 file(COPY ${PYTHON_FILES} DESTINATION .)
 
 # add_library(hello SHARED cpp-src/hello.cpp)
-PYTHON_ADD_MODULE(hello cpp-src/main.cpp)
+PYTHON_ADD_MODULE(opengl_main_cpp cpp-src/main.cpp)
 ADD_TEST(NAME ${PROJECT_NAME} COMMAND ../compile.exe)
-target_include_directories(hello SYSTEM PRIVATE  ${Boost_INCLUDE_DIRS} ${PYTHON_INCLUDE_DIRS})
-target_link_libraries(hello ${Boost_LIBRARIES} ${PYTHON_LIBRARIES})
+target_include_directories(opengl_main_cpp SYSTEM PRIVATE  ${Boost_INCLUDE_DIRS} ${PYTHON_INCLUDE_DIRS} D:/mingw/mingw64/include)
+target_link_libraries(opengl_main_cpp ${Boost_LIBRARIES} ${PYTHON_LIBRARIES})
+target_link_libraries(opengl_main_cpp sfml-window sfml-network opengl32 sfml-system)
+

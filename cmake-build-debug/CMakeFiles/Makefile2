@@ -71,7 +71,7 @@ CMAKE_BINARY_DIR = C:\Users\WildPC\Documents\GitHub\Minecraft-pygame-cpp\cmake-b
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
-all: CMakeFiles/hello.dir/all
+all: CMakeFiles/opengl_main_cpp.dir/all
 
 .PHONY : all
 
@@ -81,36 +81,36 @@ preinstall:
 .PHONY : preinstall
 
 # The main recursive "clean" target.
-clean: CMakeFiles/hello.dir/clean
+clean: CMakeFiles/opengl_main_cpp.dir/clean
 
 .PHONY : clean
 
 #=============================================================================
-# Target rules for target CMakeFiles/hello.dir
+# Target rules for target CMakeFiles/opengl_main_cpp.dir
 
 # All Build rule for target.
-CMakeFiles/hello.dir/all:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\hello.dir\build.make CMakeFiles/hello.dir/depend
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\hello.dir\build.make CMakeFiles/hello.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=C:\Users\WildPC\Documents\GitHub\Minecraft-pygame-cpp\cmake-build-debug\CMakeFiles --progress-num=1,2 "Built target hello"
-.PHONY : CMakeFiles/hello.dir/all
+CMakeFiles/opengl_main_cpp.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\opengl_main_cpp.dir\build.make CMakeFiles/opengl_main_cpp.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\opengl_main_cpp.dir\build.make CMakeFiles/opengl_main_cpp.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=C:\Users\WildPC\Documents\GitHub\Minecraft-pygame-cpp\cmake-build-debug\CMakeFiles --progress-num=1,2 "Built target opengl_main_cpp"
+.PHONY : CMakeFiles/opengl_main_cpp.dir/all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/hello.dir/rule: cmake_check_build_system
+CMakeFiles/opengl_main_cpp.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\WildPC\Documents\GitHub\Minecraft-pygame-cpp\cmake-build-debug\CMakeFiles 2
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 CMakeFiles/hello.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 CMakeFiles/opengl_main_cpp.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\WildPC\Documents\GitHub\Minecraft-pygame-cpp\cmake-build-debug\CMakeFiles 0
-.PHONY : CMakeFiles/hello.dir/rule
+.PHONY : CMakeFiles/opengl_main_cpp.dir/rule
 
 # Convenience name for target.
-hello: CMakeFiles/hello.dir/rule
+opengl_main_cpp: CMakeFiles/opengl_main_cpp.dir/rule
 
-.PHONY : hello
+.PHONY : opengl_main_cpp
 
 # clean rule for target.
-CMakeFiles/hello.dir/clean:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\hello.dir\build.make CMakeFiles/hello.dir/clean
-.PHONY : CMakeFiles/hello.dir/clean
+CMakeFiles/opengl_main_cpp.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\opengl_main_cpp.dir\build.make CMakeFiles/opengl_main_cpp.dir/clean
+.PHONY : CMakeFiles/opengl_main_cpp.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

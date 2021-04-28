@@ -74,6 +74,17 @@ CMAKE_BINARY_DIR = C:\Users\WildPC\Documents\GitHub\Minecraft-pygame-cpp\cmake-b
 #=============================================================================
 # Targets provided globally by CMake.
 
+# Special rule for the target edit_cache
+edit_cache:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
+	C:\Users\WildPC\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\211.6693.114\bin\cmake\win\bin\cmake.exe -E echo "No interactive CMake dialog available."
+.PHONY : edit_cache
+
+# Special rule for the target edit_cache
+edit_cache/fast: edit_cache
+
+.PHONY : edit_cache/fast
+
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
@@ -95,17 +106,6 @@ test:
 test/fast: test
 
 .PHONY : test/fast
-
-# Special rule for the target edit_cache
-edit_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
-	C:\Users\WildPC\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\211.6693.114\bin\cmake\win\bin\cmake.exe -E echo "No interactive CMake dialog available."
-.PHONY : edit_cache
-
-# Special rule for the target edit_cache
-edit_cache/fast: edit_cache
-
-.PHONY : edit_cache/fast
 
 # The main all target
 all: cmake_check_build_system
@@ -140,17 +140,17 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named hello
+# Target rules for targets named opengl_main_cpp
 
 # Build rule for target.
-hello: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 hello
-.PHONY : hello
+opengl_main_cpp: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 opengl_main_cpp
+.PHONY : opengl_main_cpp
 
 # fast build rule for target.
-hello/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\hello.dir\build.make CMakeFiles/hello.dir/build
-.PHONY : hello/fast
+opengl_main_cpp/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\opengl_main_cpp.dir\build.make CMakeFiles/opengl_main_cpp.dir/build
+.PHONY : opengl_main_cpp/fast
 
 cpp-src/main.obj: cpp-src/main.cpp.obj
 
@@ -158,7 +158,7 @@ cpp-src/main.obj: cpp-src/main.cpp.obj
 
 # target to build an object file
 cpp-src/main.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\hello.dir\build.make CMakeFiles/hello.dir/cpp-src/main.cpp.obj
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\opengl_main_cpp.dir\build.make CMakeFiles/opengl_main_cpp.dir/cpp-src/main.cpp.obj
 .PHONY : cpp-src/main.cpp.obj
 
 cpp-src/main.i: cpp-src/main.cpp.i
@@ -167,7 +167,7 @@ cpp-src/main.i: cpp-src/main.cpp.i
 
 # target to preprocess a source file
 cpp-src/main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\hello.dir\build.make CMakeFiles/hello.dir/cpp-src/main.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\opengl_main_cpp.dir\build.make CMakeFiles/opengl_main_cpp.dir/cpp-src/main.cpp.i
 .PHONY : cpp-src/main.cpp.i
 
 cpp-src/main.s: cpp-src/main.cpp.s
@@ -176,7 +176,7 @@ cpp-src/main.s: cpp-src/main.cpp.s
 
 # target to generate assembly for a file
 cpp-src/main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\hello.dir\build.make CMakeFiles/hello.dir/cpp-src/main.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\opengl_main_cpp.dir\build.make CMakeFiles/opengl_main_cpp.dir/cpp-src/main.cpp.s
 .PHONY : cpp-src/main.cpp.s
 
 # Help Target
@@ -188,7 +188,7 @@ help:
 	@echo ... edit_cache
 	@echo ... rebuild_cache
 	@echo ... test
-	@echo ... hello
+	@echo ... opengl_main_cpp
 	@echo ... cpp-src/main.obj
 	@echo ... cpp-src/main.i
 	@echo ... cpp-src/main.s

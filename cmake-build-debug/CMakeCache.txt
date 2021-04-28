@@ -274,6 +274,9 @@ PYTHON_DEBUG_LIBRARY:FILEPATH=PYTHON_DEBUG_LIBRARY-NOTFOUND
 //Add module hello
 PYTHON_ENABLE_MODULE_hello:BOOL=ON
 
+//Add module opengl_main_cpp
+PYTHON_ENABLE_MODULE_opengl_main_cpp:BOOL=ON
+
 //Path to a program.
 PYTHON_EXECUTABLE:FILEPATH=C:/Users/WildPC/AppData/Local/Programs/Python/Python37/python.exe
 
@@ -288,6 +291,36 @@ PYTHON_LIBRARY_DEBUG:FILEPATH=PYTHON_LIBRARY_DEBUG-NOTFOUND
 
 //Add module hello shared
 PYTHON_MODULE_hello_BUILD_SHARED:BOOL=ON
+
+//Add module opengl_main_cpp shared
+PYTHON_MODULE_opengl_main_cpp_BUILD_SHARED:BOOL=ON
+
+//The directory containing a CMake configuration file for Qt5Core.
+Qt5Core_DIR:PATH=D:/libs/cpp/QT/5.15.2/mingw81_64/lib/cmake/Qt5Core
+
+//The directory containing a CMake configuration file for Qt5Gui.
+Qt5Gui_DIR:PATH=D:/libs/cpp/QT/5.15.2/mingw81_64/lib/cmake/Qt5Gui
+
+//The directory containing a CMake configuration file for Qt5Network.
+Qt5Network_DIR:PATH=D:/libs/cpp/QT/5.15.2/mingw81_64/lib/cmake/Qt5Network
+
+//The directory containing a CMake configuration file for Qt5QmlModels.
+Qt5QmlModels_DIR:PATH=D:/libs/cpp/QT/5.15.2/mingw81_64/lib/cmake/Qt5QmlModels
+
+//The directory containing a CMake configuration file for Qt5Qml.
+Qt5Qml_DIR:PATH=D:/libs/cpp/QT/5.15.2/mingw81_64/lib/cmake/Qt5Qml
+
+//The directory containing a CMake configuration file for Qt5Quick.
+Qt5Quick_DIR:PATH=D:/libs/cpp/QT/5.15.2/mingw81_64/lib/cmake/Qt5Quick
+
+//The directory containing a CMake configuration file for Qt5Widgets.
+Qt5Widgets_DIR:PATH=D:/libs/cpp/QT/5.15.2/mingw81_64/lib/cmake/Qt5Widgets
+
+//The directory containing a CMake configuration file for SFML.
+SFML_DIR:PATH=D:/mingw/mingw64/lib/cmake/SFML
+
+//Path to a file.
+SFML_DOC_DIR:PATH=SFML_DOC_DIR-NOTFOUND
 
 
 ########################
@@ -478,6 +511,8 @@ FIND_PACKAGE_MESSAGE_DETAILS_PythonLibs:INTERNAL=[C:/Users/WildPC/AppData/Local/
 PYTHON_DEBUG_LIBRARY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: PYTHON_ENABLE_MODULE_hello
 PYTHON_ENABLE_MODULE_hello-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: PYTHON_ENABLE_MODULE_opengl_main_cpp
+PYTHON_ENABLE_MODULE_opengl_main_cpp-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: PYTHON_EXECUTABLE
 PYTHON_EXECUTABLE-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: PYTHON_INCLUDE_DIR
@@ -488,6 +523,8 @@ PYTHON_LIBRARY-ADVANCED:INTERNAL=1
 PYTHON_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: PYTHON_MODULE_hello_BUILD_SHARED
 PYTHON_MODULE_hello_BUILD_SHARED-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: PYTHON_MODULE_opengl_main_cpp_BUILD_SHARED
+PYTHON_MODULE_opengl_main_cpp_BUILD_SHARED-ADVANCED:INTERNAL=1
 //Components requested for this build tree.
 _Boost_COMPONENTS_SEARCHED:INTERNAL=python37
 //Last used Boost_INCLUDE_DIR value.
