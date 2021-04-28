@@ -83,7 +83,7 @@ endif()
 
 
 
-set(CMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES "D:/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++;D:/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/x86_64-w64-mingw32;D:/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/backward;D:/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include;D:/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include-fixed;D:/mingw/mingw64/x86_64-w64-mingw32/include")
+set(CMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES "C:/Users/WildPC/AppData/Local/Programs/Python/Python39/include;D:/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++;D:/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/x86_64-w64-mingw32;D:/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/backward;D:/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include;D:/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include-fixed;D:/mingw/mingw64/x86_64-w64-mingw32/include")
 set(CMAKE_CXX_IMPLICIT_LINK_LIBRARIES "stdc++;mingw32;gcc_s;gcc;moldname;mingwex;pthread;advapi32;shell32;user32;kernel32;iconv;mingw32;gcc_s;gcc;moldname;mingwex")
 set(CMAKE_CXX_IMPLICIT_LINK_DIRECTORIES "D:/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0;D:/mingw/mingw64/lib/gcc;D:/mingw/mingw64/x86_64-w64-mingw32/lib;D:/mingw/mingw64/lib")
 set(CMAKE_CXX_IMPLICIT_LINK_FRAMEWORK_DIRECTORIES "")

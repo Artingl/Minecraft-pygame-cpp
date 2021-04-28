@@ -26,6 +26,7 @@ set(CMAKE_MAKEFILE_DEPENDS
   "C:/Users/WildPC/AppData/Local/JetBrains/Toolbox/apps/CLion/ch-0/211.6693.114/bin/cmake/win/share/cmake-3.19/Modules/FindBoost.cmake"
   "C:/Users/WildPC/AppData/Local/JetBrains/Toolbox/apps/CLion/ch-0/211.6693.114/bin/cmake/win/share/cmake-3.19/Modules/FindPackageHandleStandardArgs.cmake"
   "C:/Users/WildPC/AppData/Local/JetBrains/Toolbox/apps/CLion/ch-0/211.6693.114/bin/cmake/win/share/cmake-3.19/Modules/FindPackageMessage.cmake"
+  "C:/Users/WildPC/AppData/Local/JetBrains/Toolbox/apps/CLion/ch-0/211.6693.114/bin/cmake/win/share/cmake-3.19/Modules/FindPythonInterp.cmake"
   "C:/Users/WildPC/AppData/Local/JetBrains/Toolbox/apps/CLion/ch-0/211.6693.114/bin/cmake/win/share/cmake-3.19/Modules/FindPythonLibs.cmake"
   "C:/Users/WildPC/AppData/Local/JetBrains/Toolbox/apps/CLion/ch-0/211.6693.114/bin/cmake/win/share/cmake-3.19/Modules/Platform/Windows-GNU-C-ABI.cmake"
   "C:/Users/WildPC/AppData/Local/JetBrains/Toolbox/apps/CLion/ch-0/211.6693.114/bin/cmake/win/share/cmake-3.19/Modules/Platform/Windows-GNU-C.cmake"
@@ -57,5 +58,5 @@ set(CMAKE_MAKEFILE_PRODUCTS
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
-  "CMakeFiles/3D_Engine.dir/DependInfo.cmake"
+  "CMakeFiles/Minecraft-pygame-cpp.dir/DependInfo.cmake"
   )

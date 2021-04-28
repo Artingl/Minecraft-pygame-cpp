@@ -1,0 +1,1 @@
+  -LD:/libs/cpp/boost/lib/libboost_python39-mt.a  -LC:/Users/WildPC/AppData/Local/Programs/Python/Python39/libs/python39.lib  D:/libs/cpp/boost/lib/libboost_python39-mt.a C:/Users/WildPC/AppData/Local/Programs/Python/Python39/libs/python39.lib -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32 

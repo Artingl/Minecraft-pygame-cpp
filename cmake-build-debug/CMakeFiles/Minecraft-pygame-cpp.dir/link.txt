@@ -1,0 +1,3 @@
+C:\Users\WildPC\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\211.6693.114\bin\cmake\win\bin\cmake.exe -E rm -f CMakeFiles\Minecraft-pygame-cpp.dir/objects.a
+D:\mingw\mingw64\bin\ar.exe cr CMakeFiles\Minecraft-pygame-cpp.dir/objects.a @CMakeFiles\Minecraft-pygame-cpp.dir\objects1.rsp
+D:\mingw\mingw64\bin\g++.exe  -march=native -O2 -m64 -D_hypot=hypot -Wall -g -shared -o libMinecraft-pygame-cpp.dll -Wl,--out-implib,libMinecraft-pygame-cpp.dll.a -Wl,--major-image-version,0,--minor-image-version,0 -Wl,--whole-archive CMakeFiles\Minecraft-pygame-cpp.dir/objects.a -Wl,--no-whole-archive @CMakeFiles\Minecraft-pygame-cpp.dir\linklibs.rsp

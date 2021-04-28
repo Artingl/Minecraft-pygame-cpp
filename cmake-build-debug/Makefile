@@ -129,44 +129,44 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named 3D_Engine
+# Target rules for targets named Minecraft-pygame-cpp
 
 # Build rule for target.
-3D_Engine: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 3D_Engine
-.PHONY : 3D_Engine
+Minecraft-pygame-cpp: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 Minecraft-pygame-cpp
+.PHONY : Minecraft-pygame-cpp
 
 # fast build rule for target.
-3D_Engine/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\3D_Engine.dir\build.make CMakeFiles/3D_Engine.dir/build
-.PHONY : 3D_Engine/fast
+Minecraft-pygame-cpp/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Minecraft-pygame-cpp.dir\build.make CMakeFiles/Minecraft-pygame-cpp.dir/build
+.PHONY : Minecraft-pygame-cpp/fast
 
-hello.obj: hello.cpp.obj
+cpp-src/main.obj: cpp-src/main.cpp.obj
 
-.PHONY : hello.obj
+.PHONY : cpp-src/main.obj
 
 # target to build an object file
-hello.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\3D_Engine.dir\build.make CMakeFiles/3D_Engine.dir/hello.cpp.obj
-.PHONY : hello.cpp.obj
+cpp-src/main.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Minecraft-pygame-cpp.dir\build.make CMakeFiles/Minecraft-pygame-cpp.dir/cpp-src/main.cpp.obj
+.PHONY : cpp-src/main.cpp.obj
 
-hello.i: hello.cpp.i
+cpp-src/main.i: cpp-src/main.cpp.i
 
-.PHONY : hello.i
+.PHONY : cpp-src/main.i
 
 # target to preprocess a source file
-hello.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\3D_Engine.dir\build.make CMakeFiles/3D_Engine.dir/hello.cpp.i
-.PHONY : hello.cpp.i
+cpp-src/main.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Minecraft-pygame-cpp.dir\build.make CMakeFiles/Minecraft-pygame-cpp.dir/cpp-src/main.cpp.i
+.PHONY : cpp-src/main.cpp.i
 
-hello.s: hello.cpp.s
+cpp-src/main.s: cpp-src/main.cpp.s
 
-.PHONY : hello.s
+.PHONY : cpp-src/main.s
 
 # target to generate assembly for a file
-hello.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\3D_Engine.dir\build.make CMakeFiles/3D_Engine.dir/hello.cpp.s
-.PHONY : hello.cpp.s
+cpp-src/main.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Minecraft-pygame-cpp.dir\build.make CMakeFiles/Minecraft-pygame-cpp.dir/cpp-src/main.cpp.s
+.PHONY : cpp-src/main.cpp.s
 
 # Help Target
 help:
@@ -176,10 +176,10 @@ help:
 	@echo ... depend
 	@echo ... edit_cache
 	@echo ... rebuild_cache
-	@echo ... 3D_Engine
-	@echo ... hello.obj
-	@echo ... hello.i
-	@echo ... hello.s
+	@echo ... Minecraft-pygame-cpp
+	@echo ... cpp-src/main.obj
+	@echo ... cpp-src/main.i
+	@echo ... cpp-src/main.s
 .PHONY : help
 
 
