@@ -140,44 +140,44 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named game
+# Target rules for targets named hello
 
 # Build rule for target.
-game: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 game
-.PHONY : game
+hello: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 hello
+.PHONY : hello
 
 # fast build rule for target.
-game/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\game.dir\build.make CMakeFiles/game.dir/build
-.PHONY : game/fast
+hello/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\hello.dir\build.make CMakeFiles/hello.dir/build
+.PHONY : hello/fast
 
-cpp-src/game.obj: cpp-src/game.cpp.obj
+cpp-src/hello.obj: cpp-src/hello.cpp.obj
 
-.PHONY : cpp-src/game.obj
+.PHONY : cpp-src/hello.obj
 
 # target to build an object file
-cpp-src/game.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\game.dir\build.make CMakeFiles/game.dir/cpp-src/game.cpp.obj
-.PHONY : cpp-src/game.cpp.obj
+cpp-src/hello.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\hello.dir\build.make CMakeFiles/hello.dir/cpp-src/hello.cpp.obj
+.PHONY : cpp-src/hello.cpp.obj
 
-cpp-src/game.i: cpp-src/game.cpp.i
+cpp-src/hello.i: cpp-src/hello.cpp.i
 
-.PHONY : cpp-src/game.i
+.PHONY : cpp-src/hello.i
 
 # target to preprocess a source file
-cpp-src/game.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\game.dir\build.make CMakeFiles/game.dir/cpp-src/game.cpp.i
-.PHONY : cpp-src/game.cpp.i
+cpp-src/hello.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\hello.dir\build.make CMakeFiles/hello.dir/cpp-src/hello.cpp.i
+.PHONY : cpp-src/hello.cpp.i
 
-cpp-src/game.s: cpp-src/game.cpp.s
+cpp-src/hello.s: cpp-src/hello.cpp.s
 
-.PHONY : cpp-src/game.s
+.PHONY : cpp-src/hello.s
 
 # target to generate assembly for a file
-cpp-src/game.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\game.dir\build.make CMakeFiles/game.dir/cpp-src/game.cpp.s
-.PHONY : cpp-src/game.cpp.s
+cpp-src/hello.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\hello.dir\build.make CMakeFiles/hello.dir/cpp-src/hello.cpp.s
+.PHONY : cpp-src/hello.cpp.s
 
 # Help Target
 help:
@@ -188,10 +188,10 @@ help:
 	@echo ... edit_cache
 	@echo ... rebuild_cache
 	@echo ... test
-	@echo ... game
-	@echo ... cpp-src/game.obj
-	@echo ... cpp-src/game.i
-	@echo ... cpp-src/game.s
+	@echo ... hello
+	@echo ... cpp-src/hello.obj
+	@echo ... cpp-src/hello.i
+	@echo ... cpp-src/hello.s
 .PHONY : help
 
 

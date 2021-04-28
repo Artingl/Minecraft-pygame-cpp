@@ -71,7 +71,7 @@ CMAKE_BINARY_DIR = C:\Users\WildPC\Documents\GitHub\Minecraft-pygame-cpp\cmake-b
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
-all: CMakeFiles/game.dir/all
+all: CMakeFiles/hello.dir/all
 
 .PHONY : all
 
@@ -81,36 +81,36 @@ preinstall:
 .PHONY : preinstall
 
 # The main recursive "clean" target.
-clean: CMakeFiles/game.dir/clean
+clean: CMakeFiles/hello.dir/clean
 
 .PHONY : clean
 
 #=============================================================================
-# Target rules for target CMakeFiles/game.dir
+# Target rules for target CMakeFiles/hello.dir
 
 # All Build rule for target.
-CMakeFiles/game.dir/all:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\game.dir\build.make CMakeFiles/game.dir/depend
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\game.dir\build.make CMakeFiles/game.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=C:\Users\WildPC\Documents\GitHub\Minecraft-pygame-cpp\cmake-build-debug\CMakeFiles --progress-num=1,2 "Built target game"
-.PHONY : CMakeFiles/game.dir/all
+CMakeFiles/hello.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\hello.dir\build.make CMakeFiles/hello.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\hello.dir\build.make CMakeFiles/hello.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=C:\Users\WildPC\Documents\GitHub\Minecraft-pygame-cpp\cmake-build-debug\CMakeFiles --progress-num=1,2 "Built target hello"
+.PHONY : CMakeFiles/hello.dir/all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/game.dir/rule: cmake_check_build_system
+CMakeFiles/hello.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\WildPC\Documents\GitHub\Minecraft-pygame-cpp\cmake-build-debug\CMakeFiles 2
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 CMakeFiles/game.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 CMakeFiles/hello.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\WildPC\Documents\GitHub\Minecraft-pygame-cpp\cmake-build-debug\CMakeFiles 0
-.PHONY : CMakeFiles/game.dir/rule
+.PHONY : CMakeFiles/hello.dir/rule
 
 # Convenience name for target.
-game: CMakeFiles/game.dir/rule
+hello: CMakeFiles/hello.dir/rule
 
-.PHONY : game
+.PHONY : hello
 
 # clean rule for target.
-CMakeFiles/game.dir/clean:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\game.dir\build.make CMakeFiles/game.dir/clean
-.PHONY : CMakeFiles/game.dir/clean
+CMakeFiles/hello.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\hello.dir\build.make CMakeFiles/hello.dir/clean
+.PHONY : CMakeFiles/hello.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

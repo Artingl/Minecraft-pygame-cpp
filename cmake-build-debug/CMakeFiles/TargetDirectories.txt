@@ -1,4 +1,4 @@
-C:/Users/WildPC/Documents/GitHub/Minecraft-pygame-cpp/cmake-build-debug/CMakeFiles/game.dir
+C:/Users/WildPC/Documents/GitHub/Minecraft-pygame-cpp/cmake-build-debug/CMakeFiles/hello.dir
 C:/Users/WildPC/Documents/GitHub/Minecraft-pygame-cpp/cmake-build-debug/CMakeFiles/rebuild_cache.dir
 C:/Users/WildPC/Documents/GitHub/Minecraft-pygame-cpp/cmake-build-debug/CMakeFiles/test.dir
 C:/Users/WildPC/Documents/GitHub/Minecraft-pygame-cpp/cmake-build-debug/CMakeFiles/edit_cache.dir
