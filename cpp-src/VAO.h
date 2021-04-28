@@ -1,3 +1,3 @@
 #pragma once
 
-void VBO_INIT();
+void VAO_INIT();

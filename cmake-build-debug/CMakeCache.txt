@@ -271,6 +271,9 @@ Minecraft-pygame-cpp_SOURCE_DIR:STATIC=C:/Users/WildPC/Documents/GitHub/Minecraf
 //Path to a library.
 PYTHON_DEBUG_LIBRARY:FILEPATH=PYTHON_DEBUG_LIBRARY-NOTFOUND
 
+//Add module debug_module
+PYTHON_ENABLE_MODULE_debug_module:BOOL=ON
+
 //Add module opengl_main_cpp
 PYTHON_ENABLE_MODULE_opengl_main_cpp:BOOL=ON
 
@@ -285,6 +288,9 @@ PYTHON_LIBRARY:FILEPATH=C:/Users/WildPC/AppData/Local/Programs/Python/Python37/l
 
 //Path to a library.
 PYTHON_LIBRARY_DEBUG:FILEPATH=PYTHON_LIBRARY_DEBUG-NOTFOUND
+
+//Add module debug_module shared
+PYTHON_MODULE_debug_module_BUILD_SHARED:BOOL=ON
 
 //Add module opengl_main_cpp shared
 PYTHON_MODULE_opengl_main_cpp_BUILD_SHARED:BOOL=ON
@@ -482,6 +488,8 @@ FIND_PACKAGE_MESSAGE_DETAILS_PythonInterp:INTERNAL=[C:/Users/WildPC/AppData/Loca
 FIND_PACKAGE_MESSAGE_DETAILS_PythonLibs:INTERNAL=[C:/Users/WildPC/AppData/Local/Programs/Python/Python37/libs/libpython37.a][C:/Users/WildPC/AppData/Local/Programs/Python/Python37/include][v3.7.0(3.7)]
 //ADVANCED property for variable: PYTHON_DEBUG_LIBRARY
 PYTHON_DEBUG_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: PYTHON_ENABLE_MODULE_debug_module
+PYTHON_ENABLE_MODULE_debug_module-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: PYTHON_ENABLE_MODULE_opengl_main_cpp
 PYTHON_ENABLE_MODULE_opengl_main_cpp-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: PYTHON_EXECUTABLE
@@ -492,6 +500,8 @@ PYTHON_INCLUDE_DIR-ADVANCED:INTERNAL=1
 PYTHON_LIBRARY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: PYTHON_LIBRARY_DEBUG
 PYTHON_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: PYTHON_MODULE_debug_module_BUILD_SHARED
+PYTHON_MODULE_debug_module_BUILD_SHARED-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: PYTHON_MODULE_opengl_main_cpp_BUILD_SHARED
 PYTHON_MODULE_opengl_main_cpp_BUILD_SHARED-ADVANCED:INTERNAL=1
 //Components requested for this build tree.

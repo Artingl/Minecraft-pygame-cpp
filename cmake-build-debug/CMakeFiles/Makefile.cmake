@@ -65,4 +65,5 @@ set(CMAKE_MAKEFILE_PRODUCTS
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
   "CMakeFiles/opengl_main_cpp.dir/DependInfo.cmake"
+  "CMakeFiles/debug_module.dir/DependInfo.cmake"
   )

@@ -152,6 +152,19 @@ opengl_main_cpp/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\opengl_main_cpp.dir\build.make CMakeFiles/opengl_main_cpp.dir/build
 .PHONY : opengl_main_cpp/fast
 
+#=============================================================================
+# Target rules for targets named debug_module
+
+# Build rule for target.
+debug_module: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 debug_module
+.PHONY : debug_module
+
+# fast build rule for target.
+debug_module/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\debug_module.dir\build.make CMakeFiles/debug_module.dir/build
+.PHONY : debug_module/fast
+
 cpp-src/VAO.obj: cpp-src/VAO.cpp.obj
 
 .PHONY : cpp-src/VAO.obj
@@ -178,6 +191,63 @@ cpp-src/VAO.s: cpp-src/VAO.cpp.s
 cpp-src/VAO.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\opengl_main_cpp.dir\build.make CMakeFiles/opengl_main_cpp.dir/cpp-src/VAO.cpp.s
 .PHONY : cpp-src/VAO.cpp.s
+
+cpp-src/debug.obj: cpp-src/debug.cpp.obj
+
+.PHONY : cpp-src/debug.obj
+
+# target to build an object file
+cpp-src/debug.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\opengl_main_cpp.dir\build.make CMakeFiles/opengl_main_cpp.dir/cpp-src/debug.cpp.obj
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\debug_module.dir\build.make CMakeFiles/debug_module.dir/cpp-src/debug.cpp.obj
+.PHONY : cpp-src/debug.cpp.obj
+
+cpp-src/debug.i: cpp-src/debug.cpp.i
+
+.PHONY : cpp-src/debug.i
+
+# target to preprocess a source file
+cpp-src/debug.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\opengl_main_cpp.dir\build.make CMakeFiles/opengl_main_cpp.dir/cpp-src/debug.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\debug_module.dir\build.make CMakeFiles/debug_module.dir/cpp-src/debug.cpp.i
+.PHONY : cpp-src/debug.cpp.i
+
+cpp-src/debug.s: cpp-src/debug.cpp.s
+
+.PHONY : cpp-src/debug.s
+
+# target to generate assembly for a file
+cpp-src/debug.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\opengl_main_cpp.dir\build.make CMakeFiles/opengl_main_cpp.dir/cpp-src/debug.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\debug_module.dir\build.make CMakeFiles/debug_module.dir/cpp-src/debug.cpp.s
+.PHONY : cpp-src/debug.cpp.s
+
+cpp-src/debug_module.obj: cpp-src/debug_module.cpp.obj
+
+.PHONY : cpp-src/debug_module.obj
+
+# target to build an object file
+cpp-src/debug_module.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\debug_module.dir\build.make CMakeFiles/debug_module.dir/cpp-src/debug_module.cpp.obj
+.PHONY : cpp-src/debug_module.cpp.obj
+
+cpp-src/debug_module.i: cpp-src/debug_module.cpp.i
+
+.PHONY : cpp-src/debug_module.i
+
+# target to preprocess a source file
+cpp-src/debug_module.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\debug_module.dir\build.make CMakeFiles/debug_module.dir/cpp-src/debug_module.cpp.i
+.PHONY : cpp-src/debug_module.cpp.i
+
+cpp-src/debug_module.s: cpp-src/debug_module.cpp.s
+
+.PHONY : cpp-src/debug_module.s
+
+# target to generate assembly for a file
+cpp-src/debug_module.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\debug_module.dir\build.make CMakeFiles/debug_module.dir/cpp-src/debug_module.cpp.s
+.PHONY : cpp-src/debug_module.cpp.s
 
 cpp-src/main.obj: cpp-src/main.cpp.obj
 
@@ -215,10 +285,17 @@ help:
 	@echo ... edit_cache
 	@echo ... rebuild_cache
 	@echo ... test
+	@echo ... debug_module
 	@echo ... opengl_main_cpp
 	@echo ... cpp-src/VAO.obj
 	@echo ... cpp-src/VAO.i
 	@echo ... cpp-src/VAO.s
+	@echo ... cpp-src/debug.obj
+	@echo ... cpp-src/debug.i
+	@echo ... cpp-src/debug.s
+	@echo ... cpp-src/debug_module.obj
+	@echo ... cpp-src/debug_module.i
+	@echo ... cpp-src/debug_module.s
 	@echo ... cpp-src/main.obj
 	@echo ... cpp-src/main.i
 	@echo ... cpp-src/main.s

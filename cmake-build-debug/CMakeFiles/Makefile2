@@ -72,6 +72,7 @@ CMAKE_BINARY_DIR = C:\Users\WildPC\Documents\GitHub\Minecraft-pygame-cpp\cmake-b
 
 # The main recursive "all" target.
 all: CMakeFiles/opengl_main_cpp.dir/all
+all: CMakeFiles/debug_module.dir/all
 
 .PHONY : all
 
@@ -82,6 +83,7 @@ preinstall:
 
 # The main recursive "clean" target.
 clean: CMakeFiles/opengl_main_cpp.dir/clean
+clean: CMakeFiles/debug_module.dir/clean
 
 .PHONY : clean
 
@@ -92,12 +94,12 @@ clean: CMakeFiles/opengl_main_cpp.dir/clean
 CMakeFiles/opengl_main_cpp.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\opengl_main_cpp.dir\build.make CMakeFiles/opengl_main_cpp.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\opengl_main_cpp.dir\build.make CMakeFiles/opengl_main_cpp.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=C:\Users\WildPC\Documents\GitHub\Minecraft-pygame-cpp\cmake-build-debug\CMakeFiles --progress-num=1,2,3 "Built target opengl_main_cpp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=C:\Users\WildPC\Documents\GitHub\Minecraft-pygame-cpp\cmake-build-debug\CMakeFiles --progress-num=4,5,6,7 "Built target opengl_main_cpp"
 .PHONY : CMakeFiles/opengl_main_cpp.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/opengl_main_cpp.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\WildPC\Documents\GitHub\Minecraft-pygame-cpp\cmake-build-debug\CMakeFiles 3
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\WildPC\Documents\GitHub\Minecraft-pygame-cpp\cmake-build-debug\CMakeFiles 4
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 CMakeFiles/opengl_main_cpp.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\WildPC\Documents\GitHub\Minecraft-pygame-cpp\cmake-build-debug\CMakeFiles 0
 .PHONY : CMakeFiles/opengl_main_cpp.dir/rule
@@ -111,6 +113,33 @@ opengl_main_cpp: CMakeFiles/opengl_main_cpp.dir/rule
 CMakeFiles/opengl_main_cpp.dir/clean:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\opengl_main_cpp.dir\build.make CMakeFiles/opengl_main_cpp.dir/clean
 .PHONY : CMakeFiles/opengl_main_cpp.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/debug_module.dir
+
+# All Build rule for target.
+CMakeFiles/debug_module.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\debug_module.dir\build.make CMakeFiles/debug_module.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\debug_module.dir\build.make CMakeFiles/debug_module.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=C:\Users\WildPC\Documents\GitHub\Minecraft-pygame-cpp\cmake-build-debug\CMakeFiles --progress-num=1,2,3 "Built target debug_module"
+.PHONY : CMakeFiles/debug_module.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/debug_module.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\WildPC\Documents\GitHub\Minecraft-pygame-cpp\cmake-build-debug\CMakeFiles 3
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 CMakeFiles/debug_module.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\WildPC\Documents\GitHub\Minecraft-pygame-cpp\cmake-build-debug\CMakeFiles 0
+.PHONY : CMakeFiles/debug_module.dir/rule
+
+# Convenience name for target.
+debug_module: CMakeFiles/debug_module.dir/rule
+
+.PHONY : debug_module
+
+# clean rule for target.
+CMakeFiles/debug_module.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\debug_module.dir\build.make CMakeFiles/debug_module.dir/clean
+.PHONY : CMakeFiles/debug_module.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

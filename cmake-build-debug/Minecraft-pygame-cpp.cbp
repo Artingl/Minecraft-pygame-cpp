@@ -95,12 +95,71 @@
 					<DistClean command="D:/mingw/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/WildPC/Documents/GitHub/Minecraft-pygame-cpp/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
+			<Target title="debug_module">
+				<Option output="C:/Users/WildPC/Documents/GitHub/Minecraft-pygame-cpp/cmake-build-debug/debug_module.pyd" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/WildPC/Documents/GitHub/Minecraft-pygame-cpp/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="3"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="D:/libs/cpp/boost"/>
+					<Add directory="C:/Users/WildPC/AppData/Local/Programs/Python/Python37/include"/>
+					<Add directory="D:/mingw/mingw64/include"/>
+					<Add directory="D:/mingw/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++"/>
+					<Add directory="D:/mingw/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/x86_64-w64-mingw32"/>
+					<Add directory="D:/mingw/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/backward"/>
+					<Add directory="D:/mingw/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include"/>
+					<Add directory="D:/mingw/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include-fixed"/>
+					<Add directory="D:/mingw/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/../../../../x86_64-w64-mingw32/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="D:/mingw/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/WildPC/Documents/GitHub/Minecraft-pygame-cpp/cmake-build-debug/Makefile&quot;  VERBOSE=1 debug_module"/>
+					<CompileFile command="D:/mingw/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/WildPC/Documents/GitHub/Minecraft-pygame-cpp/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="D:/mingw/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/WildPC/Documents/GitHub/Minecraft-pygame-cpp/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="D:/mingw/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/WildPC/Documents/GitHub/Minecraft-pygame-cpp/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="debug_module/fast">
+				<Option output="C:/Users/WildPC/Documents/GitHub/Minecraft-pygame-cpp/cmake-build-debug/debug_module.pyd" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/WildPC/Documents/GitHub/Minecraft-pygame-cpp/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="3"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="D:/libs/cpp/boost"/>
+					<Add directory="C:/Users/WildPC/AppData/Local/Programs/Python/Python37/include"/>
+					<Add directory="D:/mingw/mingw64/include"/>
+					<Add directory="D:/mingw/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++"/>
+					<Add directory="D:/mingw/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/x86_64-w64-mingw32"/>
+					<Add directory="D:/mingw/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/backward"/>
+					<Add directory="D:/mingw/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include"/>
+					<Add directory="D:/mingw/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include-fixed"/>
+					<Add directory="D:/mingw/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/../../../../x86_64-w64-mingw32/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="D:/mingw/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/WildPC/Documents/GitHub/Minecraft-pygame-cpp/cmake-build-debug/Makefile&quot;  VERBOSE=1 debug_module/fast"/>
+					<CompileFile command="D:/mingw/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/WildPC/Documents/GitHub/Minecraft-pygame-cpp/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="D:/mingw/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/WildPC/Documents/GitHub/Minecraft-pygame-cpp/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="D:/mingw/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/WildPC/Documents/GitHub/Minecraft-pygame-cpp/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
 		</Build>
 		<Unit filename="C:/Users/WildPC/Documents/GitHub/Minecraft-pygame-cpp/cpp-src/VAO.cpp">
 			<Option target="opengl_main_cpp"/>
 		</Unit>
 		<Unit filename="C:/Users/WildPC/Documents/GitHub/Minecraft-pygame-cpp/cpp-src/VAO.h">
 			<Option target="opengl_main_cpp"/>
+		</Unit>
+		<Unit filename="C:/Users/WildPC/Documents/GitHub/Minecraft-pygame-cpp/cpp-src/debug.cpp">
+			<Option target="opengl_main_cpp"/>
+			<Option target="debug_module"/>
+		</Unit>
+		<Unit filename="C:/Users/WildPC/Documents/GitHub/Minecraft-pygame-cpp/cpp-src/debug.h">
+			<Option target="opengl_main_cpp"/>
+			<Option target="debug_module"/>
+		</Unit>
+		<Unit filename="C:/Users/WildPC/Documents/GitHub/Minecraft-pygame-cpp/cpp-src/debug_module.cpp">
+			<Option target="debug_module"/>
 		</Unit>
 		<Unit filename="C:/Users/WildPC/Documents/GitHub/Minecraft-pygame-cpp/cpp-src/main.cpp">
 			<Option target="opengl_main_cpp"/>

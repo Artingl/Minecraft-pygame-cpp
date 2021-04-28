@@ -2,3 +2,4 @@ C:/Users/WildPC/Documents/GitHub/Minecraft-pygame-cpp/cmake-build-debug/CMakeFil
 C:/Users/WildPC/Documents/GitHub/Minecraft-pygame-cpp/cmake-build-debug/CMakeFiles/opengl_main_cpp.dir
 C:/Users/WildPC/Documents/GitHub/Minecraft-pygame-cpp/cmake-build-debug/CMakeFiles/rebuild_cache.dir
 C:/Users/WildPC/Documents/GitHub/Minecraft-pygame-cpp/cmake-build-debug/CMakeFiles/test.dir
+C:/Users/WildPC/Documents/GitHub/Minecraft-pygame-cpp/cmake-build-debug/CMakeFiles/debug_module.dir
