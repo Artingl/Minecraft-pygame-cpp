@@ -25,8 +25,7 @@
 				<Option compiler="gcc"/>
 				<Compiler>
 					<Add directory="D:/libs/cpp/boost"/>
-					<Add directory="C:/Users/WildPC/AppData/Local/Programs/Python/Python39/include"/>
-					<Add directory="C:\\Users\\WildPC\\AppData\\Local\\Programs\\Python\\Python39\\include"/>
+					<Add directory="C:/Users/WildPC/AppData/Local/Programs/Python/Python37/include"/>
 					<Add directory="D:/mingw/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++"/>
 					<Add directory="D:/mingw/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/x86_64-w64-mingw32"/>
 					<Add directory="D:/mingw/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/backward"/>
@@ -49,8 +48,7 @@
 				<Option compiler="gcc"/>
 				<Compiler>
 					<Add directory="D:/libs/cpp/boost"/>
-					<Add directory="C:/Users/WildPC/AppData/Local/Programs/Python/Python39/include"/>
-					<Add directory="C:\\Users\\WildPC\\AppData\\Local\\Programs\\Python\\Python39\\include"/>
+					<Add directory="C:/Users/WildPC/AppData/Local/Programs/Python/Python37/include"/>
 					<Add directory="D:/mingw/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++"/>
 					<Add directory="D:/mingw/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/x86_64-w64-mingw32"/>
 					<Add directory="D:/mingw/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/backward"/>
