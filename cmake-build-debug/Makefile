@@ -152,32 +152,32 @@ hello/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\hello.dir\build.make CMakeFiles/hello.dir/build
 .PHONY : hello/fast
 
-cpp-src/hello.obj: cpp-src/hello.cpp.obj
+cpp-src/main.obj: cpp-src/main.cpp.obj
 
-.PHONY : cpp-src/hello.obj
+.PHONY : cpp-src/main.obj
 
 # target to build an object file
-cpp-src/hello.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\hello.dir\build.make CMakeFiles/hello.dir/cpp-src/hello.cpp.obj
-.PHONY : cpp-src/hello.cpp.obj
+cpp-src/main.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\hello.dir\build.make CMakeFiles/hello.dir/cpp-src/main.cpp.obj
+.PHONY : cpp-src/main.cpp.obj
 
-cpp-src/hello.i: cpp-src/hello.cpp.i
+cpp-src/main.i: cpp-src/main.cpp.i
 
-.PHONY : cpp-src/hello.i
+.PHONY : cpp-src/main.i
 
 # target to preprocess a source file
-cpp-src/hello.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\hello.dir\build.make CMakeFiles/hello.dir/cpp-src/hello.cpp.i
-.PHONY : cpp-src/hello.cpp.i
+cpp-src/main.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\hello.dir\build.make CMakeFiles/hello.dir/cpp-src/main.cpp.i
+.PHONY : cpp-src/main.cpp.i
 
-cpp-src/hello.s: cpp-src/hello.cpp.s
+cpp-src/main.s: cpp-src/main.cpp.s
 
-.PHONY : cpp-src/hello.s
+.PHONY : cpp-src/main.s
 
 # target to generate assembly for a file
-cpp-src/hello.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\hello.dir\build.make CMakeFiles/hello.dir/cpp-src/hello.cpp.s
-.PHONY : cpp-src/hello.cpp.s
+cpp-src/main.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\hello.dir\build.make CMakeFiles/hello.dir/cpp-src/main.cpp.s
+.PHONY : cpp-src/main.cpp.s
 
 # Help Target
 help:
@@ -189,9 +189,9 @@ help:
 	@echo ... rebuild_cache
 	@echo ... test
 	@echo ... hello
-	@echo ... cpp-src/hello.obj
-	@echo ... cpp-src/hello.i
-	@echo ... cpp-src/hello.s
+	@echo ... cpp-src/main.obj
+	@echo ... cpp-src/main.i
+	@echo ... cpp-src/main.s
 .PHONY : help
 
 

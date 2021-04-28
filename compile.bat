@@ -33,5 +33,5 @@
 ::978f952a14a936cc963da21a135fa983
 @shift /0
 @echo off
-xcopy /S /Y /D "..\.\python-src\*.*" "."
+xcopy "..\.\python-src\*.*" ".\" /K /D /H /E /Y
 "../venv/scripts/python.exe" main.py
