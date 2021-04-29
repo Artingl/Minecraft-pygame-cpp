@@ -3,7 +3,7 @@ from random import randint
 import debug_module
 import pyglet
 from OpenGL.GL import *
-
+import opengl_main_cpp
 from game.blocks.BlockEvent import *
 from functions import roundPos, flatten, cube_vertices
 from game.blocks.DestroyBlock import DestroyBlock
@@ -138,22 +138,22 @@ class Player:
 
             self.position = [self.position[0] + DX, self.position[1] + DY, self.position[2] + DZ]
 
-       #     if dt < 0.2:
-       #         dt /= 10
-       #         DX /= 10
-       #         DY /= 10
-       #         DZ /= 10
-       #         for i in range(10):
-       #             self.move(dt, DX, DY, DZ)
-       # else:
-       #     self.move(self.speed, 0, 0, 0)
+        #     if dt < 0.2:
+        #         dt /= 10
+        #         DX /= 10
+        #         DY /= 10
+        #         DZ /= 10
+        #         for i in range(10):
+        #             self.move(dt, DX, DY, DZ)
+        # else:
+        #     self.move(self.speed, 0, 0, 0)
 
-        glPushMatrix()
-        glRotatef(self.rotation[0], 1, 0, 0)
-        glRotatef(self.rotation[1], 0, 1, 0)
-        glTranslatef(-self.position[0],
-                     -self.position[1] + self.shift + self.cameraShake[0],
-                     -self.position[2])
+        # glPushMatrix()
+        opengl_main_cpp._gl_engine_Rotatef(self.rotation[0], 1, 0, 0)
+        opengl_main_cpp._gl_engine_Rotatef(self.rotation[1], 0, 1, 0)
+        opengl_main_cpp._gl_engine_Translatef(-self.position[0],
+                                              -self.position[1] + self.shift + self.cameraShake[0],
+                                              -self.position[2])
 
     def jump(self):
         if not self.dy:
@@ -198,7 +198,7 @@ class Player:
         #             break
         # else:
         #     self.lastPlayerPosOnGround = col
-#
+        #
         # if self.bInAir and col2 in self.gl.cubes.cubes:
         #     hp = self.hp
         #     if 3 < self.playerFallY:
@@ -219,7 +219,7 @@ class Player:
         #     if self.hp <= 0 and not self.playerDead:
         #         # Player dead
         #         self.dead()
-#
+        #
         #     self.bInAir = False
         #     self.gl.particles.addParticle((col[0], col[1] - 1, col[2]),
         #                                   self.gl.cubes.cubes[col2],

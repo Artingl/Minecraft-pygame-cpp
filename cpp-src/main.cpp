@@ -73,7 +73,7 @@ void _gl_engine_init() {
     glDeleteShader(vertexShader);
     glDeleteShader(fragmentShader);
 
-    _gl_engine_RENDER_INIT(core_shaderProgram);
+    //_gl_engine_RENDER_INIT(core_shaderProgram);
 }
 
 void _gl_engine_quit() {
@@ -86,7 +86,6 @@ void _gl_engine_quit() {
 void _gl_engine_draw() {
     //_gl_engine_info("_gl_engine_draw", "Draw stuff");
     _gl_engine_RENDER_DRAW();
-
 }
 
 void createCube(int textureId, int x, int y, int z) {
@@ -103,5 +102,7 @@ BOOST_PYTHON_MODULE(opengl_main_cpp)
 
     // GL sutff
     def("_gl_engine_LoadIdentity", _gl_engine_LoadIdentity);
+    def("_gl_engine_Rotatef", _gl_engine_Rotatef);
+    def("_gl_engine_Translatef", _gl_engine_Translatef);
     //
 }

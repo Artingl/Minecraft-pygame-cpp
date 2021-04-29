@@ -554,7 +554,6 @@ debug_module._gl_engine_info("_main_python", "Loading complete!")
 mainMenuRotation = [50, 180, True]
 
 mainFunction = drawMainMenu
-opengl_main_cpp._gl_engine_init()
 
 while True:
     pygame.mouse.set_visible(False)

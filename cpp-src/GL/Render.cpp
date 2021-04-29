@@ -6,13 +6,14 @@
 #include "Render.h"
 #include "../debug.h"
 
+glm::mat4 ModelMatrix;
 GLuint shaderProgram;
 
 Vertex vertices[] = {
-        glm::vec3(-0.5f, 0.5f, 0.0f),   glm::vec3(1.0f, 0.0f, 0.0f),   glm::vec2(0.0f, 1.0f),
-        glm::vec3(-0.5f, -0.5f, 0.0f),  glm::vec3(0.0f, 1.0f, 0.0f),   glm::vec2(0.0f, 0.0f),
-        glm::vec3(0.5f, -0.5f, 0.0f),   glm::vec3(0.0f, 0.0f, 1.0f),   glm::vec2(1.0f, 0.0f),
-        glm::vec3(0.5f, 0.5f, 0.0f),    glm::vec3(0.0f, 1.0f, 0.0f),   glm::vec2(1.0f, 1.0f)
+        glm::vec3(-0.5f, 0.5f, 0.0f),   glm::vec3(0.7f, 0.7f, 0.7f),   glm::vec2(0.0f, 1.0f),
+        glm::vec3(-0.5f, -0.5f, 0.0f),  glm::vec3(0.7f, 0.7f, 0.7f),   glm::vec2(0.0f, 0.0f),
+        glm::vec3(0.5f, -0.5f, 0.0f),   glm::vec3(0.7f, 0.7f, 0.7f),   glm::vec2(1.0f, 0.0f),
+        glm::vec3(0.5f, 0.5f, 0.0f),    glm::vec3(0.7f, 0.7f, 0.7f),   glm::vec2(1.0f, 1.0f)
 };
 GLuint indices[] = {
         0, 1, 2,
@@ -77,18 +78,35 @@ void _gl_engine_RENDER_DELETE() {
 void _gl_engine_RENDER_DRAW() {
     glUseProgram(shaderProgram); // Use our shader program
 
+    //glUniform1i(glGetUniformLocation(shaderProgram, "texture0"), 23);     // Update uniforms
+
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, 23);
+    glBindTexture(GL_TEXTURE_2D, 23);   // Bind texture
 
     glBindVertexArray(VAO);    // Bind vertex array
     glDrawElements(GL_TRIANGLES, noi, GL_UNSIGNED_INT, 0);         // Draw
+
     glBindVertexArray(0);           // Unbind vertex array
+    glUseProgram(0);
+    //glActiveTexture(0);
+    //glBindTexture(GL_TEXTURE_2D, 0);
 
 }
-
-
 
 void _gl_engine_LoadIdentity() {
-    glm::mat4 ModelMatrix(1.f);
+    ModelMatrix = glm::mat4(1.0f);
 }
 
+void _gl_engine_Rotatef(float rot, float x, float y, float z) {
+    ModelMatrix = glm::rotate(ModelMatrix, rot, glm::vec3(x, y, z));
+
+    //glUseProgram(shaderProgram);
+    //glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "ModelMatrix"), 1, GL_FALSE, glm::val_ptr(ModelMatrix));
+    //glUseProgram(0);
+}
+
+void _gl_engine_Translatef(float x, float y, float z) {
+    ModelMatrix = glm::translate(ModelMatrix, glm::vec3(x, y, z));
+
+
+}
