@@ -1,6 +1,6 @@
 import gc
 import threading
-
+import opengl_main_cpp
 from OpenGL.GLU import *
 from OpenGL.GL import *
 from pyglet.gl import *
@@ -112,15 +112,15 @@ class Scene:
         self.set3d()
 
     def set2d(self):
-        glMatrixMode(GL_PROJECTION)
-        glLoadIdentity()
-        gluOrtho2D(0, self.WIDTH, 0, self.HEIGHT)
+        pass  # glMatrixMode(GL_PROJECTION)
+        # opengl_main_cpp._gl_engine_LoadIdentity()
+        # gluOrtho2D(0, self.WIDTH, 0, self.HEIGHT)
 
     def set3d(self):
-        glLoadIdentity()
-        gluPerspective(self.fov, (self.WIDTH / self.HEIGHT), 0.1, RENDER_DISTANCE)
-        glMatrixMode(GL_MODELVIEW)
-        glLoadIdentity()
+        pass  # opengl_main_cpp._gl_engine_LoadIdentity()
+        # gluPerspective(self.fov, (self.WIDTH / self.HEIGHT), 0.1, RENDER_DISTANCE)
+        # glMatrixMode(GL_MODELVIEW)
+        # opengl_main_cpp._gl_engine_LoadIdentity()
 
     def resizeCGL(self, w, h, changeRes=True):
         if changeRes:
@@ -174,26 +174,26 @@ class Scene:
             self.drawCounter = 0
             self.worldGen.genChunk(self.player)
 
-    def updateScene(self, _gl_engine_draw):
+    def updateScene(self):
 
         # self.genWorld()
-        if self.in_water:
-            glFogfv(GL_FOG_COLOR, (GLfloat * 4)(0, 0, 0, 1))
-            glFogf(GL_FOG_START, 10)
-            glFogf(GL_FOG_END, 35)
-        else:
-            glFogfv(GL_FOG_COLOR, (GLfloat * 4)(0.5, 0.7, 1, 1))
-            glFogf(GL_FOG_START, 10)
-            glFogf(GL_FOG_END, 80)
+        # if self.in_water:
+        #     glFogfv(GL_FOG_COLOR, (GLfloat * 4)(0, 0, 0, 1))
+        #     glFogf(GL_FOG_START, 10)
+        #     glFogf(GL_FOG_END, 35)
+        # else:
+        #     glFogfv(GL_FOG_COLOR, (GLfloat * 4)(0.5, 0.7, 1, 1))
+        #     glFogf(GL_FOG_START, 10)
+        #     glFogf(GL_FOG_END, 80)
 
         self.set3d()
         glClearColor(self.skyColor[0] / 255, self.skyColor[1] / 255, self.skyColor[2] / 255, 1)
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
-        glLoadIdentity()
+        opengl_main_cpp._gl_engine_LoadIdentity()
 
-        self.player.update()
-        _gl_engine_draw()
+        # self.player.update()
+        opengl_main_cpp._gl_engine_draw()
 
         # self.draw()
 
@@ -222,7 +222,7 @@ class Scene:
         #     self.lookingAt = "Nothing"
 
         # glColor3d(1, 1, 1)
-        glPopMatrix()
+        # glPopMatrix()
         self.set2d()
 
         # self.blockSound.pickUpAlreadyPlayed = False

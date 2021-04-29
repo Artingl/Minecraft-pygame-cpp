@@ -1,16 +1,8 @@
 #include <boost/python.hpp>
-#include "VAO.h"
+#include "GL/Render.h"
 #include "debug.h"
 
-GLuint shaderProgram;
-
-GLfloat vertices[] = {
-        0.5, 0, 0,
-        0.5, 0.5, 0.5,
-        0.5, 0.5, 0,
-        0.5, 0, 0,
-};
-GLuint VBO;
+GLuint core_shaderProgram;
 
 const char *readFile(char* path)
 {
@@ -33,8 +25,6 @@ void _gl_engine_init() {
 
     glewInit();
 
-    const char* test_read = readFile("settings.py");
-
     // Load vertex shader
     _gl_engine_info("_gl_engine_init", "Loading vertex shader...");
 
@@ -55,10 +45,10 @@ void _gl_engine_init() {
     glCompileShader(fragmentShader);
     //
 
-    shaderProgram = glCreateProgram();
-    glAttachShader(shaderProgram, vertexShader);
-    glAttachShader(shaderProgram, fragmentShader);
-    glLinkProgram(shaderProgram);
+    core_shaderProgram = glCreateProgram();
+    glAttachShader(core_shaderProgram, vertexShader);
+    glAttachShader(core_shaderProgram, fragmentShader);
+    glLinkProgram(core_shaderProgram);
 
     // Check shaders
     GLint success;
@@ -68,9 +58,14 @@ void _gl_engine_init() {
         glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
         _gl_engine_handle_error("_gl_engine_init", "ERROR::SHADER::VERTEX::COMPILATION_FAILED", infoLog);
     }
-    glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
+    glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
     if (!success) {
-        glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
+        glGetShaderInfoLog(fragmentShader, 512, NULL, infoLog);
+        _gl_engine_handle_error("_gl_engine_init", "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED", infoLog);
+    }
+    glGetProgramiv(core_shaderProgram, GL_LINK_STATUS, &success);
+    if (!success) {
+        glGetProgramInfoLog(core_shaderProgram, 512, NULL, infoLog);
         _gl_engine_handle_error("_gl_engine_init", "ERROR::SHADERPROGRAM::COMPILATION_FAILED", infoLog);
     }
     //
@@ -78,25 +73,19 @@ void _gl_engine_init() {
     glDeleteShader(vertexShader);
     glDeleteShader(fragmentShader);
 
-    glGenBuffers(1, &VBO);
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+    _gl_engine_RENDER_INIT(core_shaderProgram);
+}
 
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
-    glEnableVertexAttribArray(0);
+void _gl_engine_quit() {
+    _gl_engine_info("_gl_engine_quit", "Quit the game");
 
-    _gl_engine_VAO_INIT();
+    _gl_engine_RENDER_DELETE();
+    glDeleteProgram(core_shaderProgram);
 }
 
 void _gl_engine_draw() {
-    _gl_engine_info("_gl_engine_draw", "Draw stuff");
-
-    //_gl_engine_VBO_DRAW();
-    
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
-    glUseProgram(shaderProgram);
+    //_gl_engine_info("_gl_engine_draw", "Draw stuff");
+    _gl_engine_RENDER_DRAW();
 
 }
 
@@ -110,4 +99,9 @@ BOOST_PYTHON_MODULE(opengl_main_cpp)
     def("drawCube", createCube);
     def("_gl_engine_init", _gl_engine_init);
     def("_gl_engine_draw", _gl_engine_draw);
+    def("_gl_engine_quit", _gl_engine_quit);
+
+    // GL sutff
+    def("_gl_engine_LoadIdentity", _gl_engine_LoadIdentity);
+    //
 }

@@ -21,6 +21,11 @@ from settings import *
 import opengl_main_cpp
 
 
+def quitTheGame():
+    opengl_main_cpp._gl_engine_quit()
+    exit(0)
+
+
 def respawn():
     pause()
     player.hp = 20
@@ -521,7 +526,7 @@ quitButton = Button(scene, "Quit game", 0, 0)
 
 singleplayerButton.setEvent(startNewGame)
 optionsButton.setEvent(showSettings)
-quitButton.setEvent(exit)
+quitButton.setEvent(quitTheGame)
 #
 
 # Settings objects
@@ -561,7 +566,7 @@ while True:
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            exit()
+            quitTheGame()
     #    if event.type == pygame.KEYDOWN:
     #        keys.append(event.key)
     #        if event.key == pygame.K_F11:
@@ -656,7 +661,7 @@ while True:
         #     gui.shows["crosshair"][1] = (-100, -100)
         # if scene.allowEvents["grabMouse"] and pygame.mouse.get_focused():
         pygame.mouse.set_pos((scene.WIDTH // 2, scene.HEIGHT // 2))
-        scene.updateScene(opengl_main_cpp._gl_engine_draw)
+        scene.updateScene()
 
         # player.inventory.draw()
         # gui.update()

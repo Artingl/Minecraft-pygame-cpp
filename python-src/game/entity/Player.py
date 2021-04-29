@@ -70,6 +70,11 @@ class Player:
             elif self.rotation[0] < -90:
                 self.rotation[0] = -90
 
+            if self.rotation[1] > 360:
+                self.rotation[1] = 0
+            elif self.rotation[1] < 0:
+                self.rotation[1] = 360
+
             DX, DY, DZ = 0, 0, 0
             minKd = 0.08
 

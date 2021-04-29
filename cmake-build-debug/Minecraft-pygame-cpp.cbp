@@ -144,10 +144,10 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="C:/Users/WildPC/Documents/GitHub/Minecraft-pygame-cpp/cpp-src/VAO.cpp">
+		<Unit filename="C:/Users/WildPC/Documents/GitHub/Minecraft-pygame-cpp/cpp-src/GL/Render.cpp">
 			<Option target="opengl_main_cpp"/>
 		</Unit>
-		<Unit filename="C:/Users/WildPC/Documents/GitHub/Minecraft-pygame-cpp/cpp-src/VAO.h">
+		<Unit filename="C:/Users/WildPC/Documents/GitHub/Minecraft-pygame-cpp/cpp-src/GL/Render.h">
 			<Option target="opengl_main_cpp"/>
 		</Unit>
 		<Unit filename="C:/Users/WildPC/Documents/GitHub/Minecraft-pygame-cpp/cpp-src/debug.cpp">

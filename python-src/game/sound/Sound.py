@@ -13,7 +13,6 @@ class Sound:
         self.music_already_playing = False
 
         self.musicPlayer = pygame.mixer.music
-
         self.volume = 1
 
     def initMusic(self, t):
