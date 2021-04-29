@@ -122,7 +122,7 @@ class Scene:
 
     def set3d(self):
         opengl_main_cpp._gl_engine_LoadIdentity()
-        opengl_main_cpp._gl_engine_Perspective(self.fov, (self.WIDTH / self.HEIGHT), 0.1, 1000)  # RENDER_DISTANCE)
+        opengl_main_cpp._gl_engine_Perspective(float(self.fov), float(self.WIDTH), float(self.HEIGHT), 0.1, 1000.0)  # RENDER_DISTANCE)
 
     def resizeCGL(self, w, h, changeRes=True):
         if changeRes:

@@ -45,6 +45,8 @@ PYTHON_ADD_MODULE(opengl_main_cpp
         cpp-src/debug.cpp
         cpp-src/debug.h
 
+        cpp-src/include.h
+        cpp-src/GL/Shader.h
         cpp-src/GL/Render.cpp
         cpp-src/GL/Render.h
     )

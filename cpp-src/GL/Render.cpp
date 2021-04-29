@@ -7,7 +7,9 @@
 #include "../debug.h"
 
 glm::mat4 ModelMatrix;
-GLuint shaderProgram;
+Shader *shaderProgram;
+
+glm::vec3 camPosition(0.f, 0.f, 0.f);
 
 Vertex vertices[] = {
         glm::vec3(-0.5f, 0.5f, 0.0f),   glm::vec3(0.7f, 0.7f, 0.7f),   glm::vec2(0.0f, 1.0f),
@@ -28,7 +30,7 @@ GLuint VAO;
 GLuint VBO;
 
 
-void _gl_engine_RENDER_INIT(GLuint _shaderProgram) {
+void _gl_engine_RENDER_INIT(Shader *_shaderProgram) {
     _gl_engine_info("_gl_engine_VAO_INIT", "Initializing VAO...");
 
     shaderProgram = _shaderProgram;
@@ -76,7 +78,7 @@ void _gl_engine_RENDER_DELETE() {
 }
 
 void _gl_engine_RENDER_DRAW() {
-    glUseProgram(shaderProgram); // Use our shader program
+    shaderProgram->use(); // Use our shader program
 
     //glUniform1i(glGetUniformLocation(shaderProgram, "texture0"), 23);     // Update uniforms
 
@@ -87,7 +89,7 @@ void _gl_engine_RENDER_DRAW() {
     glDrawElements(GL_TRIANGLES, noi, GL_UNSIGNED_INT, 0);         // Draw
 
     glBindVertexArray(0);           // Unbind vertex array
-    glUseProgram(0);
+    shaderProgram->unuse();
     //glActiveTexture(0);
     //glBindTexture(GL_TEXTURE_2D, 0);
 
@@ -101,46 +103,34 @@ void _gl_engine_LoadIdentity() {
 
 // gl stuff
 
-void _gl_engine_Perspective(float fov, float aspect, float nearPlane, float farPlane)
+void _gl_engine_Perspective(float fov, float width, float height, float nearPlane, float farPlane)
 {
-    _gl_engine_info("_gl_engine_Perspective", "Setting up the camera perspective");
-    printf("\t--> [RENDER] [_gl_engine_Perspective] [VALUES]: FOV:%f ASPECT:%f NEAR_PLANE:%f FAR_PLANE%f\n", fov, aspect, nearPlane, farPlane);
-
-    glm::vec3 camPosition(0.f, 0.f, 300.f);
     glm::vec3 worldUp(0.f, 1.f, 0.f);
     glm::vec3 camFront (0.f, 0.f, -1.f);
     glm::mat4 ViewMatrix(1.f);
 
     ViewMatrix = glm::lookAt(camPosition, camPosition + camFront, worldUp);
     glm::mat4 ProjectionMatrix(1.f);
-    ProjectionMatrix = glm::perspective(glm::radians(fov), aspect, nearPlane, farPlane);
+    ProjectionMatrix = glm::perspective(fov, static_cast<float>(width) / height, nearPlane, farPlane);
 
-    glUseProgram(shaderProgram);
-    glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "ModelMatrix"), 1, GL_FALSE, glm::value_ptr(ModelMatrix));
-    glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "ViewMatrix"), 1, GL_FALSE, glm::value_ptr(ViewMatrix));
-    glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "ProjectionMatrix"), 1, GL_FALSE, glm::value_ptr(ProjectionMatrix));
-    glUseProgram(0);
+    shaderProgram->setVec4fv(ModelMatrix, "ModelMatrix");
+    shaderProgram->setVec4fv(ViewMatrix, "ViewMatrix");
+    shaderProgram->setVec4fv(ProjectionMatrix, "ProjectionMatrix");
 
 }
 
 
-void _gl_engine_SET_2D(int width, int height) {
+void _gl_engine_SET_2D(int width, int height)
+{
 
 }
 
+void _gl_engine_MOVE(float x, float y, float z, float rotation_pitch, float rotation_yaw)
+{
+    ModelMatrix = glm::rotate(ModelMatrix, rotation_pitch, glm::vec3(1, 0, 0));
+    ModelMatrix = glm::rotate(ModelMatrix, rotation_yaw, glm::vec3(0, 1, 0));
+    ModelMatrix = glm::translate(ModelMatrix, glm::vec3(x, y, z));
 
-void _gl_engine_Rotatef(float rot, float x, float y, float z) {
-    ModelMatrix = glm::rotate(ModelMatrix, rot, glm::vec3(x, y, z));
-
-    glUseProgram(shaderProgram);
-    glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "ModelMatrix"), 1, GL_FALSE, glm::value_ptr(ModelMatrix));
-    glUseProgram(0);
+    shaderProgram->setVec4fv(ModelMatrix, "ModelMatrix");
 }
 
-void _gl_engine_Translatef(float x, float y, float z) {
-    //ModelMatrix = glm::translate(ModelMatrix, glm::vec3(x, y, z));
-
-    //glUseProgram(shaderProgram);
-    //glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "ModelMatrix"), 1, GL_FALSE, glm::value_ptr(ModelMatrix));
-    //glUseProgram(0);
-}

@@ -149,11 +149,17 @@ class Player:
         #     self.move(self.speed, 0, 0, 0)
 
         # glPushMatrix()
-        opengl_main_cpp._gl_engine_Rotatef(self.rotation[0], 1, 0, 0)
-        opengl_main_cpp._gl_engine_Rotatef(self.rotation[1], 0, 1, 0)
-        opengl_main_cpp._gl_engine_Translatef(-self.position[0],
-                                              -self.position[1] + self.shift + self.cameraShake[0],
-                                              -self.position[2])
+
+            opengl_main_cpp._gl_engine_MOVE(
+                float(-self.position[0]), float(-self.position[1]),  #  + self.shift + self.cameraShake[0],
+                float(-self.position[2]),
+                float(self.rotation[0]), float(self.rotation[1]))
+
+        # opengl_main_cpp._gl_engine_Rotatef(self.rotation[0], 1, 0, 0)
+        # opengl_main_cpp._gl_engine_Rotatef(self.rotation[1], 0, 1, 0)
+        # opengl_main_cpp._gl_engine_Translatef(-self.position[0],
+        #                                       -self.position[1] + self.shift + self.cameraShake[0],
+        #                                       -self.position[2])
 
     def jump(self):
         if not self.dy:

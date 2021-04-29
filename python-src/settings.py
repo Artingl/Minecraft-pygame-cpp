@@ -17,7 +17,7 @@ IN_MENU = False
 MC_VERSION = "1.0"
 clock = pygame.time.Clock()
 
-FOV = 100
+FOV = 90.0
 RENDER_DISTANCE = 100
 
 CHUNKS_RENDER_DISTANCE = 900
