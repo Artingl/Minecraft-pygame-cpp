@@ -18,6 +18,9 @@ void _gl_engine_RENDER_INIT(GLuint _shaderProgram);
 void _gl_engine_RENDER_DELETE();
 void _gl_engine_RENDER_DRAW();
 
+
+void _gl_engine_Perspective(float fov, float aspect, float nearPlane, float farPlane);
+void _gl_engine_SET_2D(int width, int height);
 void _gl_engine_LoadIdentity();
 void _gl_engine_Rotatef(float rot, float x, float y, float z);
 void _gl_engine_Translatef(float x, float y, float z);

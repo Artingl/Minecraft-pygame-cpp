@@ -97,16 +97,50 @@ void _gl_engine_LoadIdentity() {
     ModelMatrix = glm::mat4(1.0f);
 }
 
+
+
+// gl stuff
+
+void _gl_engine_Perspective(float fov, float aspect, float nearPlane, float farPlane)
+{
+    _gl_engine_info("_gl_engine_Perspective", "Setting up the camera perspective");
+    printf("\t--> [RENDER] [_gl_engine_Perspective] [VALUES]: FOV:%f ASPECT:%f NEAR_PLANE:%f FAR_PLANE%f\n", fov, aspect, nearPlane, farPlane);
+
+    glm::vec3 camPosition(0.f, 0.f, 300.f);
+    glm::vec3 worldUp(0.f, 1.f, 0.f);
+    glm::vec3 camFront (0.f, 0.f, -1.f);
+    glm::mat4 ViewMatrix(1.f);
+
+    ViewMatrix = glm::lookAt(camPosition, camPosition + camFront, worldUp);
+    glm::mat4 ProjectionMatrix(1.f);
+    ProjectionMatrix = glm::perspective(glm::radians(fov), aspect, nearPlane, farPlane);
+
+    glUseProgram(shaderProgram);
+    glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "ModelMatrix"), 1, GL_FALSE, glm::value_ptr(ModelMatrix));
+    glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "ViewMatrix"), 1, GL_FALSE, glm::value_ptr(ViewMatrix));
+    glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "ProjectionMatrix"), 1, GL_FALSE, glm::value_ptr(ProjectionMatrix));
+    glUseProgram(0);
+
+}
+
+
+void _gl_engine_SET_2D(int width, int height) {
+
+}
+
+
 void _gl_engine_Rotatef(float rot, float x, float y, float z) {
     ModelMatrix = glm::rotate(ModelMatrix, rot, glm::vec3(x, y, z));
 
-    //glUseProgram(shaderProgram);
-    //glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "ModelMatrix"), 1, GL_FALSE, glm::val_ptr(ModelMatrix));
-    //glUseProgram(0);
+    glUseProgram(shaderProgram);
+    glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "ModelMatrix"), 1, GL_FALSE, glm::value_ptr(ModelMatrix));
+    glUseProgram(0);
 }
 
 void _gl_engine_Translatef(float x, float y, float z) {
-    ModelMatrix = glm::translate(ModelMatrix, glm::vec3(x, y, z));
+    //ModelMatrix = glm::translate(ModelMatrix, glm::vec3(x, y, z));
 
-
+    //glUseProgram(shaderProgram);
+    //glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "ModelMatrix"), 1, GL_FALSE, glm::value_ptr(ModelMatrix));
+    //glUseProgram(0);
 }

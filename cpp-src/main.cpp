@@ -73,7 +73,7 @@ void _gl_engine_init() {
     glDeleteShader(vertexShader);
     glDeleteShader(fragmentShader);
 
-    //_gl_engine_RENDER_INIT(core_shaderProgram);
+    _gl_engine_RENDER_INIT(core_shaderProgram);
 }
 
 void _gl_engine_quit() {
@@ -101,6 +101,8 @@ BOOST_PYTHON_MODULE(opengl_main_cpp)
     def("_gl_engine_quit", _gl_engine_quit);
 
     // GL sutff
+    def("_gl_engine_Perspective", _gl_engine_Perspective);
+    def("_gl_engine_SET_2D", _gl_engine_SET_2D);
     def("_gl_engine_LoadIdentity", _gl_engine_LoadIdentity);
     def("_gl_engine_Rotatef", _gl_engine_Rotatef);
     def("_gl_engine_Translatef", _gl_engine_Translatef);
