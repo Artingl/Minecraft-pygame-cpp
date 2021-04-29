@@ -1,8 +1,8 @@
 #include <cstdio>
 #include <cstdlib>
 
-void _gl_engine_handle_error(const char* prefix, const char* msg ) {
-    printf("[ERROR] [ENGINE] [%s]: %s\n", prefix, msg);
+void _gl_engine_handle_error(const char* prefix, const char* errorname, const char* msg ) {
+    printf("[ERROR] [ENGINE] [%s] [%s]: %s\n", errorname, prefix, msg);
     std::exit(1);
 }
 

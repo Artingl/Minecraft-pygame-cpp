@@ -40,7 +40,13 @@ enable_testing()
 message(STATUS "Copying *.py files...")
 file(COPY ${PYTHON_FILES} DESTINATION .)
 
-PYTHON_ADD_MODULE(opengl_main_cpp cpp-src/main.cpp cpp-src/VAO.cpp cpp-src/VAO.h cpp-src/debug.cpp cpp-src/debug.h)
+PYTHON_ADD_MODULE(opengl_main_cpp
+        cpp-src/main.cpp
+        cpp-src/VAO.cpp
+        cpp-src/VAO.h
+        cpp-src/debug.cpp
+        cpp-src/debug.h
+    )
 PYTHON_ADD_MODULE(debug_module cpp-src/debug_module.cpp cpp-src/debug.cpp cpp-src/debug.h)
 
 ADD_TEST(NAME ${PROJECT_NAME} COMMAND ../compile.exe)

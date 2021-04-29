@@ -174,7 +174,7 @@ class Scene:
             self.drawCounter = 0
             self.worldGen.genChunk(self.player)
 
-    def updateScene(self, _gl_engine_draw, _gl_update_vao_position):
+    def updateScene(self, _gl_engine_draw):
 
         # self.genWorld()
         if self.in_water:
