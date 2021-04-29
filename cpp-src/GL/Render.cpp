@@ -80,18 +80,11 @@ void _gl_engine_RENDER_DELETE() {
 void _gl_engine_RENDER_DRAW() {
     shaderProgram->use(); // Use our shader program
 
-    //glUniform1i(glGetUniformLocation(shaderProgram, "texture0"), 23);     // Update uniforms
-
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, 23);   // Bind texture
-
     glBindVertexArray(VAO);    // Bind vertex array
     glDrawElements(GL_TRIANGLES, noi, GL_UNSIGNED_INT, 0);         // Draw
 
     glBindVertexArray(0);           // Unbind vertex array
     shaderProgram->unuse();
-    //glActiveTexture(0);
-    //glBindTexture(GL_TEXTURE_2D, 0);
 
 }
 
@@ -113,9 +106,9 @@ void _gl_engine_Perspective(float fov, float width, float height, float nearPlan
     glm::mat4 ProjectionMatrix(1.f);
     ProjectionMatrix = glm::perspective(fov, static_cast<float>(width) / height, nearPlane, farPlane);
 
-    shaderProgram->setVec4fv(ModelMatrix, "ModelMatrix");
-    shaderProgram->setVec4fv(ViewMatrix, "ViewMatrix");
-    shaderProgram->setVec4fv(ProjectionMatrix, "ProjectionMatrix");
+    shaderProgram->setMat4fv(ModelMatrix, "ModelMatrix");
+    shaderProgram->setMat4fv(ViewMatrix, "ViewMatrix");
+    shaderProgram->setMat4fv(ProjectionMatrix, "ProjectionMatrix");
 
 }
 
@@ -131,6 +124,5 @@ void _gl_engine_MOVE(float x, float y, float z, float rotation_pitch, float rota
     ModelMatrix = glm::rotate(ModelMatrix, rotation_yaw, glm::vec3(0, 1, 0));
     ModelMatrix = glm::translate(ModelMatrix, glm::vec3(x, y, z));
 
-    shaderProgram->setVec4fv(ModelMatrix, "ModelMatrix");
+    shaderProgram->setMat4fv(ModelMatrix, "ModelMatrix");
 }
-

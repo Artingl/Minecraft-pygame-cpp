@@ -144,6 +144,9 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="C:/Users/WildPC/Documents/GitHub/Minecraft-pygame-cpp/cpp-src/GL/Mesh.h">
+			<Option target="opengl_main_cpp"/>
+		</Unit>
 		<Unit filename="C:/Users/WildPC/Documents/GitHub/Minecraft-pygame-cpp/cpp-src/GL/Render.cpp">
 			<Option target="opengl_main_cpp"/>
 		</Unit>
@@ -151,6 +154,9 @@
 			<Option target="opengl_main_cpp"/>
 		</Unit>
 		<Unit filename="C:/Users/WildPC/Documents/GitHub/Minecraft-pygame-cpp/cpp-src/GL/Shader.h">
+			<Option target="opengl_main_cpp"/>
+		</Unit>
+		<Unit filename="C:/Users/WildPC/Documents/GitHub/Minecraft-pygame-cpp/cpp-src/GL/Texture.h">
 			<Option target="opengl_main_cpp"/>
 		</Unit>
 		<Unit filename="C:/Users/WildPC/Documents/GitHub/Minecraft-pygame-cpp/cpp-src/debug.cpp">
@@ -163,9 +169,6 @@
 		</Unit>
 		<Unit filename="C:/Users/WildPC/Documents/GitHub/Minecraft-pygame-cpp/cpp-src/debug_module.cpp">
 			<Option target="debug_module"/>
-		</Unit>
-		<Unit filename="C:/Users/WildPC/Documents/GitHub/Minecraft-pygame-cpp/cpp-src/include.h">
-			<Option target="opengl_main_cpp"/>
 		</Unit>
 		<Unit filename="C:/Users/WildPC/Documents/GitHub/Minecraft-pygame-cpp/cpp-src/main.cpp">
 			<Option target="opengl_main_cpp"/>

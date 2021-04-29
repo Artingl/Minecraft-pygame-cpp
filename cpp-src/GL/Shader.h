@@ -2,10 +2,10 @@
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#include <glm/vec3.hpp> // glm::vec3
-#include <glm/vec4.hpp> // glm::vec4, glm::ivec4
-#include <glm/mat4x4.hpp> // glm::mat4
-#include <glm/gtc/matrix_transform.hpp> // glm::translate, glm::rotate, glm::scale, glm::perspective
+#include <glm/vec3.hpp>
+#include <glm/vec4.hpp>
+#include <glm/mat4x4.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include "../debug.h"
 
@@ -143,14 +143,29 @@ public:
 
     }
 
-    void setVec4fv(glm::mat4 value, GLchar* name, GLboolean transpose=GL_FALSE)
+    void setVec4f(glm::fvec4 value, GLchar* name)
     {
         this->use();
-        glUniformMatrix4fv(glGetUniformLocation(this->getId(), name), 1, transpose, glm::value_ptr(value));
+        glUniform4fv(glGetUniformLocation(this->id, name), 1, glm::value_ptr(value));
+        this->unuse();
+
+    }
+
+    void setMat3fv(glm::mat3 value, GLchar* name, GLboolean transpose= GL_FALSE)
+    {
+        this->use();
+        glUniformMatrix3fv(glGetUniformLocation(this->getID(), name), 1, transpose, glm::value_ptr(value));
         this->unuse();
     }
 
-    GLuint getId()
+    void setMat4fv(glm::mat4 value, GLchar* name, GLboolean transpose= GL_FALSE)
+    {
+        this->use();
+        glUniformMatrix4fv(glGetUniformLocation(this->getID(), name), 1, transpose, glm::value_ptr(value));
+        this->unuse();
+    }
+
+    GLuint getID()
     {
         return this->id;
     }

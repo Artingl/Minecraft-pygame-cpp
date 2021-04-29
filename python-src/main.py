@@ -566,7 +566,9 @@ while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             quitTheGame()
-    #    if event.type == pygame.KEYDOWN:
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_e:
+                opengl_main_cpp._gl_engine_DRAW_CUBE(23, 0, 10, 0)
     #        keys.append(event.key)
     #        if event.key == pygame.K_F11:
     #            if scene.WIDTH != monitor.current_w or scene.HEIGHT != monitor.current_h:

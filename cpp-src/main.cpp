@@ -2,6 +2,9 @@
 #include "GL/Render.h"
 #include "debug.h"
 #include "GL/Shader.h"
+#include "GL/Texture.h"
+
+Texture texture(23, 16, 16);
 
 Shader *core_shaderProgram;
 
@@ -23,17 +26,21 @@ void _gl_engine_quit() {
 
 void _gl_engine_draw() {
     //_gl_engine_info("_gl_engine_draw", "Draw stuff");
+
+    texture.bind(0, GL_TEXTURE_2D);
     _gl_engine_RENDER_DRAW();
 }
 
-void createCube(int textureId, int x, int y, int z) {
+void _gl_engine_DRAW_CUBE(int textureId, int x, int y, int z) {
+    //_gl_engine_info("_gl_engine_DRAW_CUBE", "Create some cube");
+
 
 }
 
 BOOST_PYTHON_MODULE(opengl_main_cpp)
 {
     using namespace boost::python;
-    def("drawCube", createCube);
+    def("_gl_engine_DRAW_CUBE", _gl_engine_DRAW_CUBE);
     def("_gl_engine_init", _gl_engine_init);
     def("_gl_engine_draw", _gl_engine_draw);
     def("_gl_engine_quit", _gl_engine_quit);
