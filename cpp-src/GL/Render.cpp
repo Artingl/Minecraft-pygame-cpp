@@ -9,7 +9,10 @@
 glm::mat4 ModelMatrix;
 Shader *shaderProgram;
 
-glm::vec3 camPosition(0.f, 0.f, 0.f);
+glm::vec3 worldUp(0.f, 1.f, 0.f);
+glm::vec3 camFront (0.f, 0.f, -1.f);
+glm::mat4 ViewMatrix(1.f);
+glm::vec3 camPosition(0.f, 0.f, 1.f);
 
 Vertex vertices[] = {
         glm::vec3(-0.5f, 0.5f, 0.0f),   glm::vec3(0.7f, 0.7f, 0.7f),   glm::vec2(0.0f, 1.0f),
@@ -98,10 +101,6 @@ void _gl_engine_LoadIdentity() {
 
 void _gl_engine_Perspective(float fov, float width, float height, float nearPlane, float farPlane)
 {
-    glm::vec3 worldUp(0.f, 1.f, 0.f);
-    glm::vec3 camFront (0.f, 0.f, -1.f);
-    glm::mat4 ViewMatrix(1.f);
-
     ViewMatrix = glm::lookAt(camPosition, camPosition + camFront, worldUp);
     glm::mat4 ProjectionMatrix(1.f);
     ProjectionMatrix = glm::perspective(fov, static_cast<float>(width) / height, nearPlane, farPlane);
@@ -120,9 +119,17 @@ void _gl_engine_SET_2D(int width, int height)
 
 void _gl_engine_MOVE(float x, float y, float z, float rotation_pitch, float rotation_yaw)
 {
-    ModelMatrix = glm::rotate(ModelMatrix, rotation_pitch, glm::vec3(1, 0, 0));
-    ModelMatrix = glm::rotate(ModelMatrix, rotation_yaw, glm::vec3(0, 1, 0));
-    ModelMatrix = glm::translate(ModelMatrix, glm::vec3(x, y, z));
+    //ModelMatrix = glm::rotate(ModelMatrix, rotation_pitch, glm::vec3(1, 0, 0));
+    //ModelMatrix = glm::rotate(ModelMatrix, rotation_yaw, glm::vec3(0, 1, 0));
+    //ModelMatrix = glm::translate(ModelMatrix, glm::vec3(x, y, z));
 
-    shaderProgram->setMat4fv(ModelMatrix, "ModelMatrix");
+    camFront.x = cos(glm::radians(rotation_yaw)) * cos(glm::radians(-rotation_pitch));
+    camFront.y = sin(glm::radians(-rotation_pitch));
+    camFront.z = sin(glm::radians(rotation_yaw)) * cos(glm::radians(-rotation_pitch));
+
+    camPosition.x = z;
+    camPosition.y = -y;
+    camPosition.z = -x;
+
+    //shaderProgram->setMat4fv(ModelMatrix, "ModelMatrix");
 }

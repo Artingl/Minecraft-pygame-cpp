@@ -154,14 +154,14 @@ public:
     void setMat3fv(glm::mat3 value, GLchar* name, GLboolean transpose= GL_FALSE)
     {
         this->use();
-        glUniformMatrix3fv(glGetUniformLocation(this->getID(), name), 1, transpose, glm::value_ptr(value));
+        glUniformMatrix3fv(glGetUniformLocation(this->id, name), 1, transpose, glm::value_ptr(value));
         this->unuse();
     }
 
     void setMat4fv(glm::mat4 value, GLchar* name, GLboolean transpose= GL_FALSE)
     {
         this->use();
-        glUniformMatrix4fv(glGetUniformLocation(this->getID(), name), 1, transpose, glm::value_ptr(value));
+        glUniformMatrix4fv(glGetUniformLocation(this->id, name), 1, transpose, glm::value_ptr(value));
         this->unuse();
     }
 

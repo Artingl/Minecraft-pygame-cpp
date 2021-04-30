@@ -192,7 +192,7 @@ class Scene:
         glClearColor(self.skyColor[0] / 255, self.skyColor[1] / 255, self.skyColor[2] / 255, 1)
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
-        opengl_main_cpp._gl_engine_LoadIdentity()
+        # opengl_main_cpp._gl_engine_LoadIdentity()
 
         self.player.update()
         opengl_main_cpp._gl_engine_draw()

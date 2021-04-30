@@ -47,6 +47,7 @@ PYTHON_ADD_MODULE(opengl_main_cpp
 
         cpp-src/GL/Texture.h
         cpp-src/GL/Mesh.h
+        cpp-src/GL/vertex.h
         cpp-src/GL/Shader.h
         cpp-src/GL/Render.cpp
         cpp-src/GL/Render.h

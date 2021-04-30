@@ -7,19 +7,17 @@
 #include <glm/mat4x4.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include <glm/gtx/rotate_vector.hpp>
 #include "Shader.h"
-
-struct Vertex {
-    glm::vec3 position;
-    glm::vec3 color;
-    glm::vec2 texcoord;
-};
+#include "vertex.h"
+#include "Mesh.h"
 
 void _gl_engine_RENDER_INIT(Shader *_shaderProgram);
 void _gl_engine_RENDER_DELETE();
 void _gl_engine_RENDER_DRAW();
 
 
+void _gl_engine_update_camera_vectors();
 void _gl_engine_Perspective(float fov, float width, float height, float nearPlane, float farPlane);
 void _gl_engine_SET_2D(int width, int height);
 void _gl_engine_LoadIdentity();

@@ -159,6 +159,9 @@
 		<Unit filename="C:/Users/WildPC/Documents/GitHub/Minecraft-pygame-cpp/cpp-src/GL/Texture.h">
 			<Option target="opengl_main_cpp"/>
 		</Unit>
+		<Unit filename="C:/Users/WildPC/Documents/GitHub/Minecraft-pygame-cpp/cpp-src/GL/vertex.h">
+			<Option target="opengl_main_cpp"/>
+		</Unit>
 		<Unit filename="C:/Users/WildPC/Documents/GitHub/Minecraft-pygame-cpp/cpp-src/debug.cpp">
 			<Option target="opengl_main_cpp"/>
 			<Option target="debug_module"/>
