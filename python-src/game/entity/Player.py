@@ -15,7 +15,7 @@ class Player:
         debug_module._gl_engine_info("_Player_python", "Init Player class...")
 
         self.position, self.rotation = [x, y, z], rotation
-        self.speed = 0.02
+        self.speed = 0.1  # 0.02
         self.gl = gl
         self.gravity = 5.8
         self.tVel = 50
@@ -65,10 +65,10 @@ class Player:
             rdy /= 8
             self.rotation[0] += rdy
             self.rotation[1] += rdx
-            if self.rotation[0] > 90:
-                self.rotation[0] = 90
-            elif self.rotation[0] < -90:
-                self.rotation[0] = -90
+            if self.rotation[0] > 88:
+                self.rotation[0] = 88
+            elif self.rotation[0] < -88:
+                self.rotation[0] = -88
 
             if self.rotation[1] > 360:
                 self.rotation[1] = 0
@@ -150,16 +150,16 @@ class Player:
 
         # glPushMatrix()
 
-            opengl_main_cpp._gl_engine_MOVE(
-                float(-self.position[0]), float(-self.position[1]),  #  + self.shift + self.cameraShake[0],
-                float(-self.position[2]),
-                float(self.rotation[0]), float(self.rotation[1]))
+            # opengl_main_cpp._gl_engine_MOVE(
+            #     float(-self.position[0]), float(-self.position[1]),  #  + self.shift + self.cameraShake[0],
+            #     float(-self.position[2]),
+            #     float(self.rotation[0]), float(self.rotation[1]))
 
-        # opengl_main_cpp._gl_engine_Rotatef(self.rotation[0], 1, 0, 0)
-        # opengl_main_cpp._gl_engine_Rotatef(self.rotation[1], 0, 1, 0)
-        # opengl_main_cpp._gl_engine_Translatef(-self.position[0],
-        #                                       -self.position[1] + self.shift + self.cameraShake[0],
-        #                                       -self.position[2])
+        glRotatef(self.rotation[0], 1, 0, 0)
+        glRotatef(self.rotation[1], 0, 1, 0)
+        glTranslatef(-self.position[0],
+                     -self.position[1] + self.shift + self.cameraShake[0],
+                     -self.position[2])
 
     def jump(self):
         if not self.dy:

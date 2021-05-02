@@ -10,10 +10,27 @@ import debug_module
 from settings import *
 
 
+def genPos(_id, w, h):
+    x, y = 0, 0
+    if _id == 0:
+        return x, y
+
+    for i in range(_id):
+        x += 16
+        if x > w:
+            x = 0
+            y += 16
+
+    return x, y
+
+
 def load_textures(self):
     debug_module._gl_engine_info("_functions_python", "Loading textures...")
     t = self.texture
     dirs = ['textures']
+    size = (1600, 1600)
+    allTextures = pygame.surface.Surface(size)
+    cnt = 0
     while dirs:
         d = dirs.pop(0)
         textures = os.listdir(d)
@@ -28,18 +45,19 @@ def load_textures(self):
                 path = d + '/' + file
 
                 img = pygame.image.load(path)
-                textureData = pygame.image.tostring(img, "RGB", 1)
-                width = img.get_width()
-                height = img.get_height()
-                bgImgGL = glGenTextures(1)
-                glBindTexture(GL_TEXTURE_2D, bgImgGL)
-                glTexImage2D(GL_TEXTURE_2D, 0, 3, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, textureData)
-                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST)
-                glGenerateMipmap(GL_TEXTURE_2D)
-
-                self.texture[n] = bgImgGL
+                allTextures.blit(img, genPos(cnt, *size))
 
                 debug_module._gl_engine_info("_functions_python", "Successful loaded " + n + " texture!")
+                cnt += 1
+    pygame.image.save(allTextures, "test.png")
+    width = allTextures.get_width()
+    height = allTextures.get_height()
+    bgImgGL = glGenTextures(1)
+    glBindTexture(GL_TEXTURE_2D, bgImgGL)
+    glTexImage2D(GL_TEXTURE_2D, 0, 3, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, pygame.image.tostring(allTextures, "RGB"))
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST)
+    glGenerateMipmap(GL_TEXTURE_2D)
+    self.texture["terrain"] = bgImgGL
 
 
 def translateSeed(seed):

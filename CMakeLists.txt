@@ -45,12 +45,11 @@ PYTHON_ADD_MODULE(opengl_main_cpp
         cpp-src/debug.cpp
         cpp-src/debug.h
 
+        cpp-src/GL/Chunk.h
+        cpp-src/GL/GL.h
         cpp-src/GL/Texture.h
-        cpp-src/GL/Mesh.h
         cpp-src/GL/vertex.h
         cpp-src/GL/Shader.h
-        cpp-src/GL/Render.cpp
-        cpp-src/GL/Render.h
     )
 PYTHON_ADD_MODULE(debug_module cpp-src/debug_module.cpp cpp-src/debug.cpp cpp-src/debug.h)
 

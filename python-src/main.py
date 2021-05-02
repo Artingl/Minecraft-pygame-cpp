@@ -334,7 +334,7 @@ blockSound = BlockSound(scene)
 player = Player(gl=scene)
 
 # player.position = [0, -9000, 0]
-player.position = [0, 0, 10]
+player.position = [0, 64, 0]
 
 scene.blockSound = blockSound
 scene.gui = gui
@@ -568,7 +568,7 @@ while True:
             quitTheGame()
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_e:
-                opengl_main_cpp._gl_engine_DRAW_CUBE(23, 0, 10, 0)
+                pass
     #        keys.append(event.key)
     #        if event.key == pygame.K_F11:
     #            if scene.WIDTH != monitor.current_w or scene.HEIGHT != monitor.current_h:

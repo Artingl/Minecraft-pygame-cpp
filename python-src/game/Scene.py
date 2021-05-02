@@ -81,21 +81,17 @@ class Scene:
         glClearColor(0.5, 0.7, 1, 1)
         glClearDepth(1.0)
         glEnable(GL_DEPTH_TEST)
-        glEnable(GL_CULL_FACE)
-        glCullFace(GL_BACK)
-        glFrontFace(GL_CCW)
-        # glDepthFunc(GL_LESS)
-        # glShadeModel(GL_SMOOTH)
-        # glMatrixMode(GL_PROJECTION)
-        # glDepthFunc(GL_LEQUAL)
-        # glAlphaFunc(GL_GEQUAL, 1)
+        glDepthFunc(GL_LESS)
+        glShadeModel(GL_SMOOTH)
+        glMatrixMode(GL_PROJECTION)
+        glDepthFunc(GL_LEQUAL)
+        glAlphaFunc(GL_GEQUAL, 1)
         glEnable(GL_BLEND)
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
-        # glEnable(GL_FOG)
-        # glHint(GL_FOG_HINT, GL_DONT_CARE)
-        # glFogi(GL_FOG_MODE, GL_LINEAR)
-        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL)
-        opengl_main_cpp._gl_engine_init()
+        glEnable(GL_FOG)
+        glHint(GL_FOG_HINT, GL_DONT_CARE)
+        glFogi(GL_FOG_MODE, GL_LINEAR)
+        opengl_main_cpp._gl_engine_init(RENDER_DISTANCE)
 
         glLoadIdentity()
         load_textures(self)
@@ -116,13 +112,15 @@ class Scene:
         self.set3d()
 
     def set2d(self):
-        pass  # glMatrixMode(GL_PROJECTION)
-        # opengl_main_cpp._gl_engine_LoadIdentity()
-        # gluOrtho2D(0, self.WIDTH, 0, self.HEIGHT)
+        glMatrixMode(GL_PROJECTION)
+        glLoadIdentity()
+        gluOrtho2D(0, self.WIDTH, 0, self.HEIGHT)
 
     def set3d(self):
-        opengl_main_cpp._gl_engine_LoadIdentity()
-        opengl_main_cpp._gl_engine_Perspective(float(self.fov), float(self.WIDTH), float(self.HEIGHT), 0.1, 1000.0)  # RENDER_DISTANCE)
+        glLoadIdentity()
+        gluPerspective(self.fov, (self.WIDTH / self.HEIGHT), 0.1, RENDER_DISTANCE * 16)
+        glMatrixMode(GL_MODELVIEW)
+        glLoadIdentity()
 
     def resizeCGL(self, w, h, changeRes=True):
         if changeRes:
@@ -179,14 +177,14 @@ class Scene:
     def updateScene(self):
 
         # self.genWorld()
-        # if self.in_water:
-        #     glFogfv(GL_FOG_COLOR, (GLfloat * 4)(0, 0, 0, 1))
-        #     glFogf(GL_FOG_START, 10)
-        #     glFogf(GL_FOG_END, 35)
-        # else:
-        #     glFogfv(GL_FOG_COLOR, (GLfloat * 4)(0.5, 0.7, 1, 1))
-        #     glFogf(GL_FOG_START, 10)
-        #     glFogf(GL_FOG_END, 80)
+        if self.in_water:
+            glFogfv(GL_FOG_COLOR, (GLfloat * 4)(0, 0, 0, 1))
+            glFogf(GL_FOG_START, 10)
+            glFogf(GL_FOG_END, 35)
+        else:
+            glFogfv(GL_FOG_COLOR, (GLfloat * 4)(0.5, 0.7, 1, 1))
+            glFogf(GL_FOG_START, 10)
+            glFogf(GL_FOG_END, RENDER_DISTANCE * 16 - 16)
 
         self.set3d()
         glClearColor(self.skyColor[0] / 255, self.skyColor[1] / 255, self.skyColor[2] / 255, 1)
@@ -195,7 +193,7 @@ class Scene:
         # opengl_main_cpp._gl_engine_LoadIdentity()
 
         self.player.update()
-        opengl_main_cpp._gl_engine_draw()
+        opengl_main_cpp._gl_engine_draw(int(self.texture["terrain"]))
 
         # self.draw()
 

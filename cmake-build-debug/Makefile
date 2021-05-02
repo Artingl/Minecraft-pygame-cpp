@@ -165,33 +165,6 @@ debug_module/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\debug_module.dir\build.make CMakeFiles/debug_module.dir/build
 .PHONY : debug_module/fast
 
-cpp-src/GL/Render.obj: cpp-src/GL/Render.cpp.obj
-
-.PHONY : cpp-src/GL/Render.obj
-
-# target to build an object file
-cpp-src/GL/Render.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\opengl_main_cpp.dir\build.make CMakeFiles/opengl_main_cpp.dir/cpp-src/GL/Render.cpp.obj
-.PHONY : cpp-src/GL/Render.cpp.obj
-
-cpp-src/GL/Render.i: cpp-src/GL/Render.cpp.i
-
-.PHONY : cpp-src/GL/Render.i
-
-# target to preprocess a source file
-cpp-src/GL/Render.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\opengl_main_cpp.dir\build.make CMakeFiles/opengl_main_cpp.dir/cpp-src/GL/Render.cpp.i
-.PHONY : cpp-src/GL/Render.cpp.i
-
-cpp-src/GL/Render.s: cpp-src/GL/Render.cpp.s
-
-.PHONY : cpp-src/GL/Render.s
-
-# target to generate assembly for a file
-cpp-src/GL/Render.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\opengl_main_cpp.dir\build.make CMakeFiles/opengl_main_cpp.dir/cpp-src/GL/Render.cpp.s
-.PHONY : cpp-src/GL/Render.cpp.s
-
 cpp-src/debug.obj: cpp-src/debug.cpp.obj
 
 .PHONY : cpp-src/debug.obj
@@ -287,9 +260,6 @@ help:
 	@echo ... test
 	@echo ... debug_module
 	@echo ... opengl_main_cpp
-	@echo ... cpp-src/GL/Render.obj
-	@echo ... cpp-src/GL/Render.i
-	@echo ... cpp-src/GL/Render.s
 	@echo ... cpp-src/debug.obj
 	@echo ... cpp-src/debug.i
 	@echo ... cpp-src/debug.s
