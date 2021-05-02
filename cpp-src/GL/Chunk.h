@@ -13,7 +13,7 @@
 class Chunk
 {
 private:
-    int random(int min, int max) //range : [min, max]
+    int random(int min, int max)
     {
         static bool first = true;
         if (first)
@@ -30,7 +30,9 @@ public:
     int x;
     int z;
 
+    bool prepared = false;
     int chunkList;
+
     int perlinNoise[chunk_width + 1][chunk_depth + 1];
     Texture blocks[chunk_width + 1][chunk_height + 1][chunk_depth + 1];
 
@@ -41,6 +43,21 @@ public:
 
         this->chunkList = 0;
 
+    }
+
+    int getX()
+    {
+        return this->x;
+    }
+
+    int getZ()
+    {
+        return this->z;
+    }
+
+    bool getPrepared()
+    {
+        return prepared;
     }
 
     void setPerlinNoise(int mx, int mz, int height)
@@ -55,6 +72,13 @@ public:
 
         this->blocks[x][y][z] = texture;
         this->blocks[x][y][z].exist = 1;
+    }
+
+    void removeBlock(int x, int y, int z)
+    {
+        if (y < 0)   y = 0;
+        if (y > 255) y = 255;
+        this->blocks[x][y][z].exist = -1;
     }
 
     void prepareChunk()
@@ -97,7 +121,7 @@ public:
         if (qb) delete qb;
         chunkList = glGenLists(1);
         glNewList(chunkList, GL_COMPILE);
-        //glPushMatrix();
+        glPushMatrix();
 
         glColor3f(1, 1, 1);
 
@@ -205,8 +229,10 @@ public:
         }
 
         qb->render();
-        //glPopMatrix();
+        glPopMatrix();
         glEndList();
+
+        prepared = true;
     }
 
     bool checkBlockSide(int side, int x, int y, int z)

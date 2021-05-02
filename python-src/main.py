@@ -673,7 +673,8 @@ while True:
                                  f"Block: {round(player.x())} / {round(player.y())} / {round(player.z())}\n"
                                  f"Facing: {player.rotation[1]} / {player.rotation[0]}\n"
                                  # f"Biome: {getBiomeByTemp(scene.worldGen.perlinBiomes(player.x(), player.z()) * 3)}\n"
-                                 f"Looking at: {scene.lookingAt}",
+                                 f"Looking at: {scene.lookingAt}\n"
+                                 f"Loaded chunks: {len(scene.chunks.chunks)}",
                           shadow=False, label_color=(224, 224, 224), xx=3)
 
         pygame.display.flip()

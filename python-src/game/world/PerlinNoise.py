@@ -1,4 +1,29 @@
 import random
+
+import noise
+import numpy as np
+
+from noise import pnoise1
+
+
+class PerlinNoise:
+    MAP_HEIGHT = 1800
+    MAP_WIDTH = 6400
+
+    def __init__(self, seed=323, octaves=8):
+        self.points = 256
+        self.span = 5.0
+        self.speed = 1.0
+        self.octaves = octaves
+        self.base = 0
+        self.height = 30
+        self.seed = seed
+
+    def get(self, x, z):
+        pass
+
+
+"""import random
 import math
 import threading
 
@@ -48,3 +73,4 @@ class PerlinNoise(threading.Thread):
                             lerp(u, grad(p[AB], x, y - 1, z), grad(p[BB], x - 1, y - 1, z))),
                     lerp(v, lerp(u, grad(p[AA + 1], x, y, z - 1), grad(p[BA + 1], x - 1, y, z - 1)),
                          lerp(u, grad(p[AB + 1], x, y - 1, z - 1), grad(p[BB + 1], x - 1, y - 1, z - 1))))
+"""

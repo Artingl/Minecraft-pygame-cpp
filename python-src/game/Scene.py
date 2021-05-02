@@ -33,6 +33,7 @@ class Scene:
         self.texture, self.block, self.texture_dir, self.inventory_textures = {}, {}, {}, {}
         self.fov = FOV
         self.clock = None
+        self.renderDistance = RENDER_DISTANCE
         self.updateEvents = []
         self.entity = []
         self.skyColor = [180, 208, 255]  # [64, 89, 150]
@@ -84,7 +85,7 @@ class Scene:
         glEnable(GL_FOG)
         glHint(GL_FOG_HINT, GL_DONT_CARE)
         glFogi(GL_FOG_MODE, GL_LINEAR)
-        opengl_main_cpp._gl_engine_init(RENDER_DISTANCE)
+        opengl_main_cpp._gl_engine_init(self.renderDistance)
 
         glLoadIdentity()
         load_textures(self)
@@ -108,7 +109,7 @@ class Scene:
 
     def set3d(self):
         glLoadIdentity()
-        gluPerspective(self.fov, (self.WIDTH / self.HEIGHT), 0.1, RENDER_DISTANCE * 16)
+        gluPerspective(self.fov, (self.WIDTH / self.HEIGHT), 0.1, self.renderDistance * 16 * 2)
         glMatrixMode(GL_MODELVIEW)
         glLoadIdentity()
 
@@ -159,9 +160,9 @@ class Scene:
 
     def genWorld(self):
         self.chunks.generateChunks()
+        self.chunks.checkPrepare()
 
     def updateScene(self):
-
         if self.in_water:
             glFogfv(GL_FOG_COLOR, (GLfloat * 4)(0, 0, 0, 1))
             glFogf(GL_FOG_START, 10)
@@ -170,7 +171,7 @@ class Scene:
             glFogfv(GL_FOG_COLOR, (GLfloat * 4)
                 (self.skyColor[0] / 255, self.skyColor[1] / 255, self.skyColor[2] / 255, 1))
             glFogf(GL_FOG_START, 10)
-            glFogf(GL_FOG_END, RENDER_DISTANCE * 16 - 16)
+            glFogf(GL_FOG_END, self.renderDistance * 16 - 32)
 
         self.set3d()
         glClearColor(self.skyColor[0] / 255, self.skyColor[1] / 255, self.skyColor[2] / 255, 1)

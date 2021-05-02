@@ -15,7 +15,7 @@ class Player:
         debug_module._gl_engine_info("_Player_python", "Init Player class...")
 
         self.position, self.rotation = [x, y, z], rotation
-        self.speed = 1 * gl.clock.get_fps() / 1000  # 0.02
+        self.speed = 0.02 * gl.clock.get_fps() / 1000  # 0.02
         self.gl = gl
         self.gravity = 5.8
         self.tVel = 50
