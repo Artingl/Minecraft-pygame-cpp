@@ -94,10 +94,6 @@ def getSum(s):
     return res
 
 
-def adjacent(x, y, z):
-    for p in ((x - 1, y, z), (x + 1, y, z), (x, y - 1, z), (x, y + 1, z), (x, y, z - 1), (x, y, z + 1)): yield p
-
-
 def drawInfoLabel(gl, text, xx=0, yy=0, style=None, size=15, anchor_x='left', anchor_y='baseline', opacity=1, rotate=0,
                   label_color=(255, 255, 255), shadow_color=(56, 56, 56), scale=0, shadow=True):
     if style is None:
@@ -126,7 +122,10 @@ def drawInfoLabel(gl, text, xx=0, yy=0, style=None, size=15, anchor_x='left', an
                                 anchor_x=anchor_x,
                                 anchor_y=anchor_y)
         if not style:
-            lbl.set_style("background_color", (69, 69, 69, 100))
+            if shadow:
+                shadow_lbl.set_style("background_color", (69, 69, 69, 100))
+            else:
+                lbl.set_style("background_color", (69, 69, 69, 100))
         else:
             for st in style:
                 lbl.set_style(st[0], st[1])

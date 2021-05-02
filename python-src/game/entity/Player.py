@@ -15,7 +15,7 @@ class Player:
         debug_module._gl_engine_info("_Player_python", "Init Player class...")
 
         self.position, self.rotation = [x, y, z], rotation
-        self.speed = 0.1  # 0.02
+        self.speed = 0.03  # 0.02
         self.gl = gl
         self.gravity = 5.8
         self.tVel = 50
@@ -244,12 +244,17 @@ class Player:
             self.inventory.inventory[i[0]] = [i[1][0], 0]
 
     def mouseEvent(self, button):
-        blockByVec = self.gl.cubes.hitTest(self.position, self.get_sight_vector())
+        blockByVec = self.hitTest(self.position, self.get_sight_vector())
 
         if button == 1 and blockByVec[0]:
-            self.gl.destroy.destroy(self.gl.cubes.cubes[blockByVec[0]].name, blockByVec)
+            opengl_main_cpp._gl_engine_RemoveBlock(blockByVec[0][0], blockByVec[0][1], blockByVec[0][2])
+            # self.gl.destroy.destroy(self.gl.cubes.cubes[blockByVec[0]].name, blockByVec)
+        elif button == 3 and blockByVec[1]:
+            pass  # if blockByVec[2] == -342:
+            #     self.gl.gui.showText("Height limit for building is 256 blocks")
         else:
-            self.gl.destroy.destroyStage = -1
+            pass  # self.gl.destroy.destroyStage = -1
+        return
 
         if button == 2 and blockByVec[0]:
             if self.inventory.inventory[self.inventory.activeInventory][1] == 0:
@@ -321,6 +326,23 @@ class Player:
         dx, dz = math.sin(rotY), -math.cos(rotY)
         dy, m = math.sin(rotX), math.cos(rotX)
         return dx * m, dy, dz * m
+
+    def hitTest(self, p, vec, dist=32):
+        m = 8
+        x, y, z = p
+        dx, dy, dz = vec
+        dx /= m
+        dy /= m
+        dz /= m
+        prev = None
+        for i in range(dist * m):
+            key = roundPos((x, y, z))
+            block = opengl_main_cpp._gl_engine_GetBlock(key[0], key[1], key[2])
+            if block != -1:
+                return key, prev, block
+            prev = key
+            x, y, z = x + dx, y + dy, z + dz
+        return None, None, block
 
     def x(self):
         return self.position[0]

@@ -12,9 +12,8 @@ from game.blocks.DestroyBlock import DestroyBlock
 from game.blocks.droppedBlock import droppedBlock
 from game.entity.Inventory import Inventory
 from game.entity.Zombie import Zombie
+from game.world.Chunks import Chunks
 from game.world.Clouds import Clouds
-from game.world.worldGenerator import worldGenerator
-from game.blocks.CubeHandler import CubeHandler
 
 
 class Scene:
@@ -35,7 +34,7 @@ class Scene:
         self.fov = FOV
         self.updateEvents = []
         self.entity = []
-        self.skyColor = [128, 179, 255]  # [64, 89, 150]
+        self.skyColor = [180, 208, 255]  # [64, 89, 150]
         self.panorama = {}
         self.in_water = False
 
@@ -51,14 +50,12 @@ class Scene:
 
         self.clouds = Clouds(self)
         self.droppedBlock = droppedBlock(self)
-        self.worldGen = worldGenerator(self, randint(434, 434343454))
         self.particles = Particles(self)
         self.destroy = DestroyBlock(self)
         self.light = Light(self)
+        self.chunks = Chunks(self)
 
         self.drawCounter = 0
-        self.genTime = 1
-        self.startPlayerPos = [0, -9000, 0]
 
     def loadPanoramaTextures(self):
         debug_module._gl_engine_info("_Scene_python", "Loading panorama textures...")
@@ -69,11 +66,6 @@ class Scene:
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR)
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE)
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE)
-
-    def vertexList(self):
-        x, y, w, h = self.WIDTH / 2, self.HEIGHT / 2, self.WIDTH, self.HEIGHT
-        self.reticle = pyglet.graphics.vertex_list(4, ('v2f', (x - 10, y, x + 10, y, x, y - 10, x, y + 10)),
-                                                   ('c3f', (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)))
 
     def initScene(self):
         debug_module._gl_engine_info("_Scene_python", "Init OpenGL scene...")
@@ -96,14 +88,11 @@ class Scene:
         glLoadIdentity()
         load_textures(self)
         self.loadPanoramaTextures()
-        self.vertexList()
 
         self.transparent = pyglet.graphics.Batch()
         self.opaque = pyglet.graphics.Batch()
         self.stuffBatch = pyglet.graphics.Batch()
         self.player.inventory = Inventory(self)
-        self.cubes = CubeHandler(self.opaque, self.block, self.opaque,
-                                 ('leaves_taiga', 'leaves_oak', 'tall_grass', 'nocolor'), self)
 
         self.zombie = Zombie(self)
         self.zombie.position = [0, 53, 0]
@@ -126,7 +115,6 @@ class Scene:
         if changeRes:
             self.WIDTH = w
             self.HEIGHT = h
-        self.vertexList()
         glViewport(0, 0, w, h)
 
     def drawPanorama(self):
@@ -169,20 +157,17 @@ class Scene:
         # self.resizeCGL(self.WIDTH, self.HEIGHT, changeRes=False)
 
     def genWorld(self):
-        self.drawCounter += 1
-        if self.drawCounter > self.genTime:
-            self.drawCounter = 0
-            self.worldGen.genChunk(self.player)
+        self.chunks.generateChunks()
 
     def updateScene(self):
 
-        # self.genWorld()
         if self.in_water:
             glFogfv(GL_FOG_COLOR, (GLfloat * 4)(0, 0, 0, 1))
             glFogf(GL_FOG_START, 10)
             glFogf(GL_FOG_END, 35)
         else:
-            glFogfv(GL_FOG_COLOR, (GLfloat * 4)(0.5, 0.7, 1, 1))
+            glFogfv(GL_FOG_COLOR, (GLfloat * 4)
+                (self.skyColor[0] / 255, self.skyColor[1] / 255, self.skyColor[2] / 255, 1))
             glFogf(GL_FOG_START, 10)
             glFogf(GL_FOG_END, RENDER_DISTANCE * 16 - 16)
 
@@ -190,12 +175,18 @@ class Scene:
         glClearColor(self.skyColor[0] / 255, self.skyColor[1] / 255, self.skyColor[2] / 255, 1)
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
-        # opengl_main_cpp._gl_engine_LoadIdentity()
+        glLoadIdentity()
 
+        glPushMatrix()
         self.player.update()
-        opengl_main_cpp._gl_engine_draw(int(self.texture["terrain"]))
+        self.chunks.update()
+        # opengl_main_cpp._gl_engine_draw(int(self.texture["terrain"]),
+        #                                 float(self.player.position[0]),
+        #                                 float(self.player.position[1]),
+        #                                 float(self.player.position[2]))
 
-        # self.draw()
+        self.stuffBatch.draw()
+        self.stuffBatch = pyglet.graphics.Batch()
 
         # self.clouds.update()
         # self.droppedBlock.update()
@@ -206,38 +197,25 @@ class Scene:
         # self.particles.drawParticles()
         # self.light.update()
 
-        # blockByVec = self.cubes.hitTest(self.player.position, self.player.get_sight_vector())
-        # if blockByVec[0]:
-        #     self.destroy.drawDestroy(*blockByVec[0])
+        blockByVec = self.player.hitTest(self.player.position, self.player.get_sight_vector())
+        if blockByVec[0]:
+            # self.destroy.drawDestroy(*blockByVec[0])
 
-        #     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE)
-        #     glColor3d(0, 0, 0)
-        #     pyglet.graphics.draw(24, GL_QUADS, ('v3f/static', flatten(cube_vertices(blockByVec[0], 0.51))))
-        #     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL)
-        #     glColor3d(1, 1, 1)
+            glPolygonMode(GL_FRONT_AND_BACK, GL_LINE)
+            glColor3d(0, 0, 0)
+            pyglet.graphics.draw(24, GL_QUADS, ('v3f/static', flatten(cube_vertices(blockByVec[0], 0.51))))
+            glPolygonMode(GL_FRONT_AND_BACK, GL_FILL)
+            glColor3d(1, 1, 1)
 
         #     self.lookingAt = f"{blockByVec[0][0]} {blockByVec[0][1]} {blockByVec[0][2]} " \
         #                      f"({self.cubes.cubes[blockByVec[0]].name})"
         # else:
         #     self.lookingAt = "Nothing"
 
-        # glColor3d(1, 1, 1)
-        # glPopMatrix()
+        glColor3d(1, 1, 1)
+        glPopMatrix()
         self.set2d()
 
-        # self.blockSound.pickUpAlreadyPlayed = False
-
-        # for i in self.updateEvents:
-        #    i()
-
-    def draw(self):
-        glEnable(GL_ALPHA_TEST)
-        self.opaque.draw()
-        glDisable(GL_ALPHA_TEST)
-        glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE)
-        self.transparent.draw()
-        glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE)
-        self.transparent.draw()
-
-        self.stuffBatch.draw()
-        self.stuffBatch = pyglet.graphics.Batch()
+        self.blockSound.pickUpAlreadyPlayed = False
+        for i in self.updateEvents:
+            i()

@@ -15,8 +15,6 @@ from game.entity.Player import Player
 from game.sound.BlockSound import BlockSound
 from game.sound.Sound import Sound
 from game.Scene import Scene
-from game.world.Biomes import getBiomeByTemp
-from game.world.worldGenerator import worldGenerator
 from settings import *
 import opengl_main_cpp
 
@@ -85,7 +83,7 @@ def startNewGame():
     global mainFunction
     sound.musicPlayer.stop()
     sound.initMusic(True)
-    scene.worldGen = worldGenerator(scene, translateSeed(seedEditArea.text))
+    # scene.worldGen = worldGenerator(scene, translateSeed(seedEditArea.text))
     mainFunction = genWorld
 
 
@@ -217,12 +215,12 @@ def genWorld(mc):
             tex2.blit(ix, iy)
 
     scene.genWorld()
-    if scene.worldGen.start - len(scene.worldGen.queue) > chunkCnt:
-        scene.genTime = 16
+    if scene.chunks.worldGen_chunkPosition[1] >= RENDER_DISTANCE * 2:
         IN_MENU = False
         PAUSE = False
 
-    proc = round((scene.worldGen.start - len(scene.worldGen.queue)) * 100 / chunkCnt)
+    proc = round((scene.chunks.worldGen_chunkPosition[1]) * 100 / (RENDER_DISTANCE * 2))
+    debug_module._gl_engine_info("INFO_PYTHON_MAIN_WORLD_GENERATOR", f"{proc}%/100%")
     drawInfoLabel(scene, "Loading world...", xx=scene.WIDTH // 2, yy=scene.HEIGHT // 2, style=[('', '')],
                   size=12, anchor_x='center')
     drawInfoLabel(scene, f"Generating terrain {proc}%...", xx=scene.WIDTH // 2, yy=scene.HEIGHT // 2 - 39,
@@ -248,7 +246,8 @@ def drawMainMenu(mc):
     glRotatef(mainMenuRotation[1], 0, 1, 0)
     glTranslatef(0, 0, 0)
 
-    scene.draw()
+    scene.stuffBatch.draw()
+    scene.stuffBatch = pyglet.graphics.Batch()
     scene.drawPanorama()
 
     glPopMatrix()
@@ -334,7 +333,7 @@ blockSound = BlockSound(scene)
 player = Player(gl=scene)
 
 # player.position = [0, -9000, 0]
-player.position = [0, 64, 0]
+player.position = [0, 68, 0]
 
 scene.blockSound = blockSound
 scene.gui = gui
@@ -556,144 +555,138 @@ mainMenuRotation = [50, 180, True]
 mainFunction = drawMainMenu
 
 while True:
-    pygame.mouse.set_visible(False)
-    # if scene.allowEvents["keyboardAndMouse"] and not PAUSE:
-    #     if pygame.mouse.get_pressed(3)[0]:
-    #         player.mouseEvent(1)
-    # mbclicked = None
-    # keys = []
+    if scene.allowEvents["keyboardAndMouse"] and not PAUSE:
+        if pygame.mouse.get_pressed(3)[0]:
+            player.mouseEvent(1)
+    mbclicked = None
+    keys = []
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             quitTheGame()
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_e:
-                pass
-    #        keys.append(event.key)
-    #        if event.key == pygame.K_F11:
-    #            if scene.WIDTH != monitor.current_w or scene.HEIGHT != monitor.current_h:
-    #                LAST_SAVED_RESOLUTION = [scene.WIDTH, scene.HEIGHT]
-#
-    #                WIDTH = monitor.current_w
-    #                HEIGHT = monitor.current_h
-    #                screen = pygame.display.set_mode((monitor.current_w, monitor.current_h),
-    #                                                 pygame.DOUBLEBUF | pygame.OPENGL | pygame.RESIZABLE
-    #                                                 | pygame.FULLSCREEN)
-    #                scene.resizeCGL(WIDTH, HEIGHT)
-    #                resizeEvent = True
-    #            else:
-    #                WIDTH = LAST_SAVED_RESOLUTION[0]
-    #                HEIGHT = LAST_SAVED_RESOLUTION[1]
-    #                screen = pygame.display.set_mode((WIDTH, HEIGHT),
-    #                                                 pygame.DOUBLEBUF | pygame.OPENGL | pygame.RESIZABLE)
-    #                scene.resizeCGL(WIDTH, HEIGHT)
-    #                resizeEvent = True
+            keys.append(event.key)
+            if event.key == pygame.K_F11:
+                if scene.WIDTH != monitor.current_w or scene.HEIGHT != monitor.current_h:
+                    LAST_SAVED_RESOLUTION = [scene.WIDTH, scene.HEIGHT]
+
+                    WIDTH = monitor.current_w
+                    HEIGHT = monitor.current_h
+                    screen = pygame.display.set_mode((monitor.current_w, monitor.current_h),
+                                                     pygame.DOUBLEBUF | pygame.OPENGL | pygame.RESIZABLE
+                                                     | pygame.FULLSCREEN)
+                    scene.resizeCGL(WIDTH, HEIGHT)
+                    resizeEvent = True
+                else:
+                    WIDTH = LAST_SAVED_RESOLUTION[0]
+                    HEIGHT = LAST_SAVED_RESOLUTION[1]
+                    screen = pygame.display.set_mode((WIDTH, HEIGHT),
+                                                     pygame.DOUBLEBUF | pygame.OPENGL | pygame.RESIZABLE)
+                    scene.resizeCGL(WIDTH, HEIGHT)
+                    resizeEvent = True
         if event.type == pygame.VIDEORESIZE:
             WIDTH = event.w
             HEIGHT = event.h
             scene.resizeCGL(WIDTH, HEIGHT)
             resizeEvent = True
-    #    if event.type == pygame.MOUSEBUTTONDOWN:
-    #        mbclicked = event.button
-    #    if not IN_MENU:
-    #        if scene.allowEvents["keyboardAndMouse"]:
-    #            if event.type == pygame.KEYDOWN:
-    #                if event.key == pygame.K_ESCAPE:
-    #                    pause()
-    #                if event.key == pygame.K_e:
-    #                    player.inventory.showWindow()
-    #                if event.key == pygame.K_1:
-    #                    player.inventory.activeInventory = 0
-    #                if event.key == pygame.K_2:
-    #                    player.inventory.activeInventory = 1
-    #                if event.key == pygame.K_3:
-    #                    player.inventory.activeInventory = 2
-    #                if event.key == pygame.K_4:
-    #                    player.inventory.activeInventory = 3
-    #                if event.key == pygame.K_5:
-    #                    player.inventory.activeInventory = 4
-    #                if event.key == pygame.K_6:
-    #                    player.inventory.activeInventory = 5
-    #                if event.key == pygame.K_7:
-    #                    player.inventory.activeInventory = 6
-    #                if event.key == pygame.K_8:
-    #                    player.inventory.activeInventory = 7
-    #                if event.key == pygame.K_9:
-    #                    player.inventory.activeInventory = 8
-    #                if event.key == pygame.K_F3:
-    #                    showInfoLabel = not showInfoLabel
-    #                if event.key == pygame.K_F5:
-    #                    player.cameraType += 1
-    #                    if player.cameraType > 3:
-    #                        player.cameraType = 1
-    #            if event.type == pygame.MOUSEBUTTONDOWN:
-    #                player.mouseEvent(event.button)
-    #                if event.button == 4:
-    #                    player.inventory.activeInventory -= 1
-    #                    if player.inventory.activeInventory < 0:
-    #                        player.inventory.activeInventory = 8
-    #                    if player.inventory.inventory[player.inventory.activeInventory][1]:
-    #                        gui.showText(player.inventory.inventory[player.inventory.activeInventory][0])
-    #                elif event.button == 5:
-    #                    player.inventory.activeInventory += 1
-    #                    if player.inventory.activeInventory > 8:
-    #                        player.inventory.activeInventory = 0
-    #                    if player.inventory.inventory[player.inventory.activeInventory][1]:
-    #                        gui.showText(player.inventory.inventory[player.inventory.activeInventory][0])
-    #            else:
-    #                if pygame.mouse.get_pressed(3)[0]:
-    #                    player.mouseEvent(1)
-    #                else:
-    #                    player.mouseEvent(-1)
-    # if scene.allowEvents["grabMouse"]:
-    #     pygame.mouse.set_visible(PAUSE)
-    # else:
-    #     pygame.mouse.set_visible(True)
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            mbclicked = event.button
+        if not IN_MENU:
+            if scene.allowEvents["keyboardAndMouse"]:
+                if event.type == pygame.KEYDOWN:
+                    debug_module._gl_engine_info("main_python_EVENT_HANDLER", "Key press: " + str(event.key))
+                    if event.key == pygame.K_ESCAPE:
+                        pause()
+                    if event.key == pygame.K_e:
+                        player.inventory.showWindow()
+                    if event.key == pygame.K_1:
+                        player.inventory.activeInventory = 0
+                    if event.key == pygame.K_2:
+                        player.inventory.activeInventory = 1
+                    if event.key == pygame.K_3:
+                        player.inventory.activeInventory = 2
+                    if event.key == pygame.K_4:
+                        player.inventory.activeInventory = 3
+                    if event.key == pygame.K_5:
+                        player.inventory.activeInventory = 4
+                    if event.key == pygame.K_6:
+                        player.inventory.activeInventory = 5
+                    if event.key == pygame.K_7:
+                        player.inventory.activeInventory = 6
+                    if event.key == pygame.K_8:
+                        player.inventory.activeInventory = 7
+                    if event.key == pygame.K_9:
+                        player.inventory.activeInventory = 8
+                    if event.key == pygame.K_F3:
+                        showInfoLabel = not showInfoLabel
+                    if event.key == pygame.K_F5:
+                        player.cameraType += 1
+                        if player.cameraType > 3:
+                            player.cameraType = 1
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    player.mouseEvent(event.button)
+                    if event.button == 4:
+                        player.inventory.activeInventory -= 1
+                        if player.inventory.activeInventory < 0:
+                            player.inventory.activeInventory = 8
+                        if player.inventory.inventory[player.inventory.activeInventory][1]:
+                            gui.showText(player.inventory.inventory[player.inventory.activeInventory][0])
+                    elif event.button == 5:
+                        player.inventory.activeInventory += 1
+                        if player.inventory.activeInventory > 8:
+                            player.inventory.activeInventory = 0
+                        if player.inventory.inventory[player.inventory.activeInventory][1]:
+                            gui.showText(player.inventory.inventory[player.inventory.activeInventory][0])
+                else:
+                    if pygame.mouse.get_pressed(3)[0]:
+                        player.mouseEvent(1)
+                    else:
+                        player.mouseEvent(-1)
+    if scene.allowEvents["grabMouse"]:
+        pygame.mouse.set_visible(PAUSE)
+    else:
+        pygame.mouse.set_visible(True)
 
-    # if IN_MENU:
-    #     mainFunction(mbclicked)
+    if IN_MENU:
+        mainFunction(mbclicked)
 
     if not PAUSE:
-        # sound.playMusic()
+        sound.playMusic()
 
-        # if scene.allowEvents["showCrosshair"]:
-        #     gui.shows["crosshair"][1] = (scene.WIDTH // 2 - 9, scene.HEIGHT // 2 - 9)
-        # else:
-        #     gui.shows["crosshair"][1] = (-100, -100)
-        # if scene.allowEvents["grabMouse"] and pygame.mouse.get_focused():
-        pygame.mouse.set_pos((scene.WIDTH // 2, scene.HEIGHT // 2))
+        if scene.allowEvents["showCrosshair"]:
+            gui.shows["crosshair"][1] = (scene.WIDTH // 2 - 9, scene.HEIGHT // 2 - 9)
+        else:
+            gui.shows["crosshair"][1] = (-100, -100)
+        if scene.allowEvents["grabMouse"] and pygame.mouse.get_focused():
+            pygame.mouse.set_pos((scene.WIDTH // 2, scene.HEIGHT // 2))
         scene.updateScene()
 
-        # player.inventory.draw()
-        # gui.update()
+        player.inventory.draw()
+        gui.update()
 
-        # if showInfoLabel:
-        #     drawInfoLabel(scene, f"Minecraft {MC_VERSION} ({MC_VERSION}/vanilla)\n"
-        #                          f"{round(clock.get_fps())} fps\n"
-        #                          f"\n"
-        #                          f"XYZ: {round(player.x(), 3)} / {round(player.y(), 5)} / {round(player.z(), 3)}\n"
-        #                          f"Block: {round(player.x())} / {round(player.y())} / {round(player.z())}\n"
-        #                          f"Facing: {player.rotation[1]} / {player.rotation[0]}\n"
-        #                          f"Biome: {getBiomeByTemp(scene.worldGen.perlinBiomes(player.x(), player.z()) * 3)}\n"
-        #                          f"Looking at: {scene.lookingAt}\n"
-        #                          f"Count of chunks: {scene.worldGen.start - len(scene.worldGen.queue)} "
-        #                          f"({scene.worldGen.start})",
-        #                   shadow=False, label_color=(224, 224, 224), xx=3)
+        if showInfoLabel:
+            drawInfoLabel(scene, f"Minecraft {MC_VERSION} ({MC_VERSION}/vanilla)\n"
+                                 f"{round(clock.get_fps())} fps\n"
+                                 f"\n"
+                                 f"XYZ: {round(player.x(), 3)} / {round(player.y(), 5)} / {round(player.z(), 3)}\n"
+                                 f"Block: {round(player.x())} / {round(player.y())} / {round(player.z())}\n"
+                                 f"Facing: {player.rotation[1]} / {player.rotation[0]}\n"
+                                 # f"Biome: {getBiomeByTemp(scene.worldGen.perlinBiomes(player.x(), player.z()) * 3)}\n"
+                                 f"Looking at: {scene.lookingAt}",
+                          shadow=False, label_color=(224, 224, 224), xx=3)
 
-        pygame.display.set_caption("A, X, Y, Z,: %f %f %f %f ; FPS: %d" %
-                                   (round(player.rotation[1], 3), round(player.x(), 3), round(player.y(), 5), round(player.z(), 3), int(clock.get_fps())))
         pygame.display.flip()
         clock.tick(MAX_FPS)
-    # elif PAUSE and not IN_MENU:
-    #     scene.allowEvents["movePlayer"] = False
-    #     scene.allowEvents["keyboardAndMouse"] = False
-    #     if scene.allowEvents["showCrosshair"]:
-    #         gui.shows["crosshair"][1] = (scene.WIDTH // 2 - 9, scene.HEIGHT // 2 - 9)
-    #     else:
-    #         gui.shows["crosshair"][1] = (-100, -100)
-    #     scene.updateScene()
+    elif PAUSE and not IN_MENU:
+        scene.allowEvents["movePlayer"] = False
+        scene.allowEvents["keyboardAndMouse"] = False
+        if scene.allowEvents["showCrosshair"]:
+            gui.shows["crosshair"][1] = (scene.WIDTH // 2 - 9, scene.HEIGHT // 2 - 9)
+        else:
+            gui.shows["crosshair"][1] = (-100, -100)
+        scene.updateScene()
 
-    #     player.inventory.draw()
-    #     gui.update()
+        player.inventory.draw()
+        gui.update()
 
-    #     mainFunction(mbclicked)
+        mainFunction(mbclicked)

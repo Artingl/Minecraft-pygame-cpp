@@ -1,6 +1,7 @@
 #pragma once
 
 #include "GL.h"
+#include "../AABB.h"
 #include <GL/glew.h>
 
 #define chunk_width 16
@@ -11,12 +12,27 @@
 
 class Chunk
 {
+private:
+    int random(int min, int max) //range : [min, max]
+    {
+        static bool first = true;
+        if (first)
+        {
+            srand( time(NULL) ); //seeding for the first time only!
+            first = false;
+        }
+        return min + rand() % (( max + 1 ) - min);
+    }
+
 public:
+    GL *qb;
+
     int x;
     int z;
 
     int chunkList;
-    int blocks[chunk_width + 1][chunk_height + 1][chunk_depth + 1];
+    int perlinNoise[chunk_width + 1][chunk_depth + 1];
+    Texture blocks[chunk_width + 1][chunk_height + 1][chunk_depth + 1];
 
     Chunk(int x, int z)
     {
@@ -25,30 +41,67 @@ public:
 
         this->chunkList = 0;
 
+    }
+
+    void setPerlinNoise(int mx, int mz, int height)
+    {
+        this->perlinNoise[(int ) mx][(int ) mz] = height;
+    }
+
+    void setBlock(int x, int y, int z, Texture texture)
+    {
+        if (y < 0)   y = 0;
+        if (y > 255) y = 255;
+
+        this->blocks[x][y][z] = texture;
+        this->blocks[x][y][z].exist = 1;
+    }
+
+    void prepareChunk()
+    {
         for (int block_x = 0; block_x <= chunk_width; ++block_x)
         {
-            for (int block_y = 0; block_y <= chunk_height; ++block_y)
+            for (int block_z = 0; block_z <= chunk_depth; ++block_z)
             {
-                for (int block_z = 0; block_z <= chunk_depth; ++block_z)
+                int block_y = world_height + this->perlinNoise[block_x][block_z];
+
+                setBlock(block_x, 0, block_z, Texture::getTexture("bedrock"));
+                setBlock(block_x, block_y, block_z, Texture::getTexture("grass_block"));
+
+                for (int i = 1; i < block_y; ++i)
                 {
-                    this->blocks[block_x][block_y][block_z] = -1;
+                    if (i > block_y - random(5, 10))
+                    {
+                        setBlock(block_x, i, block_z, Texture::getTexture("dirt"));
+                    }
+                    else
+                    {
+                        setBlock(block_x, i, block_z, Texture::getTexture("stone"));
+                    }
                 }
             }
         }
 
-        create();
+        update();
     }
 
-    void create()
+    void erase()
+    {
+        delete qb;
+        if(chunkList) glDeleteLists(chunkList, 1);
+    }
+
+    void update()
     {
         if(chunkList) glDeleteLists(chunkList, 1);
+        if (qb) delete qb;
         chunkList = glGenLists(1);
         glNewList(chunkList, GL_COMPILE);
-        glPushMatrix();
+        //glPushMatrix();
 
         glColor3f(1, 1, 1);
 
-        GL *qb = new GL(65536);
+        qb = new GL(65536);
         qb->begin();
 
         int block_r = 255;
@@ -57,13 +110,12 @@ public:
 
         for (int block_x = 0; block_x <= chunk_width; ++block_x)
         {
-            for (int block_y = 0; block_y <= world_height; ++block_y)
+            for (int block_y = 0; block_y <= chunk_height; ++block_y)
             {
                 for (int block_z = 0; block_z <= chunk_depth; ++block_z)
                 {
-                    Texture textureClass = Texture::getTexture("grass_block");
-
-                    this->blocks[block_x][block_y][block_z] = 10;
+                    if (this->blocks[block_x][block_y][block_z].exist == -1) continue;
+                    Texture textureClass = this->blocks[block_x][block_y][block_z];
 
                     if (checkBlockSide(0, block_x, block_y, block_z))
                     {
@@ -153,17 +205,31 @@ public:
         }
 
         qb->render();
-        glPopMatrix();
+        //glPopMatrix();
         glEndList();
     }
 
     bool checkBlockSide(int side, int x, int y, int z)
     {
-        // TODO
-
-        if ((x == 16 || y == world_height || z == 16) || (x == 0 || y == 0 || z == 0))
+        if (x == 0 || x == chunk_width || y == 0 || y == chunk_height || z == 0 || z == chunk_depth)
         {
             return true;
+        }
+
+        switch (side)
+        {
+            case 0:
+                return this->blocks[x][y + 1][z].exist == -1;
+            case 1:
+                return this->blocks[x][y - 1][z].exist == -1;
+            case 2:
+                return this->blocks[x][y][z - 1].exist == -1;
+            case 3:
+                return this->blocks[x + 1][y][z].exist == -1;
+            case 4:
+                return this->blocks[x][y][z + 1].exist == -1;
+            case 5:
+                return this->blocks[x - 1][y][z].exist == -1;
         }
 
         return false;

@@ -9,9 +9,6 @@ private:
     float width = 16.0f;
     float height = 16.0f;
 
-    int top;
-    int bottom;
-    int side;
 
     float top_x;      float top_y;
     float bottom_x;   float bottom_y;
@@ -54,7 +51,13 @@ private:
     }
 
 public:
+    int top;
+    int bottom;
+    int side;
+    int exist = -1;
     float addTextCoord = 1.0f / 100.0f;
+
+    Texture() {}
 
     Texture (int id_top, int id_bottom, int id_side)
     {
@@ -87,6 +90,10 @@ public:
         else if(id == "dirt")
         {
             return Texture(52);
+        }
+        else if(id == "bedrock")
+        {
+            return Texture(7);
         }
         else
         {
