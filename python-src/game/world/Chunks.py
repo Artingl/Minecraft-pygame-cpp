@@ -12,7 +12,15 @@ class Chunks:
         self.chunks = {}
         self.perlinNoise = PerlinNoise(seed=4342, mh=8)
 
+    def chunksUpdate(self):
+        pass
+
+    def getBlock(self, x, y, z):
+        return -1
+
     def update(self):
+        self.chunksUpdate()
+
         glEnable(GL_TEXTURE_2D)
         glEnable(GL_BLEND)
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)

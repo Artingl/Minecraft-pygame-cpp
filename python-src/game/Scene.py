@@ -32,6 +32,7 @@ class Scene:
 
         self.texture, self.block, self.texture_dir, self.inventory_textures = {}, {}, {}, {}
         self.fov = FOV
+        self.clock = None
         self.updateEvents = []
         self.entity = []
         self.skyColor = [180, 208, 255]  # [64, 89, 150]
@@ -180,10 +181,6 @@ class Scene:
         glPushMatrix()
         self.player.update()
         self.chunks.update()
-        # opengl_main_cpp._gl_engine_draw(int(self.texture["terrain"]),
-        #                                 float(self.player.position[0]),
-        #                                 float(self.player.position[1]),
-        #                                 float(self.player.position[2]))
 
         self.stuffBatch.draw()
         self.stuffBatch = pyglet.graphics.Batch()

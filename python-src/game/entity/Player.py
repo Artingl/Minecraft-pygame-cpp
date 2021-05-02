@@ -15,7 +15,7 @@ class Player:
         debug_module._gl_engine_info("_Player_python", "Init Player class...")
 
         self.position, self.rotation = [x, y, z], rotation
-        self.speed = 0.03  # 0.02
+        self.speed = 1 * gl.clock.get_fps() / 1000  # 0.02
         self.gl = gl
         self.gravity = 5.8
         self.tVel = 50
@@ -59,6 +59,8 @@ class Player:
 
     def updatePosition(self):
         if self.gl.allowEvents["movePlayer"]:
+            self.speed = 1 * self.gl.clock.get_fps() / 1000
+
             rdx, rdy = pygame.mouse.get_pos()
             rdx, rdy = rdx - self.gl.WIDTH // 2, rdy - self.gl.HEIGHT // 2
             rdx /= 8
@@ -337,7 +339,7 @@ class Player:
         prev = None
         for i in range(dist * m):
             key = roundPos((x, y, z))
-            block = opengl_main_cpp._gl_engine_GetBlock(key[0], key[1], key[2])
+            block = self.gl.chunks.getBlock(key[0], key[1], key[2])
             if block != -1:
                 return key, prev, block
             prev = key

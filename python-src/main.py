@@ -328,6 +328,7 @@ pygame.display.flip()
 
 sound = Sound()
 scene = Scene()
+scene.clock = clock
 gui = GUI(scene)
 blockSound = BlockSound(scene)
 player = Player(gl=scene)
