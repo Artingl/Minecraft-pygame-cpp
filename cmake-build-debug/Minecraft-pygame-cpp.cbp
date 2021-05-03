@@ -176,6 +176,12 @@
 		<Unit filename="C:/Users/WildPC/Documents/GitHub/Minecraft-pygame-cpp/cpp-src/main.cpp">
 			<Option target="opengl_main_cpp"/>
 		</Unit>
+		<Unit filename="C:/Users/WildPC/Documents/GitHub/Minecraft-pygame-cpp/cpp-src/noise.h">
+			<Option target="opengl_main_cpp"/>
+		</Unit>
+		<Unit filename="C:/Users/WildPC/Documents/GitHub/Minecraft-pygame-cpp/cpp-src/nose.cpp">
+			<Option target="opengl_main_cpp"/>
+		</Unit>
 		<Unit filename="C:/Users/WildPC/Documents/GitHub/Minecraft-pygame-cpp/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>

@@ -30,7 +30,11 @@ class Scene:
 
         self.lookingAt = "Nothing"
 
-        self.texture, self.block, self.texture_dir, self.inventory_textures = {}, {}, {}, {}
+        self.texture = {}
+        self.block = {}
+        self.texture_dir = {}
+        self.terrain = {}
+        self.inventory_textures = {}
         self.fov = FOV
         self.clock = None
         self.renderDistance = RENDER_DISTANCE
@@ -186,7 +190,7 @@ class Scene:
         self.stuffBatch.draw()
         self.stuffBatch = pyglet.graphics.Batch()
 
-        # self.clouds.update()
+        self.clouds.update()
         # self.droppedBlock.update()
 
         # for i in self.entity:
@@ -199,7 +203,7 @@ class Scene:
         if blockByVec[0]:
             # self.destroy.drawDestroy(*blockByVec[0])
 
-            glPolygonMode(GL_FRONT_AND_BACK, GL_LINE)
+            glPolygonMode(GL_FRONT_AND_BACK, GL_FILL)
             glColor3d(0, 0, 0)
             pyglet.graphics.draw(24, GL_QUADS, ('v3f/static', flatten(cube_vertices(blockByVec[0], 0.51))))
             glPolygonMode(GL_FRONT_AND_BACK, GL_FILL)

@@ -249,6 +249,33 @@ cpp-src/main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\opengl_main_cpp.dir\build.make CMakeFiles/opengl_main_cpp.dir/cpp-src/main.cpp.s
 .PHONY : cpp-src/main.cpp.s
 
+cpp-src/nose.obj: cpp-src/nose.cpp.obj
+
+.PHONY : cpp-src/nose.obj
+
+# target to build an object file
+cpp-src/nose.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\opengl_main_cpp.dir\build.make CMakeFiles/opengl_main_cpp.dir/cpp-src/nose.cpp.obj
+.PHONY : cpp-src/nose.cpp.obj
+
+cpp-src/nose.i: cpp-src/nose.cpp.i
+
+.PHONY : cpp-src/nose.i
+
+# target to preprocess a source file
+cpp-src/nose.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\opengl_main_cpp.dir\build.make CMakeFiles/opengl_main_cpp.dir/cpp-src/nose.cpp.i
+.PHONY : cpp-src/nose.cpp.i
+
+cpp-src/nose.s: cpp-src/nose.cpp.s
+
+.PHONY : cpp-src/nose.s
+
+# target to generate assembly for a file
+cpp-src/nose.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\opengl_main_cpp.dir\build.make CMakeFiles/opengl_main_cpp.dir/cpp-src/nose.cpp.s
+.PHONY : cpp-src/nose.cpp.s
+
 # Help Target
 help:
 	@echo The following are some of the valid targets for this Makefile:
@@ -269,6 +296,9 @@ help:
 	@echo ... cpp-src/main.obj
 	@echo ... cpp-src/main.i
 	@echo ... cpp-src/main.s
+	@echo ... cpp-src/nose.obj
+	@echo ... cpp-src/nose.i
+	@echo ... cpp-src/nose.s
 .PHONY : help
 
 

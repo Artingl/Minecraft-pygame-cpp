@@ -46,6 +46,8 @@ PYTHON_ADD_MODULE(opengl_main_cpp
         cpp-src/debug.h
 
         cpp-src/AABB.h
+        cpp-src/noise.h
+        cpp-src/nose.cpp
         cpp-src/GL/Chunk.h
         cpp-src/GL/GL.h
         cpp-src/GL/Texture.h

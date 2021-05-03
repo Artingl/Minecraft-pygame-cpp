@@ -1,31 +1,14 @@
+#include <boost/python/dict.hpp>
 #include <boost/python.hpp>
 #include <cmath>
 #include <glm/glm.hpp>
 #include <glm/gtc/noise.hpp>
+#include "AABB.h"
 #include "GL/Texture.h"
 #include "GL/Chunk.h"
+#include "noise.h"
 
 int renderDistance;
-
-float getNoiseNumber(int x, int z)
-{
-    float result = 0;
-
-    for (int xx = -10; xx < 10; ++xx)
-    {
-        for (int zz = -10; zz < 10; ++zz)
-        {
-            float value = glm::simplex(glm::vec2{(xx + x) / 128.0f, (zz + z) / 128.0f});
-            value = (value + 1) / 2;
-            value *= 4 + 4;
-
-            result += value / 16.0f * 0.1f;
-        }
-    }
-
-
-    return result;
-}
 
 void _gl_engine_init(int _renderDistance)
 {
@@ -43,19 +26,37 @@ BOOST_PYTHON_MODULE(opengl_main_cpp)
 {
     using namespace boost::python;
 
-    def("getNoiseNumber", getNoiseNumber);
+    //Py_Initialize();
+
     def("_gl_engine_init", _gl_engine_init);
     def("_gl_engine_quit", _gl_engine_quit);
 
-    class_<Chunk>("Chunk", init<int, int>())
+    class_<AABB>("AABB", init<double, double, double, double, double, double>())
+            .def("getMinX", &AABB::getMinX)
+            .def("getMinY", &AABB::getMinY)
+            .def("getMinZ", &AABB::getMinZ)
+            .def("getMaxX", &AABB::getMaxX)
+            .def("getMaxY", &AABB::getMaxY)
+            .def("getMaxZ", &AABB::getMaxZ)
+            .def("getExist", &AABB::getExist)
+            .def("setExist", &AABB::setExist)
+            .def("clipXCollide", &AABB::clipXCollide)
+            .def("clipYCollide", &AABB::clipYCollide)
+            .def("clipZCollide", &AABB::clipZCollide)
+            .def("move", &AABB::move)
+            ;
+
+    class_<Chunk>("Chunk", init<int, int, int, dict>())
             .def("erase", &Chunk::erase)
             .def("setBlock", &Chunk::setBlock)
+            .def("getBlock", &Chunk::getBlock)
+            .def("getBlockAABB", &Chunk::getBlockAABB)
+            .def("setChunk", &Chunk::setChunk)
             .def("getPrepared", &Chunk::getPrepared)
             .def("getX", &Chunk::getX)
             .def("getZ", &Chunk::getZ)
             .def("removeBlock", &Chunk::removeBlock)
             .def("prepareChunk", &Chunk::prepareChunk)
-            .def("setPerlinNoise", &Chunk::setPerlinNoise)
             .def("update", &Chunk::update)
             .def("checkBlockSide", &Chunk::checkBlockSide)
             .def("render", &Chunk::render)

@@ -30,6 +30,7 @@ class Player:
         self.bInAir = False
         self.playerDead = False
         self.inventory = None
+        self.sensitivity = 2
 
         self.lastPlayerPosOnGround = [0, 0, 0]
         self.playerFallY = 0
@@ -63,10 +64,10 @@ class Player:
 
             rdx, rdy = pygame.mouse.get_pos()
             rdx, rdy = rdx - self.gl.WIDTH // 2, rdy - self.gl.HEIGHT // 2
-            rdx /= 8
-            rdy /= 8
-            self.rotation[0] += rdy
-            self.rotation[1] += rdx
+            rdx /= self.sensitivity
+            rdy /= self.sensitivity
+            self.rotation[0] += rdy * self.gl.clock.get_fps() / 1000
+            self.rotation[1] += rdx * self.gl.clock.get_fps() / 1000
             if self.rotation[0] > 88:
                 self.rotation[0] = 88
             elif self.rotation[0] < -88:
@@ -78,94 +79,37 @@ class Player:
                 self.rotation[1] = 360
 
             DX, DY, DZ = 0, 0, 0
-            minKd = 0.08
 
             rotY = self.rotation[1] / 180 * math.pi
             dx, dz = (self.speed + self.acceleration - 0.008) * math.sin(rotY), \
                      (self.speed + self.acceleration - 0.008) * math.cos(rotY)
 
             key = pygame.key.get_pressed()
-            # if key[pygame.K_LCTRL]:
-            #     self.acceleration = 0.009
             if self.kW > 0 or key[pygame.K_w]:
                 DX += dx
                 DZ -= dz
-                # self.setCameraShake()
-                # if self.kW > 0:
-                #     self.kW -= minKd
-            # else:
-            #     self.acceleration = 0
             if self.kS > 0 or key[pygame.K_s]:
                 DX -= dx
                 DZ += dz
-            #     self.setCameraShake()
-            #     self.acceleration = 0
-            #     if self.kS > 0:
-            #         self.kS -= minKd
             if self.kA > 0 or key[pygame.K_a]:
                 DX -= dz
                 DZ -= dx
-            #    self.setCameraShake()
-            #    self.acceleration = 0
-            #    if self.kA > 0:
-            #        self.kA -= minKd
             if self.kD > 0 or key[pygame.K_d]:
                 DX += dz
                 DZ += dx
-            #    self.setCameraShake()
-            #    self.acceleration = 0
-            #    if self.kD > 0:
-            #        self.kD -= minKd
             if key[pygame.K_SPACE]:
                 DY += self.speed
-            #    self.jump()
-            #    if key[pygame.K_w]:
-            #        self.kW = 1
-            #    if key[pygame.K_a]:
-            #        self.kA = 1
-            #    if key[pygame.K_s]:
-            #        self.kS = 1
-            #    if key[pygame.K_d]:
-            #        self.kD = 1
+                # self.jump()
             if key[pygame.K_LSHIFT]:
                 DY -= self.speed
-            #     self.setShift(True)
-            #     self.acceleration = -0.01
-            # else:
-            #     self.setShift(False)
-            #     if self.acceleration == -0.01:
-            #         self.acceleration = 0
-
-            dt = self.speed
-
             self.position = [self.position[0] + DX, self.position[1] + DY, self.position[2] + DZ]
-
-        #     if dt < 0.2:
-        #         dt /= 10
-        #         DX /= 10
-        #         DY /= 10
-        #         DZ /= 10
-        #         for i in range(10):
-        #             self.move(dt, DX, DY, DZ)
-        # else:
-        #     self.move(self.speed, 0, 0, 0)
-
-        # glPushMatrix()
-
-            # opengl_main_cpp._gl_engine_MOVE(
-            #     float(-self.position[0]), float(-self.position[1]),  #  + self.shift + self.cameraShake[0],
-            #     float(-self.position[2]),
-            #     float(self.rotation[0]), float(self.rotation[1]))
+            # self.move(self.speed, DX, DY, DZ)
 
         glRotatef(self.rotation[0], 1, 0, 0)
         glRotatef(self.rotation[1], 0, 1, 0)
         glTranslatef(-self.position[0],
                      -self.position[1] + self.shift + self.cameraShake[0],
                      -self.position[2])
-
-    def jump(self):
-        if not self.dy:
-            self.dy = 4
 
     def move(self, dt, dx, dy, dz):
         self.dy -= dt * self.gravity
@@ -176,64 +120,46 @@ class Player:
             self.dy = 19.8
 
         x, y, z = self.position
-        col = self.collide((x + dx, y + dy, z + dz))
-        # col2 = roundPos((col[0], col[1] - 2, col[2]))
-        # self.canShake = self.position[1] == col[1]
-        # if self.position[0] != col[0] or self.position[2] != col[2]:
-        #     if col2 in self.gl.cubes.cubes and self.shift <= 0:
-        #         self.gl.blockSound.playStepSound(self.gl.cubes.cubes[col2].name)
-        # # Dynamic FOV
-        # # if self.position[0] != col[0] or self.position[2] != col[2]:
-        # #    if self.gl.fov < FOV + 20:
-        # #        self.gl.fov += 0.2
-        # #    else:
-        # #        self.gl.fov = FOV + 20
-        # # else:
-        # #    if self.gl.fov > FOV:
-        # #        self.gl.fov -= 0.2
-        # #    else:
-        # #        self.gl.fov = FOV
-        # #
-        # if not self.bInAir:
-        #     for i in range(1, 6):
-        #         col21 = roundPos((col[0], col[1] - i, col[2]))
-        #         if col21 not in self.gl.cubes.cubes:
-        #             self.bInAir = True
-        #             if self.playerFallY < col[1]:
-        #                 self.playerFallY = round(col[1] - self.lastPlayerPosOnGround[1])
-        #         else:
-        #             self.bInAir = False
-        #             break
-        # else:
-        #     self.lastPlayerPosOnGround = col
-        #
-        # if self.bInAir and col2 in self.gl.cubes.cubes:
-        #     hp = self.hp
-        #     if 3 < self.playerFallY:
-        #         # self.gl.sound.playSound("oof", 0.8)
-        #         self.hp -= 1
-        #         if self.playerFallY < 10:
-        #             self.hp -= 3
-        #         elif self.playerFallY < 16:
-        #             self.hp -= 5
-        #         elif self.playerFallY < 23:
-        #             self.hp -= 8
-        #         elif self.playerFallY < 30:
-        #             self.hp -= 11
-        #         else:
-        #             self.hp = 0
-        #         self.gl.blockSound.cntr = 99
-        #         self.gl.blockSound.damageByBlock(self.gl.cubes.cubes[col2].name, self.hp)
-        #     if self.hp <= 0 and not self.playerDead:
-        #         # Player dead
-        #         self.dead()
-        #
-        #     self.bInAir = False
-        #     self.gl.particles.addParticle((col[0], col[1] - 1, col[2]),
-        #                                   self.gl.cubes.cubes[col2],
-        #                                   direction="down",
-        #                                   count=10)
+        col = self.collide((dx, dy, dz))
         self.position = col
+
+    def collide(self, pos):
+        xa = pos[0]
+        ya = pos[1]
+        za = pos[2]
+        chunk_position = self.getPositionInChunk(self.position[0], self.position[1], self.position[2])
+        aabb = opengl_main_cpp.AABB(
+            self.position[0] - 0.6 / 2.0, self.position[1] - 1.8 / 2.0, self.position[2] - 0.6 / 2.0,
+            self.position[0] + 0.6 / 2.0, self.position[1] + 1.8 / 2.0, self.position[2] + 0.6 / 2.0)
+
+        for face in ((-1, 0, 0), (1, 0, 0), (0, -1, 0), (0, 1, 0), (0, 0, -1), (0, 0, 1)):
+            block = self.gl.chunks.getBlockAABB(
+                int(chunk_position[0] + face[0]),
+                int(chunk_position[1] + face[1]),
+                int(chunk_position[2] + face[2])
+            )  # TODO
+            if block.getExist():
+                xa = block.clipYCollide(aabb, self.position[0] + pos[0])
+                aabb.move(xa, 0.0, 0.0)
+                ya = block.clipYCollide(aabb, self.position[1] + pos[1])
+                aabb.move(0.0, ya, 0.0)
+                za = block.clipYCollide(aabb, self.position[2] + pos[2])
+                aabb.move(0.0, 0.0, za)
+
+        if ya != pos[1]:
+            self.dy = 0
+
+        return (aabb.getMinX() + aabb.getMaxX()) / 2.0, aabb.getMinY(), (aabb.getMinZ() + aabb.getMaxZ()) / 2.0
+
+    def get_sight_vector(self):
+        rotX, rotY = -self.rotation[0] / 180 * math.pi, self.rotation[1] / 180 * math.pi
+        dx, dz = math.sin(rotY), -math.cos(rotY)
+        dy, m = math.sin(rotX), math.cos(rotX)
+        return dx * m, dy, dz * m
+
+    def jump(self):
+        if not self.dy:
+            self.dy = 4
 
     def dead(self):
         self.playerDead = True
@@ -249,7 +175,7 @@ class Player:
         blockByVec = self.hitTest(self.position, self.get_sight_vector())
 
         if button == 1 and blockByVec[0]:
-            opengl_main_cpp._gl_engine_RemoveBlock(blockByVec[0][0], blockByVec[0][1], blockByVec[0][2])
+            self.gl.chunks.removeBlock(blockByVec[0][0], blockByVec[0][1], blockByVec[0][2])
             # self.gl.destroy.destroy(self.gl.cubes.cubes[blockByVec[0]].name, blockByVec)
         elif button == 3 and blockByVec[1]:
             pass  # if blockByVec[2] == -342:
@@ -293,45 +219,27 @@ class Player:
                     self.gl.blockSound.playBlockSound(self.gl.cubes.cubes[blockByVec].name)
                     self.inventory.inventory[self.inventory.activeInventory][1] -= 1
 
-    def collide(self, pos):
-        if -90 > pos[1] > -9000:
-            if not self.playerDead:
-                self.hp -= 2
-                self.gl.blockSound.damageByBlock("ahh", 1)
-                if self.hp <= 0:
-                    # Player dead
-                    self.dead()
+    def getPositionInChunk(self, x, y, z):
+        num_x = x / 16
+        num_z = z / 16
 
-        p = list(pos)
-        np = roundPos(pos)
-        for face in ((-1, 0, 0), (1, 0, 0), (0, -1, 0), (0, 1, 0), (0, 0, -1), (0, 0, 1)):
-            for i in (0, 1, 2):
-                if not face[i]:
-                    continue
-                d = (p[i] - np[i]) * face[i]
-                pad = 0.25
-                if d < pad:
-                    continue
-                for dy in (0, 1):
-                    op = list(np)
-                    op[1] -= dy
-                    op[i] += face[i]
-                    if tuple(op) in self.gl.cubes.collidable:
-                        p[i] -= (d - pad) * face[i]
-                        if face[1]:
-                            self.dy = 0
-                        break
-        return tuple(p)
+        num_x = float(str(num_x - int(num_x))[1:])
+        num_z = float(str(num_z - int(num_z))[1:])
 
-    def get_sight_vector(self):
-        rotX, rotY = -self.rotation[0] / 180 * math.pi, self.rotation[1] / 180 * math.pi
-        dx, dz = math.sin(rotY), -math.cos(rotY)
-        dy, m = math.sin(rotX), math.cos(rotX)
-        return dx * m, dy, dz * m
+        if num_x == 0:
+            num_x = 16 / 100
+
+        if num_z == 0:
+            num_z = 16 / 100
+
+        player_x_chunk = round(num_x * 16)
+        player_z_chunk = round(num_z * 16)
+
+        return player_x_chunk, y, player_z_chunk
 
     def hitTest(self, p, vec, dist=32):
         m = 8
-        x, y, z = p
+        x, y, z = self.getPositionInChunk(p[0], p[1], p[2])
         dx, dy, dz = vec
         dx /= m
         dy /= m

@@ -27,7 +27,7 @@ def genPos(_id, w, h):
 def load_textures(self):
     debug_module._gl_engine_info("_functions_python", "Loading textures...")
     t = self.texture
-    dirs = ['textures']
+    dirs = ['textures', 'textures/terrain']
     size = (1600, 1600)
     allTextures = pygame.surface.Surface(size)
     cnt = 0
@@ -44,8 +44,36 @@ def load_textures(self):
                 n = file.split('.')[0]
                 path = d + '/' + file
 
+                if d == 'textures/terrain':
+                    image = pyglet.image.load(d + '/' + file)
+                    texture = image.get_mipmapped_texture()
+                    self.terrain[n] = pyglet.graphics.TextureGroup(texture)
+                    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST)
+                    continue
                 img = pygame.image.load(path)
                 allTextures.blit(img, genPos(cnt, *size))
+
+                if d == "textures/blocks/tbs":
+                    if n[0:-1].strip() not in self.block:
+                        self.block[n[0:-1].strip()] = {}
+
+                    if n.endswith('t'):
+                        self.block[n[0:-1].strip()][0] = cnt
+                    if n.endswith('b'):
+                        self.block[n[0:-1].strip()][1] = cnt
+                    if n.endswith('s'):
+                        self.block[n[0:-1].strip()][2] = cnt
+                elif d == "textures/blocks/ts":
+                    if n[0:-1].strip() not in self.block:
+                        self.block[n[0:-1].strip()] = {}
+
+                    if n.endswith('t'):
+                        self.block[n[0:-1].strip()][0] = cnt
+                        self.block[n[0:-1].strip()][1] = cnt
+                    if n.endswith('s'):
+                        self.block[n[0:-1].strip()][2] = cnt
+                else:
+                    self.block[n] = (cnt, cnt, cnt)
 
                 debug_module._gl_engine_info("_functions_python", "Successful loaded " + n + " texture!")
                 cnt += 1
@@ -57,7 +85,9 @@ def load_textures(self):
     glTexImage2D(GL_TEXTURE_2D, 0, 3, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, pygame.image.tostring(allTextures, "RGB"))
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST)
     glGenerateMipmap(GL_TEXTURE_2D)
-    self.texture["terrain"] = bgImgGL
+    self.texture["world"] = bgImgGL
+
+    debug_module._gl_engine_info("_functions_python", "Successful loaded " + str(cnt) + " textures!")
 
 
 def translateSeed(seed):

@@ -334,7 +334,7 @@ blockSound = BlockSound(scene)
 player = Player(gl=scene)
 
 # player.position = [0, -9000, 0]
-player.position = [0, 68, 0]
+player.position = [0, 90, 0]
 
 scene.blockSound = blockSound
 scene.gui = gui

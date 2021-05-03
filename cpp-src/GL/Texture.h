@@ -1,8 +1,11 @@
 #pragma once
 
+#include <boost/python/dict.hpp>
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include "../debug.h"
+
+using namespace boost::python;
 
 class Texture {
 private:
@@ -77,28 +80,21 @@ public:
         create();
     }
 
-    static Texture getTexture(const char *id)
+    static Texture getTexture(const char *id, dict textures)
     {
-        if (id == "grass_block")
+        if (!textures.contains(id))
         {
-            return Texture(54, 52, 53);
+            extract<int> texture_top(textures["invalid"][0]);
+            extract<int> texture_bottom(textures["invalid"][1]);
+            extract<int> texture_side(textures["invalid"][2]);
+            return Texture(texture_top, texture_bottom, texture_side);
         }
-        else if(id == "stone")
-        {
-            return Texture(42);
-        }
-        else if(id == "dirt")
-        {
-            return Texture(52);
-        }
-        else if(id == "bedrock")
-        {
-            return Texture(7);
-        }
-        else
-        {
-            return Texture(0);
-        }
+
+        extract<int> texture_top(textures[id][0]);
+        extract<int> texture_bottom(textures[id][1]);
+        extract<int> texture_side(textures[id][2]);
+
+        return Texture(texture_top, texture_bottom, texture_side);
     }
 
     float getTopX() const { return this->top_x; }
