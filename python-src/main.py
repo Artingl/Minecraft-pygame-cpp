@@ -19,6 +19,15 @@ from settings import *
 import opengl_main_cpp
 
 
+def getWorlds():
+    return [("New World", "New World (5) (4/26/21 7:39 PM)", 0, 1), ("New World", "New World (6) (1/26/21 7:39 PM)", 0, 0), ("New World", "New World (9) (4/26/20 7:21 PM)", 0, 1)]
+    #         ^ Name        ^ Folder name and time           ^ game mode (0 - survival) and is cheats on
+
+
+def playSelected():
+    startNewGame()
+
+
 def quitTheGame():
     opengl_main_cpp.engineQuit()
     exit(0)
@@ -74,7 +83,7 @@ def showSettings():
     mainFunction = drawSettingsMenu
 
 
-def closeSettings():
+def closeMenuWindows():
     global mainFunction
     mainFunction = drawMainMenu
 
@@ -85,6 +94,13 @@ def startNewGame():
     sound.initMusic(True)
     # scene.worldGen = worldGenerator(scene, translateSeed(seedEditArea.text))
     mainFunction = genWorld
+
+
+def setWorldsMenu():
+    global mainFunction, worlds, selectedWorld
+    worlds = getWorlds()
+    selectedWorld = -1
+    mainFunction = drawWorldsMenu
 
 
 def pause():
@@ -122,12 +138,6 @@ def drawSettingsMenu(mc):
     soundVolumeSliderBox.x = scene.WIDTH // 2 - (soundVolumeSliderBox.bg.width // 2)
     soundVolumeSliderBox.y = scene.HEIGHT // 2 - (soundVolumeSliderBox.bg.height // 2) - 80
     soundVolumeSliderBox.update(mp)
-    #
-
-    # Seed edit area
-    seedEditArea.x = scene.WIDTH // 2 - (seedEditArea.bg.width // 2)
-    seedEditArea.y = scene.HEIGHT // 2 - (seedEditArea.bg.height // 2)
-    seedEditArea.update(mp, mc, keys)
     #
 
     # Close
@@ -199,6 +209,81 @@ def pauseMenu(mc):
     clock.tick(MAX_FPS)
 
 
+def setCreateWorld():
+    global mainFunction
+    mainFunction = createWorld
+
+
+def createWorld(mc):
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+    glLoadIdentity()
+    scene.set2d()
+
+    tex = gui.GUI_TEXTURES["options_background"]
+    tex2 = gui.GUI_TEXTURES["black"]
+    for ix in range(0, scene.WIDTH, tex.width):
+        for iy in range(0, scene.HEIGHT, tex.height):
+            tex.blit(ix, iy)
+            tex2.blit(ix, iy)
+
+    createNewWorldButton.setEvent(startNewGame)
+    cancelButton.setEvent(setWorldsMenu)
+
+    mp = pygame.mouse.get_pos()
+
+    drawInfoLabel(scene, "Create New World",
+                  xx=scene.WIDTH // 2, yy=scene.HEIGHT - 80, style=[('', '')], anchor_x='center', size=12)
+
+    # World name edit area
+    worldNameEditArea.bg.width = 404
+    worldNameEditArea.bg.height = 44
+    worldNameEditArea.x = scene.WIDTH // 2 - (worldNameEditArea.bg.width // 2)
+    worldNameEditArea.y = 140
+    worldNameEditArea.update(mp, mc, keys)
+    #
+
+    drawInfoLabel(scene, "Will be saved in: " + worldNameEditArea.text,
+                  xx=worldNameEditArea.x, yy=scene.HEIGHT - worldNameEditArea.y - 64, style=[('', '')],
+                  size=12, label_color=(199, 199, 199))
+
+    # Game mode
+    gameModeButton.x = scene.WIDTH // 2 - (gameModeButton.button.width // 2)
+    gameModeButton.y = worldNameEditArea.y + 100
+    gameModeButton.update(mp, mc)
+    #
+
+    drawInfoLabel(scene, "Only survival now available!",
+                  xx=worldNameEditArea.x, yy=scene.HEIGHT - gameModeButton.y - 59, style=[('', '')],
+                  size=12, label_color=(199, 199, 199))
+
+    # More World Options...
+    moreWorldOptionsButton.x = scene.WIDTH // 2 - (moreWorldOptionsButton.button.width // 2)
+    moreWorldOptionsButton.y = gameModeButton.y + 105
+    moreWorldOptionsButton.update(mp, mc)
+    #
+
+    # Create new world button
+    createNewWorldButton.x = scene.WIDTH // 2 - (createNewWorldButton.button.width // 2) - (createNewWorldButton.button.width // 2) - 10
+    createNewWorldButton.y = scene.HEIGHT - createNewWorldButton.button.height * 3 + 70
+    createNewWorldButton.update(mp, mc)
+    #
+
+    # Cancel button
+    cancelButton.x = scene.WIDTH // 2 - (cancelButton.button.width // 2) + (cancelButton.button.width // 2) + 10
+    cancelButton.y = scene.HEIGHT - cancelButton.button.height * 3 + 70
+    cancelButton.update(mp, mc)
+    #
+
+    # # Seed edit area
+    # seedEditArea.x = scene.WIDTH // 2 - (seedEditArea.bg.width // 2)
+    # seedEditArea.y = scene.HEIGHT // 2 - (seedEditArea.bg.height // 2)
+    # seedEditArea.update(mp, mc, keys)
+    # #
+
+    pygame.display.flip()
+    clock.tick(MAX_FPS)
+
+
 def genWorld(mc):
     global IN_MENU, PAUSE, resizeEvent
     chunkCnt = 1  # 220
@@ -216,16 +301,140 @@ def genWorld(mc):
 
     # scene.genWorld()
     # if scene.chunks.worldGen_chunkPosition[1] >= RENDER_DISTANCE * 2:
+    #     IN_MENU = False
+    #     PAUSE = False
+    # return
+
+    # proc = round((scene.chunks.worldGen_chunkPosition[1]) * 100 / (RENDER_DISTANCE * 2))
+    # debug_module._gl_engine_info("INFO_PYTHON_MAIN_WORLD_GENERATOR", f"{proc}%/100%")
+    # drawInfoLabel(scene, "Loading world...", xx=scene.WIDTH // 2, yy=scene.HEIGHT // 2, style=[('', '')],
+    #               size=12, anchor_x='center')
+    # drawInfoLabel(scene, f"Generating terrain {proc}%...", xx=scene.WIDTH // 2, yy=scene.HEIGHT // 2 - 39,
+    #               style=[('', '')], size=12, anchor_x='center')
+
+    # TODO
+    drawInfoLabel(scene, "Generating world...", xx=scene.WIDTH // 2, yy=scene.HEIGHT // 2, style=[('', '')],
+                  size=12, anchor_x='center')
+    pygame.display.flip()
+    clock.tick(MAX_FPS)
+    opengl_main_cpp.generateLevel(-128, -128, 128, 128, 64)
+
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+    glLoadIdentity()
+    scene.set2d()
+
+    tex = gui.GUI_TEXTURES["options_background"]
+    tex2 = gui.GUI_TEXTURES["black"]
+    for ix in range(0, scene.WIDTH, tex.width):
+        for iy in range(0, scene.HEIGHT, tex.height):
+            tex.blit(ix, iy)
+            tex2.blit(ix, iy)
+
+    drawInfoLabel(scene, "Generating chunks...", xx=scene.WIDTH // 2, yy=scene.HEIGHT // 2, style=[('', '')],
+                  size=12, anchor_x='center')
+    pygame.display.flip()
+    clock.tick(MAX_FPS)
+    opengl_main_cpp.generateChunks(0, 0, 0)
+
     IN_MENU = False
     PAUSE = False
-    return
+    # TODO
 
-    proc = round((scene.chunks.worldGen_chunkPosition[1]) * 100 / (RENDER_DISTANCE * 2))
-    debug_module._gl_engine_info("INFO_PYTHON_MAIN_WORLD_GENERATOR", f"{proc}%/100%")
-    drawInfoLabel(scene, "Loading world...", xx=scene.WIDTH // 2, yy=scene.HEIGHT // 2, style=[('', '')],
+
+def drawWorldsMenu(mc):
+    global selectedWorld
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+    glLoadIdentity()
+    scene.set2d()
+
+    tex = gui.GUI_TEXTURES["options_background"]
+    tex2 = gui.GUI_TEXTURES["black"]
+    tex3 = gui.GUI_TEXTURES["black2"]
+    for ix in range(0, scene.WIDTH, tex.width):
+        for iy in range(0, scene.HEIGHT, tex.height):
+            tex.blit(ix, iy)
+            tex3.blit(ix, iy)
+            tex2.blit(ix, iy)
+
+    if selectedWorld != -1 and selectedWorld < len(worlds):
+        yy = scene.HEIGHT - 144 - ((selectedWorld + 1) * 80)
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST)
+        t = gui.GUI_TEXTURES["edit_bg2"]
+        sw = t.width
+        sh = t.height
+        t.width = 440
+        t.height = 85
+        t.blit(scene.WIDTH // 2 - 160, yy)
+        t.width = sw
+        t.height = sh
+
+    y = scene.HEIGHT - 160
+    for i in worlds:
+        sett = ""
+        if i[2] == 0:
+            sett = "Survival, "
+        if i[2] == 1:
+            sett = "Creative, "
+        if i[3] == 0:
+            sett = sett[:-2]
+        else:
+            sett += "Cheats"
+
+        drawInfoLabel(scene, i[0], xx=scene.WIDTH // 2 - 150, yy=y, style=[('', '')], size=12)
+        drawInfoLabel(scene, i[1], xx=scene.WIDTH // 2 - 150, yy=y - 25, style=[('', '')], size=12, label_color=(199, 199, 199))
+        drawInfoLabel(scene, sett, xx=scene.WIDTH // 2 - 150, yy=y - 50, style=[('', '')], size=12, label_color=(199, 199, 199))
+
+        y -= 80
+
+    for ix in range(0, scene.WIDTH, tex.width):
+        tex.blit(ix, scene.HEIGHT - 65)
+        tex2.blit(ix, scene.HEIGHT - 65)
+    for ix in range(0, scene.WIDTH, tex.width):
+        for iy in range(128, 0, -(128 // 2)):
+            tex.blit(ix, iy - tex.height)
+            tex2.blit(ix, iy - tex.height)
+
+    mp = pygame.mouse.get_pos()
+
+    if scene.WIDTH // 2 - 160 < mp[0] < scene.WIDTH // 2 - 160 + 440 and mc == 1:
+        pos = mp[1] - 144
+        if pos > 0:
+            pos = pos // 85
+            if pos < len(worlds):
+                selectedWorld = pos
+
+    drawInfoLabel(scene, "Select world", xx=scene.WIDTH // 2, yy=scene.HEIGHT - 49, style=[('', '')],
                   size=12, anchor_x='center')
-    drawInfoLabel(scene, f"Generating terrain {proc}%...", xx=scene.WIDTH // 2, yy=scene.HEIGHT // 2 - 39,
-                  style=[('', '')], size=12, anchor_x='center')
+
+    playSelectedWorldButton.active = selectedWorld != -1
+    deleteWorldButton.active = selectedWorld != -1
+
+    createNewWorldButton.setEvent(setCreateWorld)
+    cancelButton.setEvent(closeMenuWindows)
+
+    # Play selected world button
+    playSelectedWorldButton.x = scene.WIDTH // 2 - (playSelectedWorldButton.button.width // 2) - (playSelectedWorldButton.button.width // 2) - 10
+    playSelectedWorldButton.y = scene.HEIGHT - playSelectedWorldButton.button.height * 3 + 15
+    playSelectedWorldButton.update(mp, mc)
+    #
+
+    # Create new world button
+    createNewWorldButton.x = scene.WIDTH // 2 - (createNewWorldButton.button.width // 2) + (createNewWorldButton.button.width // 2) + 10
+    createNewWorldButton.y = scene.HEIGHT - createNewWorldButton.button.height * 3 + 15
+    createNewWorldButton.update(mp, mc)
+    #
+
+    # Cancel button
+    cancelButton.x = scene.WIDTH // 2 - (cancelButton.button.width // 2) + (cancelButton.button.width // 2) + 10
+    cancelButton.y = scene.HEIGHT - cancelButton.button.height * 3 + 70
+    cancelButton.update(mp, mc)
+    #
+
+    # Delete world button
+    deleteWorldButton.x = scene.WIDTH // 2 - (deleteWorldButton.button.width // 2) - (deleteWorldButton.button.width // 2) - 10
+    deleteWorldButton.y = scene.HEIGHT - deleteWorldButton.button.height * 3 + 70
+    deleteWorldButton.update(mp, mc)
+    #
 
     pygame.display.flip()
     clock.tick(MAX_FPS)
@@ -258,7 +467,7 @@ def drawMainMenu(mc):
     tex = gui.GUI_TEXTURES["game_logo"]
     tex.blit(scene.WIDTH // 2 - (tex.width // 2), scene.HEIGHT - tex.height - (scene.HEIGHT // 15))
 
-    drawInfoLabel(scene, f"Minecraft {MC_VERSION}", xx=10, yy=10, style=[('', '')], size=12)
+    drawInfoLabel(scene, f"Minecraft {MC_VERSION} (Pygame edition)", xx=10, yy=10, style=[('', '')], size=12)
 
     # Singleplayer button
     singleplayerButton.x = scene.WIDTH // 2 - (singleplayerButton.button.width // 2)
@@ -298,9 +507,9 @@ def drawMainMenu(mc):
         mainMenuRotation[2] = True
 
     if mainMenuRotation[2]:
-        mainMenuRotation[0] -= 0.008
+        mainMenuRotation[0] -= 0.02
     else:
-        mainMenuRotation[0] += 0.008
+        mainMenuRotation[0] += 0.02
     mainMenuRotation[1] += 0.02
 
 
@@ -308,6 +517,7 @@ debug_module._gl_engine_info("_main_python", "Loading the game...")
 
 resizeEvent = False
 LAST_SAVED_RESOLUTION = [WIDTH, HEIGHT]
+worlds = []
 
 screen = pygame.display.set_mode((WIDTH, HEIGHT), pygame.DOUBLEBUF | pygame.OPENGL | pygame.RESIZABLE)
 pygame.display.set_caption(f"Minecraft {MC_VERSION}")
@@ -335,7 +545,7 @@ blockSound = BlockSound(scene)
 player = Player(gl=scene)
 
 # player.position = [0, -9000, 0]
-player.position = [0, 66, 0]
+player.position = [0, 90, 0]
 
 scene.blockSound = blockSound
 scene.gui = gui
@@ -431,9 +641,17 @@ gui.GUI_TEXTURES = {
     "game_logo": pyglet.resource.image("gui/game_logo.png"),
     "button_bg": pyglet.resource.image("gui/gui_elements/button_bg.png"),
     "button_bg_hover": pyglet.resource.image("gui/gui_elements/button_bg_hover.png"),
+    "button_bg_hover_first6px": pyglet.resource.image("gui/gui_elements/button_bg_hover_first6px.png"),
+    "button_bg_hover_last6px": pyglet.resource.image("gui/gui_elements/button_bg_hover_last6px.png"),
+    "button_bg_first6px": pyglet.resource.image("gui/gui_elements/button_bg_first6px.png"),
+    "button_bg_last6px": pyglet.resource.image("gui/gui_elements/button_bg_last6px.png"),
+    "edit_bg_first6px": pyglet.resource.image("gui/gui_elements/edit_bg_first6px.png"),
+    "edit_bg_last6px": pyglet.resource.image("gui/gui_elements/edit_bg_last6px.png"),
     "edit_bg": pyglet.resource.image("gui/gui_elements/edit_bg.png"),
+    "edit_bg2": pyglet.resource.image("gui/gui_elements/edit_bg2.png"),
     "options_background": pyglet.resource.image("gui/gui_elements/options_background.png"),
     "black": pyglet.resource.image("gui/gui_elements/black.png"),
+    "black2": pyglet.resource.image("gui/gui_elements/black2.png"),
     "red": pyglet.resource.image("gui/gui_elements/red.png"),
     "selected": pyglet.resource.image("gui/gui_elements/selected.png"),
     "slider": pyglet.resource.image("gui/gui_elements/slider.png"),
@@ -442,49 +660,12 @@ gui.GUI_TEXTURES = {
 
 glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST)
 
-texture = gui.GUI_TEXTURES["crafting_table"]
-texture.width *= 2
-texture.height *= 2
-
-texture = gui.GUI_TEXTURES["inventory_window"]
-texture.width *= 2
-texture.height *= 2
-
-texture = gui.GUI_TEXTURES["inventory"]
-texture.width *= 2
-texture.height *= 2
-
-texture = gui.GUI_TEXTURES["sel_inventory"]
-texture.width *= 2
-texture.height *= 2
-
-texture = gui.GUI_TEXTURES["fullheart"]
-texture.width *= 2
-texture.height *= 2
-
-texture = gui.GUI_TEXTURES["halfheart"]
-texture.width *= 2
-texture.height *= 2
-
-texture = gui.GUI_TEXTURES["heartbg"]
-texture.width *= 2
-texture.height *= 2
-
-texture = gui.GUI_TEXTURES["game_logo"]
-texture.width *= 2
-texture.height *= 2
-
-texture = gui.GUI_TEXTURES["button_bg"]
-texture.width *= 2
-texture.height *= 2
-
-texture = gui.GUI_TEXTURES["button_bg_hover"]
-texture.width *= 2
-texture.height *= 2
-
-texture = gui.GUI_TEXTURES["edit_bg"]
-texture.width *= 2
-texture.height *= 2
+for i, j in gui.GUI_TEXTURES.items():
+    if i in ["options_background", "black", "black2", "red", "crosshair"]:
+        continue
+    texture = gui.GUI_TEXTURES[i]
+    texture.width *= 2
+    texture.height *= 2
 
 texture = gui.GUI_TEXTURES["options_background"]
 texture.width *= 6
@@ -494,23 +675,20 @@ texture = gui.GUI_TEXTURES["black"]
 texture.width *= 6
 texture.height *= 6
 
-texture = gui.GUI_TEXTURES["red"]
+texture = gui.GUI_TEXTURES["black2"]
 texture.width *= 6
 texture.height *= 6
 
-texture = gui.GUI_TEXTURES["selected"]
-texture.width *= 2
-texture.height *= 2
-
-texture = gui.GUI_TEXTURES["slider"]
-texture.width *= 2
-texture.height *= 2
+texture = gui.GUI_TEXTURES["red"]
+texture.width *= 6
+texture.height *= 6
 
 gui.addGuiElement("crosshair", (scene.WIDTH // 2 - 9, scene.HEIGHT // 2 - 9))
 
 # player.inventory.initWindow()
 
 showInfoLabel = False
+selectedWorld = -1
 
 debug_module._gl_engine_info("_main_python", "Loading splashes...")
 splfile = open("../src/gui/splashes.txt", "r", encoding='utf-8')
@@ -526,17 +704,36 @@ singleplayerButton = Button(scene, "Singleplayer", 0, 0)
 optionsButton = Button(scene, "Options", 0, 0)
 quitButton = Button(scene, "Quit game", 0, 0)
 
-singleplayerButton.setEvent(startNewGame)
+singleplayerButton.setEvent(setWorldsMenu)
 optionsButton.setEvent(showSettings)
 quitButton.setEvent(quitTheGame)
 #
 
 # Settings objects
-closeSettingsButton = Button(scene, "Close", 0, 0)
+closeSettingsButton = Button(scene, "Done", 0, 0)
 soundVolumeSliderBox = Sliderbox(scene, "Sound volume:", 100, 0, 0)
 seedEditArea = Editarea(scene, "World seed", 0, 0)
 
-closeSettingsButton.setEvent(closeSettings)
+closeSettingsButton.setEvent(closeMenuWindows)
+#
+
+# Worlds objects
+playSelectedWorldButton = Button(scene, "Play Selected World", 0, 0, active=False)
+createNewWorldButton = Button(scene, "Create New World", 0, 0)
+deleteWorldButton = Button(scene, "Delete", 0, 0, active=False)
+cancelButton = Button(scene, "Cancel", 0, 0)
+
+playSelectedWorldButton.setEvent(playSelected)
+createNewWorldButton.setEvent(setCreateWorld)
+cancelButton.setEvent(closeMenuWindows)
+#
+
+# Create new world objects
+worldNameEditArea = Editarea(scene, "World Name", 0, 0)
+gameModeButton = Button(scene, "Game Mode: Survival", 0, 0, active=False)
+moreWorldOptionsButton = Button(scene, "More World Options...", 0, 0, active=False)
+
+worldNameEditArea.text = "New World"
 #
 
 # Pause menu buttons
@@ -556,6 +753,9 @@ debug_module._gl_engine_info("_main_python", "Loading complete!")
 mainMenuRotation = [50, 180, True]
 
 mainFunction = drawMainMenu
+
+if not os.path.isdir("saves"):
+    os.mkdir("saves")
 
 while True:
     # if scene.allowEvents["keyboardAndMouse"] and not PAUSE:
@@ -645,6 +845,11 @@ while True:
                 #         player.mouseEvent(1)
                 #     else:
                 #         player.mouseEvent(-1)
+        else:
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    mainFunction = drawMainMenu
+
     if scene.allowEvents["grabMouse"]:
         pygame.mouse.set_visible(PAUSE)
     else:
@@ -674,7 +879,7 @@ while True:
                                  f"XYZ: {round(player.x(), 3)} / {round(player.y(), 5)} / {round(player.z(), 3)}\n"
                                  f"Block: {round(player.x())} / {round(player.y())} / {round(player.z())}\n"
                                  f"Facing: {round(player.rotation[1], 3)} / {round(player.rotation[0], 3)}\n"
-                                 # f"Biome: {getBiomeByTemp(scene.worldGen.perlinBiomes(player.x(), player.z()) * 3)}\n"
+            # f"Biome: {getBiomeByTemp(scene.worldGen.perlinBiomes(player.x(), player.z()) * 3)}\n"
                                  f"Looking at: {scene.lookingAt}\n",
                           shadow=False, label_color=(224, 224, 224), xx=3)
         pygame.display.flip()

@@ -11,7 +11,7 @@ pygame.init()
 monitor = pygame.display.Info()
 WIDTH = 854  # monitor.current_w
 HEIGHT = 480  # monitor.current_h
-MAX_FPS = 1000
+MAX_FPS = 144
 PAUSE = True
 IN_MENU = True
 MC_VERSION = "1.0"

@@ -6,7 +6,7 @@
 
 class World
 {
-private:
+public:
     std::map<std::pair<int, std::pair<int, int>>, Chunk*> chunks;
     std::vector<Chunk*> prepare;
     dict textures;
@@ -14,6 +14,26 @@ private:
     int texturesId;
     int renderDistance;
     int seed;
+
+    void updateChunkByPos(int x, int y, int z)
+    {
+        for (int chunk_x = (x / 16) - 1; chunk_x < (x / 16) + 1; chunk_x++)
+        {
+            for (int chunk_y = (y / 16) - 1; chunk_y < (y / 16) + 1; chunk_y++)
+            {
+                for (int chunk_z = (z / 16) - 1; chunk_z < (z / 16) + 1; chunk_z++)
+                {
+                    if (this->chunks.count(std::make_pair(chunk_x, std::make_pair(chunk_y, chunk_z))))
+                    {
+                        this->chunks[std::make_pair(chunk_x, std::make_pair(chunk_y, chunk_z))]->update();
+                    }
+                }
+            }
+
+        }
+
+
+    }
 
     void generateChunk(int x, int y, int z)
     {
@@ -43,7 +63,6 @@ private:
         }
     }
 
-public:
     World(int renderDistance, int texturesId, dict textures)
     {
         this->renderDistance = renderDistance;
@@ -52,12 +71,10 @@ public:
         this->seed = 4334232;
         this->level = Level(this->seed);
 
-        _gl_engine_info("World->constructor", "Generating world...");
-        this->level.generateLevel(-128, -128, 128, 128, 64);
-        _gl_engine_info("World->constructor", "Generating chunks...");
-
-
-        this->generateChunks(0, 0, 0);
+        //_gl_engine_info("World->constructor", "Generating world...");
+        //this->level.generateLevel(-128, -128, 128, 128, 64);
+        //_gl_engine_info("World->constructor", "Generating chunks...");
+        //this->generateChunks(0, 0, 0);
     }
 
     bool isUnderWater(int x, int y, int z)
@@ -81,18 +98,17 @@ public:
 
     void removeBlock(int x, int y, int z)
     {
-        int chunk_x = floor(x / 16.0f);
-        int chunk_y = floor(y / 16.0f);
-        int chunk_z = floor(z / 16.0f);
-
         if (level.getBlock(x, y, z).exist)
         {
-            if (this->chunks.count(std::make_pair(chunk_x, std::make_pair(chunk_y, chunk_z))))
-            {
-                level.removeBlock(x, y, z);
-                this->chunks[std::make_pair(chunk_x, std::make_pair(chunk_y, chunk_z))]->update();
-            }
+            level.removeBlock(x, y, z);
+            updateChunkByPos(x, y, z);
         }
+    }
+
+    void setBlock(int x, int y, int z, char* name)
+    {
+        level.setBlock(Block(name, x, y, z));
+        updateChunkByPos(x, y, z);
     }
 
     void update(float player_x, float player_y, float player_z)
@@ -101,17 +117,22 @@ public:
         glEnable(GL_TEXTURE_2D);
         glBindTexture(GL_TEXTURE_2D, this->texturesId);
 
+        int player_x_chunk = (int) (player_x / chunk_width);
+        int player_y_chunk = (int) (player_y / chunk_height);
+        int player_z_chunk = (int) (player_z / chunk_depth);
+
         for (const auto& [position, chunk] : chunks)
         {
             int cx = chunk->x * 16;
             int cy = chunk->y * 16;
             int cz = chunk->z * 16;
 
-            //if (player_x_chunk - (this->renderDistance - 1) > chunk->x || chunk->x > player_x_chunk + (this->renderDistance - 1) ||
-            //    player_z_chunk - (this->renderDistance - 1) > chunk->z || chunk->z > player_z_chunk + (this->renderDistance - 1))
-            //{
-            //    continue;
-            //}
+            if (player_x_chunk - (this->renderDistance - 1) > chunk->x || chunk->x > player_x_chunk + (this->renderDistance - 1) ||
+                player_y_chunk - (this->renderDistance - 1) > chunk->y || chunk->y > player_y_chunk + (this->renderDistance - 1) ||
+                player_z_chunk - (this->renderDistance - 1) > chunk->z || chunk->z > player_z_chunk + (this->renderDistance - 1))
+            {
+                continue;
+            }
 
             glPushMatrix();
             glTranslatef(cx, cy, cz);

@@ -6,41 +6,41 @@ public:
     bool exist = false;
 
     float epsilon = 0.0F;
-    double minX;
-    double minY;
-    double minZ;
-    double maxX;
-    double maxY;
-    double maxZ;
+    double x0;
+    double y0;
+    double z0;
+    double x1;
+    double y1;
+    double z1;
 
     double getMinX()
     {
-        return this->minX;
+        return this->x0;
     }
 
     double getMinY()
     {
-        return this->minY;
+        return this->y0;
     }
 
     double getMinZ()
     {
-        return this->minZ;
+        return this->z0;
     }
 
     double getMaxX()
     {
-        return this->maxX;
+        return this->x1;
     }
 
     double getMaxY()
     {
-        return this->maxY;
+        return this->y1;
     }
 
     double getMaxZ()
     {
-        return this->maxZ;
+        return this->z1;
     }
 
     bool getExist()
@@ -54,18 +54,18 @@ public:
     }
 
     float clipXCollide(AABB c, float xa) {
-        if (!(c.maxY <= this->minY) && !(c.minY >= this->maxY)) {
-            if (!(c.maxZ <= this->minZ) && !(c.minZ >= this->maxZ)) {
+        if (!(c.y1 <= this->y0) && !(c.y0 >= this->y1)) {
+            if (!(c.z1 <= this->z0) && !(c.z0 >= this->z1)) {
                 float max;
-                if (xa > 0.0F && c.maxX <= this->minX) {
-                    max = this->minX - c.maxX - this->epsilon;
+                if (xa > 0.0F && c.x1 <= this->x0) {
+                    max = this->x0 - c.x1 - this->epsilon;
                     if (max < xa) {
                         xa = max;
                     }
                 }
 
-                if (xa < 0.0F && c.minX >= this->maxX) {
-                    max = this->maxX - c.minX + this->epsilon;
+                if (xa < 0.0F && c.x0 >= this->x1) {
+                    max = this->x1 - c.x0 + this->epsilon;
                     if (max > xa) {
                         xa = max;
                     }
@@ -81,18 +81,18 @@ public:
     }
 
     float clipYCollide(AABB c, float ya) {
-        if (!(c.maxX <= this->minX) && !(c.minX >= this->maxX)) {
-            if (!(c.maxZ <= this->minZ) && !(c.minZ >= this->maxZ)) {
+        if (!(c.x1 <= this->x0) && !(c.x0 >= this->x1)) {
+            if (!(c.z1 <= this->z0) && !(c.z0 >= this->z1)) {
                 float max;
-                if (ya > 0.0F && c.maxY <= this->minY) {
-                    max = this->minY - c.maxY - this->epsilon;
+                if (ya > 0.0F && c.y1 <= this->y0) {
+                    max = this->y0 - c.y1 - this->epsilon;
                     if (max < ya) {
                         ya = max;
                     }
                 }
 
-                if (ya < 0.0F && c.minY >= this->maxY) {
-                    max = this->maxY - c.minY + this->epsilon;
+                if (ya < 0.0F && c.y0 >= this->y1) {
+                    max = this->y1 - c.y0 + this->epsilon;
                     if (max > ya) {
                         ya = max;
                     }
@@ -108,18 +108,18 @@ public:
     }
 
     float clipZCollide(AABB c, float za) {
-        if (!(c.maxX <= this->minX) && !(c.minX >= this->maxX)) {
-            if (!(c.maxY <= this->minY) && !(c.minY >= this->maxY)) {
+        if (!(c.x1 <= this->x0) && !(c.x0 >= this->x1)) {
+            if (!(c.y1 <= this->y0) && !(c.y0 >= this->y1)) {
                 float max;
-                if (za > 0.0F && c.maxZ <= this->minZ) {
-                    max = this->minZ - c.maxZ - this->epsilon;
+                if (za > 0.0F && c.z1 <= this->z0) {
+                    max = this->z0 - c.z1 - this->epsilon;
                     if (max < za) {
                         za = max;
                     }
                 }
 
-                if (za < 0.0F && c.minZ >= this->maxZ) {
-                    max = this->maxZ - c.minZ + this->epsilon;
+                if (za < 0.0F && c.z0 >= this->z1) {
+                    max = this->z1 - c.z0 + this->epsilon;
                     if (max > za) {
                         za = max;
                     }
@@ -135,22 +135,56 @@ public:
     }
 
     void move(float xa, float ya, float za) {
-        this->minX += xa;
-        this->minY += ya;
-        this->minZ += za;
-        this->maxX += xa;
-        this->maxY += ya;
-        this->maxZ += za;
+        this->x0 += xa;
+        this->y0 += ya;
+        this->z0 += za;
+        this->x1 += xa;
+        this->y1 += ya;
+        this->z1 += za;
     }
 
     AABB(double minx, double miny, double minz, double maxx, double maxy, double maxz)
     {
-        this->minX = minx;
-        this->minY = miny;
-        this->minZ = minz;
-        this->maxX = maxx;
-        this->maxY = maxy;
-        this->maxZ = maxz;
+        this->x0 = minx;
+        this->y0 = miny;
+        this->z0 = minz;
+        this->x1 = maxx;
+        this->y1 = maxy;
+        this->z1 = maxz;
+    }
+
+    AABB expand(float xa, float ya, float za) {
+        float _x0 = this->x0;
+        float _y0 = this->y0;
+        float _z0 = this->z0;
+        float _x1 = this->x1;
+        float _y1 = this->y1;
+        float _z1 = this->z1;
+        if (xa < 0.0F) {
+            _x0 += xa;
+        }
+
+        if (xa > 0.0F) {
+            _x1 += xa;
+        }
+
+        if (ya < 0.0F) {
+            _y0 += ya;
+        }
+
+        if (ya > 0.0F) {
+            _y1 += ya;
+        }
+
+        if (za < 0.0F) {
+            _z0 += za;
+        }
+
+        if (za > 0.0F) {
+            _z1 += za;
+        }
+
+        return AABB(_x0, _y0, _z0, _x1, _y1, _z1);
     }
 
 };

@@ -13,7 +13,7 @@ class Editarea:
         self.focused = False
         self.curFade = [1, True]
 
-        self.bg = gl.gui.GUI_TEXTURES["edit_bg"]
+        self.bg = gl.gui.GUI_TEXTURES["edit_bg2"]
 
     def update(self, mp, mc, keys):
         if checkHover(self.x, self.y,
@@ -45,10 +45,8 @@ class Editarea:
         self.bg.blit(self.x, self.gl.HEIGHT - self.y - self.bg.height)
         drawInfoLabel(self.gl, self.text, xx=self.x + 10, yy=self.gl.HEIGHT - self.y - 25, style=[('', '')],
                       size=12)
-        if not self.focused and not self.text:
-            drawInfoLabel(self.gl, self.hintText, xx=self.x + 10, yy=self.gl.HEIGHT - self.y - 25, style=[('', '')],
-                          size=12, label_color=(199, 199, 199))
-
+        drawInfoLabel(self.gl, self.hintText, xx=self.x, yy=self.gl.HEIGHT - self.y + 10, style=[('', '')],
+                      size=12, label_color=(199, 199, 199))
         if self.focused:
             if self.curFade[1]:
                 self.curFade[0] -= 0.1

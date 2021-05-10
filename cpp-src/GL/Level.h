@@ -140,6 +140,7 @@ public:
             for (int z = z_from; z <= z_to; z++)
             {
                 int y = height + this->sumOcatave(16, (float) x, (float) z, .5f, .007f, -24.0f, 32.0f);
+
                 if (y < 0) y = 0;
                 if (y > 255) y = 255;
                 bool wasSand = false;
@@ -154,10 +155,12 @@ public:
                 {
                     setBlock(Block("grass", x, y, z));
                 }
+
                 if (!wasSand && random(20, 100) == random(20, 100))
                 {
                     this->generateTree(x, y, z);
                 }
+
                 for (int i = 1; i < y; i++)
                 {
                     if (!wasSand)
@@ -191,6 +194,7 @@ public:
                         setBlock(Block("water", x, i, z));
                     }
                 }
+
             }
         }
     }

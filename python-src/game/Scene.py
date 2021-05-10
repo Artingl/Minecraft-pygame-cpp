@@ -195,7 +195,7 @@ class Scene:
         # self.particles.drawParticles()
         # self.light.update()
 
-        blockByVec = self.player.hitTest(self.player.position, self.player.get_sight_vector())
+        blockByVec = self.player.hitTest()
         if blockByVec[0] and blockByVec[2] != 2:
             # self.destroy.drawDestroy(*blockByVec[0])
 

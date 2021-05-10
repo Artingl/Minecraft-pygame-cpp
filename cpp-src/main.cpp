@@ -40,6 +40,21 @@ void removeBlock(int x, int y, int z)
     world->removeBlock(x, y, z);
 }
 
+void setBlock(int x, int y, int z, char* name)
+{
+    world->setBlock(x, y, z, name);
+}
+
+void generateLevel(int x_from, int z_from, int x_to, int z_to, int height)
+{
+    world->level.generateLevel(x_from, z_from, x_to, z_to, height);
+}
+
+void generateChunks(int x, int y, int z)
+{
+    world->generateChunks(x, y, z);
+}
+
 BOOST_PYTHON_MODULE(opengl_main_cpp)
 {
     using namespace boost::python;
@@ -49,7 +64,10 @@ BOOST_PYTHON_MODULE(opengl_main_cpp)
     def("updateWorld", updateWorld);
     def("getBlockExist", getBlockExist);
     def("removeBlock", removeBlock);
+    def("setBlock", setBlock);
     def("isUnderWater", isUnderWater);
+    def("generateLevel", generateLevel);
+    def("generateChunks", generateChunks);
 
     class_<AABB>("AABB", init<double, double, double, double, double, double>())
             .def("getMinX", &AABB::getMinX)
@@ -64,6 +82,7 @@ BOOST_PYTHON_MODULE(opengl_main_cpp)
             .def("clipYCollide", &AABB::clipYCollide)
             .def("clipZCollide", &AABB::clipZCollide)
             .def("move", &AABB::move)
+            .def("expand", &AABB::expand)
             ;
 
     class_<Chunk>("Chunk", init<int, int, int, Level*, dict>())
