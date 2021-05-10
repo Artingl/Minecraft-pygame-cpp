@@ -17,7 +17,7 @@ class Entity:
 
     def jump(self):
         if not self.dy:
-            self.dy = 4  # 2.5
+            self.dy = 3
 
     def move(self, dt, dx, dy, dz):
         self.dy -= dt * self.gravity
@@ -56,7 +56,7 @@ class Entity:
     def update(self):
         # self.gravity = 9.8 * self.gl.clock.get_fps() / 1000
         # self.speed = 0.1 * self.gl.clock.get_fps() / 1000
-        self.gravity = 5.8
+        self.gravity = 3.8
         self.speed = 0.03
 
         if self.position[0] > 128:

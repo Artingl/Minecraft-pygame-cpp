@@ -98,7 +98,7 @@ public:
 
     void removeBlock(int x, int y, int z)
     {
-        if (level.getBlock(x, y, z).exist)
+        if (level.getBlock(x, y, z).exist && level.getBlock(x, y, z).id != "bedrock")
         {
             level.removeBlock(x, y, z);
             updateChunkByPos(x, y, z);

@@ -313,8 +313,10 @@ def genWorld(mc):
     #               style=[('', '')], size=12, anchor_x='center')
 
     # TODO
-    drawInfoLabel(scene, "Generating world...", xx=scene.WIDTH // 2, yy=scene.HEIGHT // 2, style=[('', '')],
+    drawInfoLabel(scene, "Loading world...", xx=scene.WIDTH // 2, yy=scene.HEIGHT // 2, style=[('', '')],
                   size=12, anchor_x='center')
+    drawInfoLabel(scene, "Generating world...", xx=scene.WIDTH // 2, yy=scene.HEIGHT // 2 - 39,
+                  style=[('', '')], size=12, anchor_x='center')
     pygame.display.flip()
     clock.tick(MAX_FPS)
     opengl_main_cpp.generateLevel(-128, -128, 128, 128, 64)
@@ -330,8 +332,10 @@ def genWorld(mc):
             tex.blit(ix, iy)
             tex2.blit(ix, iy)
 
-    drawInfoLabel(scene, "Generating chunks...", xx=scene.WIDTH // 2, yy=scene.HEIGHT // 2, style=[('', '')],
+    drawInfoLabel(scene, "Loading world...", xx=scene.WIDTH // 2, yy=scene.HEIGHT // 2, style=[('', '')],
                   size=12, anchor_x='center')
+    drawInfoLabel(scene, "Generating chunks...", xx=scene.WIDTH // 2, yy=scene.HEIGHT // 2 - 39,
+                  style=[('', '')], size=12, anchor_x='center')
     pygame.display.flip()
     clock.tick(MAX_FPS)
     opengl_main_cpp.generateChunks(0, 0, 0)
@@ -556,11 +560,11 @@ scene.deathScreen = deathScreen
 scene.initScene()
 
 debug_module._gl_engine_info("_main_python", "Loading sounds...")
-sound.BLOCKS_SOUND["pickUp"] = pygame.mixer.Sound("../src/sounds/pick.mp3")
+sound.BLOCKS_SOUND["pickUp"] = pygame.mixer.Sound("sounds/pick.mp3")
 
 debug_module._gl_engine_info("_main_python", "Loading step sounds...")
 sound.BLOCKS_SOUND["step"] = {}
-for e, i in enumerate(os.listdir("../src/sounds/step/")):
+for e, i in enumerate(os.listdir("sounds/step/")):
     soundName = i.split(".")[0][:-1]
     soundNum = i.split(".")[0][-1]
 
@@ -572,7 +576,7 @@ for e, i in enumerate(os.listdir("../src/sounds/step/")):
 
 debug_module._gl_engine_info("_main_python", "Loading dig sounds...")
 sound.BLOCKS_SOUND["dig"] = {}
-for e, i in enumerate(os.listdir("../src/sounds/dig/")):
+for e, i in enumerate(os.listdir("sounds/dig/")):
     soundName = i.split(".")[0][:-1]
     soundNum = i.split(".")[0][-1]
 
@@ -584,7 +588,7 @@ for e, i in enumerate(os.listdir("../src/sounds/dig/")):
 
 debug_module._gl_engine_info("_main_python", "Loading explode sounds...")
 sound.BLOCKS_SOUND["explode"] = []
-for e, i in enumerate(os.listdir("../src/sounds/explode/")):
+for e, i in enumerate(os.listdir("sounds/explode/")):
     soundName = i.split(".")[0][:-1]
     soundNum = i.split(".")[0][-1]
 
@@ -593,7 +597,7 @@ for e, i in enumerate(os.listdir("../src/sounds/explode/")):
 
 debug_module._gl_engine_info("_main_python", "Loading damage sounds...")
 sound.SOUNDS["damage"] = {}
-for e, i in enumerate(os.listdir("../src/sounds/damage/")):
+for e, i in enumerate(os.listdir("sounds/damage/")):
     soundName = i.split(".")[0][:-1]
     soundNum = i.split(".")[0][-1]
 
@@ -605,7 +609,7 @@ for e, i in enumerate(os.listdir("../src/sounds/damage/")):
 
 debug_module._gl_engine_info("_main_python", "Loading GUI sounds...")
 sound.SOUNDS["GUI"] = {}
-for e, i in enumerate(os.listdir("../src/sounds/gui/")):
+for e, i in enumerate(os.listdir("sounds/gui/")):
     soundName = i.split(".")[0][:-1]
     soundNum = i.split(".")[0][-1]
 
@@ -616,12 +620,12 @@ for e, i in enumerate(os.listdir("../src/sounds/gui/")):
     debug_module._gl_engine_info("_main_python", "Successful loaded " + soundName + " #" + soundNum + " sound!")
 
 debug_module._gl_engine_info("_main_python", "Loading menu music...")
-for e, i in enumerate(os.listdir("../src/sounds/music/menu")):
+for e, i in enumerate(os.listdir("sounds/music/menu")):
     sound.MENU_MUSIC.append("sounds/music/menu/" + i)
     debug_module._gl_engine_info("_main_python", "Successful loaded " + i + " music!")
 
 debug_module._gl_engine_info("_main_python", "Loading game music...")
-for e, i in enumerate(os.listdir("../src/sounds/music/game")):
+for e, i in enumerate(os.listdir("sounds/music/game")):
     sound.MUSIC.append("sounds/music/game/" + i)
     debug_module._gl_engine_info("_main_python", "Successful loaded " + i + " music!")
 sound.initMusic(False)
@@ -691,7 +695,7 @@ showInfoLabel = False
 selectedWorld = -1
 
 debug_module._gl_engine_info("_main_python", "Loading splashes...")
-splfile = open("../src/gui/splashes.txt", "r", encoding='utf-8')
+splfile = open("gui/splashes.txt", "r", encoding='utf-8')
 splash = splfile.read().split("\n")
 splash = splash[randint(0, len(splash) - 1)]
 splfile.close()

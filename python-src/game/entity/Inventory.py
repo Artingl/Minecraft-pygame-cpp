@@ -22,7 +22,7 @@ class Inventory:
         old = False
         for i in range(10):
             old = not old
-            self.heartAnimation.append([0, '-' if old else '+', randint(3, 8) / 10])
+            self.heartAnimation.append([0, '-' if old else '+', randint(3, 8) / 50])
         for i in range(9 * 5 + 1):
             self.inventory[i] = ["sand", 0]
             self.blocksLabel[i] = pyglet.text.Label("0",
