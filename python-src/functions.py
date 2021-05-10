@@ -86,7 +86,7 @@ def load_textures(self):
     height = allTextures.get_height()
     bgImgGL = glGenTextures(1)
     glBindTexture(GL_TEXTURE_2D, bgImgGL)
-    glTexImage2D(GL_TEXTURE_2D, 0, 3, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, pygame.image.tostring(allTextures, "RGB"))
+    glTexImage2D(GL_TEXTURE_2D, 0, 4, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, pygame.image.tostring(allTextures, "RGBA"))
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST)
     glGenerateMipmap(GL_TEXTURE_2D)
     self.texture["world"] = bgImgGL

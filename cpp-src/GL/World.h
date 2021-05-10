@@ -60,10 +60,20 @@ public:
         this->generateChunks(0, 0, 0);
     }
 
+    bool isUnderWater(int x, int y, int z)
+    {
+        if (level.getBlock(x, y, z).id == "water")
+        {
+            return true;
+        }
+        return false;
+    }
+
     int getBlockExist(int x, int y, int z)
     {
-        if (level.getBlock(x, y, z).exist)
+        if (level.getBlock(x, y, z).exist && !level.getBlock(x, y, z).liquid)
         {
+            if (level.getBlock(x, y, z).liquid) return 2;
             return 1;
         }
         return -1;
@@ -71,22 +81,9 @@ public:
 
     void removeBlock(int x, int y, int z)
     {
-        int chunk_x = (int) (abs(x) / 16);
-        int chunk_y = (int) (abs(y) / 16);
-        int chunk_z = (int) (abs(z) / 16);
-
-        if (x < 0)
-        {
-            chunk_x = -chunk_x;
-        }
-        if (y < 0)
-        {
-            chunk_y = -chunk_y;
-        }
-        if (z < 0)
-        {
-            chunk_z = -chunk_z;
-        }
+        int chunk_x = floor(x / 16.0f);
+        int chunk_y = floor(y / 16.0f);
+        int chunk_z = floor(z / 16.0f);
 
         if (level.getBlock(x, y, z).exist)
         {
@@ -100,6 +97,7 @@ public:
 
     void update(float player_x, float player_y, float player_z)
     {
+        glEnable(GL_ALPHA_TEST);
         glEnable(GL_TEXTURE_2D);
         glBindTexture(GL_TEXTURE_2D, this->texturesId);
 
@@ -121,6 +119,7 @@ public:
             glPopMatrix();
         }
         glBindTexture(GL_TEXTURE_2D, 0);
+        glDisable(GL_ALPHA_TEST);
 
     }
 

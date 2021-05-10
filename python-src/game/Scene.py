@@ -42,7 +42,6 @@ class Scene:
         self.entity = []
         self.skyColor = [137, 177, 255]  # [64, 89, 150]
         self.panorama = {}
-        self.in_water = False
 
         self.resetScene()
 
@@ -163,15 +162,16 @@ class Scene:
         # self.resizeCGL(self.WIDTH, self.HEIGHT, changeRes=False)
 
     def updateScene(self):
-        # if self.in_water:
-        #     glFogfv(GL_FOG_COLOR, (GLfloat * 4)(0, 0, 0, 1))
-        #     glFogf(GL_FOG_START, 10)
-        #     glFogf(GL_FOG_END, 35)
-        # else:
-        #     glFogfv(GL_FOG_COLOR, (GLfloat * 4)
-        #         (self.skyColor[0] / 255, self.skyColor[1] / 255, self.skyColor[2] / 255, 1))
-        #     glFogf(GL_FOG_START, 10)
-        #     glFogf(GL_FOG_END, self.renderDistance * 16 - 32)
+        if opengl_main_cpp.isUnderWater(int(self.player.x()), int(self.player.y()), int(self.player.z())):
+            glFogfv(GL_FOG_COLOR, (GLfloat * 4)
+                    (116 / 255, 129 / 255, 248 / 255))
+            glFogf(GL_FOG_START, 5)
+            glFogf(GL_FOG_END, 20)
+        else:
+            glFogfv(GL_FOG_COLOR, (GLfloat * 4)
+                    (self.skyColor[0] / 255, self.skyColor[1] / 255, self.skyColor[2] / 255, 1))
+            glFogf(GL_FOG_START, 10)
+            glFogf(GL_FOG_END, self.renderDistance * 16)
 
         self.set3d()
         glClearColor(self.skyColor[0] / 255, self.skyColor[1] / 255, self.skyColor[2] / 255, 1)
@@ -196,7 +196,7 @@ class Scene:
         # self.light.update()
 
         blockByVec = self.player.hitTest(self.player.position, self.player.get_sight_vector())
-        if blockByVec[0]:
+        if blockByVec[0] and blockByVec[2] != 2:
             # self.destroy.drawDestroy(*blockByVec[0])
 
             glPolygonMode(GL_FRONT_AND_BACK, GL_LINE)
@@ -213,6 +213,12 @@ class Scene:
         glColor3d(1, 1, 1)
         glPopMatrix()
         self.set2d()
+
+        if opengl_main_cpp.isUnderWater(int(self.player.x()), int(self.player.y()), int(self.player.z())):
+            texture = self.gui.GUI_TEXTURES["under_water"]
+            texture.width = self.WIDTH
+            texture.height = self.HEIGHT
+            texture.blit(0, 0)
 
         self.blockSound.pickUpAlreadyPlayed = False
         for i in self.updateEvents:

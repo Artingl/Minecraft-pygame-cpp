@@ -5,8 +5,18 @@
 class Level
 {
 public:
-    int seed;
+    int random(int min, int max)
+    {
+        static bool first = true;
+        if (first)
+        {
+            srand( this->seed ); //seeding for the first time only!
+            first = false;
+        }
+        return min + rand() % (( max + 1 ) - min);
+    }
 
+    int seed;
     std::map<std::pair<int, std::pair<int, int>>, Block> blocks;
 
     Level()
@@ -78,6 +88,51 @@ public:
         }
     }
 
+    void generateTree(int x, int y, int z)
+    {
+        int treeHeight = random(5, 7);
+        for (int i = y; i < y + treeHeight; i++)
+        {
+            setBlock(Block("log_oak", x, i, z));
+        }
+        for (int i = x + -2; i < x + 3; i++)
+        {
+            for (int j = z + -2; j < z + 3; j++)
+            {
+                for (int k = y + treeHeight - 2; k < y + treeHeight; k++)
+                {
+                    setBlock(Block("leaves_oak", i, k, j));
+                }
+            }
+        }
+        for (int i = treeHeight; i < treeHeight + 1; i++)
+        {
+            for (int j = -1; j < 2; j++)
+            {
+                for (int k = -1; k < 2; k++)
+                {
+                    setBlock(Block("leaves_oak", x + j, y + i, z + k));
+                }
+            }
+        }
+        int cl = 2;
+        for (int i = treeHeight + 1; i < treeHeight + 2; i++)
+        {
+            for (int j = -1; j < 2; j++)
+            {
+                for (int k = -1; k < 2; k++)
+                {
+                    if (cl % 2 != 0)
+                    {
+                        setBlock(Block("leaves_oak", x + j, y + i, z + k));
+                    }
+                    cl++;
+                }
+            }
+        }
+        setBlock(Block("leaves_oak", x, y + treeHeight + 1, z));
+    }
+
     void generateLevel(int x_from, int z_from, int x_to, int z_to, int height)
     {
         for (int x = x_from; x <= x_to; x++)
@@ -87,13 +142,54 @@ public:
                 int y = height + this->sumOcatave(16, (float) x, (float) z, .5f, .007f, -24.0f, 32.0f);
                 if (y < 0) y = 0;
                 if (y > 255) y = 255;
+                bool wasSand = false;
 
                 setBlock(Block("bedrock", x, 0, z));
-                setBlock(Block("grass", x, y, z));
-
+                if (y < height - 1)
+                {
+                    setBlock(Block("sand", x, y, z));
+                    wasSand = true;
+                }
+                else
+                {
+                    setBlock(Block("grass", x, y, z));
+                }
+                if (!wasSand && random(20, 100) == random(20, 100))
+                {
+                    this->generateTree(x, y, z);
+                }
                 for (int i = 1; i < y; i++)
                 {
-                    setBlock(Block("dirt", x, i, z));
+                    if (!wasSand)
+                    {
+                        if (i > y - random(5, 10))
+                        {
+                            setBlock(Block("dirt", x, i, z));
+                        }
+                        else
+                        {
+                            setBlock(Block("stone", x, i, z));
+                        }
+                    }
+                    else
+                    {
+                        if (i > y - random(5, 10))
+                        {
+                            setBlock(Block("gravel", x, i, z));
+                        }
+                        else
+                        {
+                            setBlock(Block("stone", x, i, z));
+                        }
+                    }
+
+                }
+                if (y < height - 3)
+                {
+                    for (int i = y; i < height - 3; i++)
+                    {
+                        setBlock(Block("water", x, i, z));
+                    }
                 }
             }
         }

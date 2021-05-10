@@ -24,8 +24,6 @@ public:
     int y{};
     int z{};
     int chunkList{};
-
-    //std::map<std::pair<int, std::pair<int, int>>, BlockRender*> blocks_by_real_coords;
     dict textures;
 
     Chunk(int x, int y, int z, Level *level, dict textures)
@@ -47,8 +45,6 @@ public:
 
     void update()
     {
-        //blocks_by_real_coords = std::map<std::pair<int, std::pair<int, int>>, BlockRender*>();
-
         if(chunkList) glDeleteLists(chunkList, 1);
         if (qb) delete qb;
         chunkList = glGenLists(1);
@@ -74,35 +70,38 @@ public:
                     if (!level_block.exist) continue;
                     BlockRender block = BlockRender::getBlock(this->textures,
                                                               Block(level_block.id, level_block.x - xcw, level_block.y - ycw, level_block.z - zcw));
+                    float down = 0.0f;
+                    if (level_block.liquid)// && !this->level->getBlock(block_x, block_y + 1, block_z).liquid)
+                        down = 0.1f;
 
                     if (haveToRenderBlock(0, block_x, block_y, block_z))
                     {
-                        block.renderTopSide(qb);
+                        block.renderTopSide(qb, down);
                     }
 
                     if (haveToRenderBlock(1, block_x, block_y, block_z))
                     {
-                        block.renderBottomSide(qb);
+                        block.renderBottomSide(qb, down);
                     }
 
                     if (haveToRenderBlock(2, block_x, block_y, block_z))
                     {
-                        block.renderBackSide(qb);
+                        block.renderBackSide(qb, down);
                     }
 
                     if (haveToRenderBlock(3, block_x, block_y, block_z))
                     {
-                        block.renderRightSide(qb);
+                        block.renderRightSide(qb, down);
                     }
 
                     if (haveToRenderBlock(4, block_x, block_y, block_z))
                     {
-                        block.renderFrontSide(qb);
+                        block.renderFrontSide(qb, down);
                     }
 
                     if (haveToRenderBlock(5, block_x, block_y, block_z))
                     {
-                        block.renderLeftSide(qb);
+                        block.renderLeftSide(qb, down);
                     }
 
                 }
@@ -116,12 +115,23 @@ public:
 
     bool haveToRenderBlock(int side, int x, int y, int z)
     {
-        if (side == 0) return !this->level->blocks[std::make_pair(x,    std::make_pair(y + 1,z    ))].exist;
+        Block current = this->level->getBlock(x, y, z);
+        if (current.liquid)
+        {
+            if (side == 0) return !this->level->blocks[std::make_pair(x,    std::make_pair(y + 1,z    ))].exist;
+            if (side == 1) return !this->level->blocks[std::make_pair(x,    std::make_pair(y - 1,z    ))].exist;
+            if (side == 2) return !this->level->blocks[std::make_pair(x,    std::make_pair(y,    z - 1))].exist;
+            if (side == 3) return !this->level->blocks[std::make_pair(x + 1,std::make_pair(y,    z    ))].exist;
+            if (side == 4) return !this->level->blocks[std::make_pair(x,    std::make_pair(y,    z + 1))].exist;
+            if (side == 5) return !this->level->blocks[std::make_pair(x - 1,std::make_pair(y,    z    ))].exist;
+        }
+
+        if (side == 0) return !this->level->blocks[std::make_pair(x,    std::make_pair(y + 1,z    ))].exist || this->level->blocks[std::make_pair(x,    std::make_pair(y + 1,z    ))].liquid;
         if (side == 1) return !this->level->blocks[std::make_pair(x,    std::make_pair(y - 1,z    ))].exist;
-        if (side == 2) return !this->level->blocks[std::make_pair(x,    std::make_pair(y,    z - 1))].exist;
-        if (side == 3) return !this->level->blocks[std::make_pair(x + 1,std::make_pair(y,    z    ))].exist;
-        if (side == 4) return !this->level->blocks[std::make_pair(x,    std::make_pair(y,    z + 1))].exist;
-        if (side == 5) return !this->level->blocks[std::make_pair(x - 1,std::make_pair(y,    z    ))].exist;
+        if (side == 2) return !this->level->blocks[std::make_pair(x,    std::make_pair(y,    z - 1))].exist || this->level->blocks[std::make_pair(x,    std::make_pair(y,    z - 1))].liquid;
+        if (side == 3) return !this->level->blocks[std::make_pair(x + 1,std::make_pair(y,    z    ))].exist || this->level->blocks[std::make_pair(x + 1,std::make_pair(y,    z    ))].liquid;
+        if (side == 4) return !this->level->blocks[std::make_pair(x,    std::make_pair(y,    z + 1))].exist || this->level->blocks[std::make_pair(x,    std::make_pair(y,    z + 1))].liquid;
+        if (side == 5) return !this->level->blocks[std::make_pair(x - 1,std::make_pair(y,    z    ))].exist || this->level->blocks[std::make_pair(x - 1,std::make_pair(y,    z    ))].liquid;
 
         return false;
     }

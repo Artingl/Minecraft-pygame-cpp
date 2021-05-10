@@ -97,20 +97,20 @@ public:
 
     // gl stuff
 
-    void renderTopSide(GL *qb, int block_r=255, int block_g=255, int block_b=255)
+    void renderTopSide(GL *qb, float down, int block_r=255, int block_g=255, int block_b=255)
     {
         qb->setColori(block_r, block_g, block_b);
         qb->setTexCoord(this->top_x + 0.0f, this->top_y + this->addTextCoord);
-        qb->addVertex(this->x - 0.5f, 0.5f + this->y, this->z - 0.5f);
+        qb->addVertex(this->x - 0.5f, 0.5f + this->y - down, this->z - 0.5f);
         qb->setTexCoord(this->top_x + 0.0f, this->top_y + 0.0f);
-        qb->addVertex(0.5f + this->x, 0.5f + this->y, this->z - 0.5f);
+        qb->addVertex(0.5f + this->x, 0.5f + this->y - down, this->z - 0.5f);
         qb->setTexCoord(this->top_x + this->addTextCoord, this->top_y + 0.0f);
-        qb->addVertex(0.5f + this->x, 0.5f + this->y, 0.5f + this->z);
+        qb->addVertex(0.5f + this->x, 0.5f + this->y - down, 0.5f + this->z);
         qb->setTexCoord(this->top_x + this->addTextCoord, this->top_y + this->addTextCoord);
-        qb->addVertex(this->x - 0.5f, 0.5f + this->y, 0.5f + this->z);
+        qb->addVertex(this->x - 0.5f, 0.5f + this->y - down, 0.5f + this->z);
     }
 
-    void renderBottomSide(GL *qb, int block_r=255, int block_g=255, int block_b=255)
+    void renderBottomSide(GL *qb, float down, int block_r=255, int block_g=255, int block_b=255)
     {
         qb->setColori(block_r, block_g, block_b);
         qb->setTexCoord(this->bottom_x + 0.0f, this->bottom_y + this->addTextCoord);
@@ -123,56 +123,56 @@ public:
         qb->addVertex(this->x - 0.5f, this->y - 0.5f, this->z - 0.5f);
     }
 
-    void renderBackSide(GL *qb, int block_r=255, int block_g=255, int block_b=255)
+    void renderBackSide(GL *qb, float down, int block_r=255, int block_g=255, int block_b=255)
     {
         qb->setColori(block_r - 40, block_g - 40, block_b - 40);
         qb->setTexCoord(this->side_x + this->addTextCoord, this->side_y + this->addTextCoord);
-        qb->addVertex(this->x - 0.5f, this->y - 0.5f, this->z - 0.5f);
+        qb->addVertex(this->x - 0.5f, this->y - 0.5f - down, this->z - 0.5f);
         qb->setTexCoord(this->side_x + 0.0f, this->side_y + this->addTextCoord);
-        qb->addVertex(0.5f + this->x, this->y - 0.5f, this->z - 0.5f);
+        qb->addVertex(0.5f + this->x, this->y - 0.5f - down, this->z - 0.5f);
         qb->setTexCoord(this->side_x + 0.0f, this->side_y + 0.0f);
-        qb->addVertex(0.5f + this->x, 0.5f + this->y, this->z - 0.5f);
+        qb->addVertex(0.5f + this->x, 0.5f + this->y - down, this->z - 0.5f);
         qb->setTexCoord(this->side_x + this->addTextCoord, this->side_y + 0.0f);
-        qb->addVertex(this->x - 0.5f, 0.5f + this->y, this->z - 0.5f);
+        qb->addVertex(this->x - 0.5f, 0.5f + this->y - down, this->z - 0.5f);
     }
 
-    void renderRightSide(GL *qb, int block_r=255, int block_g=255, int block_b=255)
+    void renderRightSide(GL *qb, float down, int block_r=255, int block_g=255, int block_b=255)
     {
         qb->setColori(block_r - 80, block_g - 80, block_b - 80);
         qb->setTexCoord(this->side_x + this->addTextCoord, this->side_y + this->addTextCoord);
-        qb->addVertex(0.5f + this->x, this->y - 0.5f, this->z - 0.5f);
+        qb->addVertex(0.5f + this->x, this->y - 0.5f - down, this->z - 0.5f);
         qb->setTexCoord(this->side_x + 0.0f, this->side_y + this->addTextCoord);
-        qb->addVertex(0.5f + this->x, this->y - 0.5f, 0.5f + this->z);
+        qb->addVertex(0.5f + this->x, this->y - 0.5f - down, 0.5f + this->z);
         qb->setTexCoord(this->side_x + 0.0f, this->side_y + 0.0f);
-        qb->addVertex(0.5f + this->x, 0.5f + this->y, 0.5f + this->z);
+        qb->addVertex(0.5f + this->x, 0.5f + this->y - down, 0.5f + this->z);
         qb->setTexCoord(this->side_x + this->addTextCoord, this->side_y + 0.0f);
-        qb->addVertex(0.5f + this->x, 0.5f + this->y, this->z - 0.5f);
+        qb->addVertex(0.5f + this->x, 0.5f + this->y - down, this->z - 0.5f);
     }
 
-    void renderFrontSide(GL *qb, int block_r=255, int block_g=255, int block_b=255)
+    void renderFrontSide(GL *qb, float down, int block_r=255, int block_g=255, int block_b=255)
     {
         qb->setColori(block_r - 40, block_g - 40, block_b - 40);
         qb->setTexCoord(this->side_x + this->addTextCoord, this->side_y + this->addTextCoord);
-        qb->addVertex(0.5f + this->x, this->y - 0.5f, 0.5f + this->z);
+        qb->addVertex(0.5f + this->x, this->y - 0.5f - down, 0.5f + this->z);
         qb->setTexCoord(this->side_x + 0.0f, this->side_y + this->addTextCoord);
-        qb->addVertex(this->x - 0.5f, this->y - 0.5f, 0.5f + this->z);
+        qb->addVertex(this->x - 0.5f, this->y - 0.5f - down, 0.5f + this->z);
         qb->setTexCoord(this->side_x + 0.0f, this->side_y + 0.0f);
-        qb->addVertex(this->x - 0.5f, 0.5f + this->y, 0.5f + this->z);
+        qb->addVertex(this->x - 0.5f, 0.5f + this->y - down, 0.5f + this->z);
         qb->setTexCoord(this->side_x + this->addTextCoord, this->side_y + 0.0f);
-        qb->addVertex(0.5f + this->x, 0.5f + this->y, 0.5f + this->z);
+        qb->addVertex(0.5f + this->x, 0.5f + this->y - down, 0.5f + this->z);
     }
 
-    void renderLeftSide(GL *qb, int block_r=255, int block_g=255, int block_b=255)
+    void renderLeftSide(GL *qb, float down, int block_r=255, int block_g=255, int block_b=255)
     {
         qb->setColori(block_r - 80, block_g - 80, block_b - 80);
         qb->setTexCoord(this->side_x + this->addTextCoord, this->side_y + this->addTextCoord);
-        qb->addVertex(this->x - 0.5f, this->y - 0.5f, 0.5f + this->z);
+        qb->addVertex(this->x - 0.5f, this->y - 0.5f - down, 0.5f + this->z);
         qb->setTexCoord(this->side_x + 0.0f, this->side_y + this->addTextCoord);
-        qb->addVertex(this->x - 0.5f, this->y - 0.5f, this->z - 0.5f);
+        qb->addVertex(this->x - 0.5f, this->y - 0.5f - down, this->z - 0.5f);
         qb->setTexCoord(this->side_x + 0.0f, this->side_y + 0.0f);
-        qb->addVertex(this->x - 0.5f, 0.5f + this->y, this->z - 0.5f);
+        qb->addVertex(this->x - 0.5f, 0.5f + this->y - down, this->z - 0.5f);
         qb->setTexCoord(this->side_x + this->addTextCoord, this->side_y + 0.0f);
-        qb->addVertex(this->x - 0.5f, 0.5f + this->y, 0.5f + this->z);
+        qb->addVertex(this->x - 0.5f, 0.5f + this->y - down, 0.5f + this->z);
     }
 
 };

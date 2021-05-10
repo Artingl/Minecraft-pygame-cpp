@@ -8,6 +8,7 @@ public:
     int y;
     int z;
 
+    bool liquid = false;
     bool exist = false;
 
     Block() {}
@@ -19,6 +20,8 @@ public:
         this->y = y;
         this->z = z;
         this->exist = true;
+
+        if (id == "water" || id == "lava") this->liquid = true;
     }
 
     int getXByChunk(int chunk_x)

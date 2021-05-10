@@ -437,6 +437,7 @@ gui.GUI_TEXTURES = {
     "red": pyglet.resource.image("gui/gui_elements/red.png"),
     "selected": pyglet.resource.image("gui/gui_elements/selected.png"),
     "slider": pyglet.resource.image("gui/gui_elements/slider.png"),
+    "under_water": pyglet.resource.image("gui/under_water.png"),
 }
 
 glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST)

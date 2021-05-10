@@ -25,6 +25,11 @@ void updateWorld(float player_x, float player_y, float player_z)
     world->update(player_x, player_y, player_z);
 }
 
+bool isUnderWater(int x, int y, int z)
+{
+    return world->isUnderWater(x, y, z);
+}
+
 int getBlockExist(int x, int y, int z)
 {
     return world->getBlockExist(x, y, z);
@@ -44,6 +49,7 @@ BOOST_PYTHON_MODULE(opengl_main_cpp)
     def("updateWorld", updateWorld);
     def("getBlockExist", getBlockExist);
     def("removeBlock", removeBlock);
+    def("isUnderWater", isUnderWater);
 
     class_<AABB>("AABB", init<double, double, double, double, double, double>())
             .def("getMinX", &AABB::getMinX)

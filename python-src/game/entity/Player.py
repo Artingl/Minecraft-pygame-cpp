@@ -102,6 +102,14 @@ class Player:
                 DY -= self.speed
             self.position = [self.position[0] + DX, self.position[1] + DY, self.position[2] + DZ]
             # self.move(self.speed, DX, DY, DZ)
+        if self.position[0] > 128:
+            self.position[0] = 128
+        if self.position[0] < -128:
+            self.position[0] = -128
+        if self.position[2] > 128:
+            self.position[2] = 128
+        if self.position[2] < -128:
+            self.position[2] = -128
 
         glRotatef(self.rotation[0], 1, 0, 0)
         glRotatef(self.rotation[1], 0, 1, 0)
@@ -172,7 +180,7 @@ class Player:
     def mouseEvent(self, button):
         blockByVec = self.hitTest(self.position, self.get_sight_vector())
 
-        if button == 1 and blockByVec[0]:
+        if button == 1 and blockByVec[0] and blockByVec[2] != 2:
             opengl_main_cpp.removeBlock(blockByVec[0][0], blockByVec[0][1], blockByVec[0][2])
             # self.gl.destroy.destroy(self.gl.cubes.cubes[blockByVec[0]].name, blockByVec)
         elif button == 3 and blockByVec[1]:
