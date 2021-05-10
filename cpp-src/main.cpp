@@ -1,35 +1,49 @@
 #include <boost/python/dict.hpp>
 #include <boost/python.hpp>
-#include <cmath>
-#include <glm/glm.hpp>
-#include <glm/gtc/noise.hpp>
 #include "AABB.h"
-#include "GL/Texture.h"
+#include "GL/BlockRender.h"
 #include "GL/Chunk.h"
-#include "noise.h"
+#include "GL/World.h"
+#include "GL/Level.h"
 
-int renderDistance;
+World *world;
 
-void _gl_engine_init(int _renderDistance)
+void engineInit(int _renderDistance, int texturesId, dict textures)
 {
-    _gl_engine_info("_gl_engine_init", "Initializing engine...");
+    _gl_engine_info("engineInit", "Initializing engine...");
 
     glewInit();
-    renderDistance = _renderDistance;
+    world = new World(_renderDistance, texturesId, textures);
 }
 
-void _gl_engine_quit() {
-    _gl_engine_info("_gl_engine_quit", "Quit the game");
+void engineQuit() {
+    _gl_engine_info("engineQuit", "Quit the game");
+}
+
+void updateWorld(float player_x, float player_y, float player_z)
+{
+    world->update(player_x, player_y, player_z);
+}
+
+int getBlockExist(int x, int y, int z)
+{
+    return world->getBlockExist(x, y, z);
+}
+
+void removeBlock(int x, int y, int z)
+{
+    world->removeBlock(x, y, z);
 }
 
 BOOST_PYTHON_MODULE(opengl_main_cpp)
 {
     using namespace boost::python;
 
-    //Py_Initialize();
-
-    def("_gl_engine_init", _gl_engine_init);
-    def("_gl_engine_quit", _gl_engine_quit);
+    def("engineInit", engineInit);
+    def("engineQuit", engineQuit);
+    def("updateWorld", updateWorld);
+    def("getBlockExist", getBlockExist);
+    def("removeBlock", removeBlock);
 
     class_<AABB>("AABB", init<double, double, double, double, double, double>())
             .def("getMinX", &AABB::getMinX)
@@ -46,19 +60,10 @@ BOOST_PYTHON_MODULE(opengl_main_cpp)
             .def("move", &AABB::move)
             ;
 
-    class_<Chunk>("Chunk", init<int, int, int, dict>())
+    class_<Chunk>("Chunk", init<int, int, int, Level*, dict>())
             .def("erase", &Chunk::erase)
-            .def("setBlock", &Chunk::setBlock)
-            .def("getBlock", &Chunk::getBlock)
-            .def("getBlockAABB", &Chunk::getBlockAABB)
-            .def("setChunk", &Chunk::setChunk)
-            .def("getPrepared", &Chunk::getPrepared)
-            .def("getX", &Chunk::getX)
-            .def("getZ", &Chunk::getZ)
-            .def("removeBlock", &Chunk::removeBlock)
-            .def("prepareChunk", &Chunk::prepareChunk)
             .def("update", &Chunk::update)
-            .def("checkBlockSide", &Chunk::checkBlockSide)
+            .def("haveToRenderBlock", &Chunk::haveToRenderBlock)
             .def("render", &Chunk::render)
             ;
 }

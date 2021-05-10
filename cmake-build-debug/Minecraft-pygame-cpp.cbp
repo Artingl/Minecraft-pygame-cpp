@@ -147,6 +147,9 @@
 		<Unit filename="C:/Users/WildPC/Documents/GitHub/Minecraft-pygame-cpp/cpp-src/AABB.h">
 			<Option target="opengl_main_cpp"/>
 		</Unit>
+		<Unit filename="C:/Users/WildPC/Documents/GitHub/Minecraft-pygame-cpp/cpp-src/GL/BlockRender.h">
+			<Option target="opengl_main_cpp"/>
+		</Unit>
 		<Unit filename="C:/Users/WildPC/Documents/GitHub/Minecraft-pygame-cpp/cpp-src/GL/Chunk.h">
 			<Option target="opengl_main_cpp"/>
 		</Unit>
@@ -154,9 +157,6 @@
 			<Option target="opengl_main_cpp"/>
 		</Unit>
 		<Unit filename="C:/Users/WildPC/Documents/GitHub/Minecraft-pygame-cpp/cpp-src/GL/Shader.h">
-			<Option target="opengl_main_cpp"/>
-		</Unit>
-		<Unit filename="C:/Users/WildPC/Documents/GitHub/Minecraft-pygame-cpp/cpp-src/GL/Texture.h">
 			<Option target="opengl_main_cpp"/>
 		</Unit>
 		<Unit filename="C:/Users/WildPC/Documents/GitHub/Minecraft-pygame-cpp/cpp-src/GL/vertex.h">
@@ -174,12 +174,6 @@
 			<Option target="debug_module"/>
 		</Unit>
 		<Unit filename="C:/Users/WildPC/Documents/GitHub/Minecraft-pygame-cpp/cpp-src/main.cpp">
-			<Option target="opengl_main_cpp"/>
-		</Unit>
-		<Unit filename="C:/Users/WildPC/Documents/GitHub/Minecraft-pygame-cpp/cpp-src/noise.h">
-			<Option target="opengl_main_cpp"/>
-		</Unit>
-		<Unit filename="C:/Users/WildPC/Documents/GitHub/Minecraft-pygame-cpp/cpp-src/nose.cpp">
 			<Option target="opengl_main_cpp"/>
 		</Unit>
 		<Unit filename="C:/Users/WildPC/Documents/GitHub/Minecraft-pygame-cpp/CMakeLists.txt">

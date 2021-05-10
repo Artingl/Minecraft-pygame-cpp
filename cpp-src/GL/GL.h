@@ -1,82 +1,70 @@
 #ifndef _QUADBUILDER_H_
 #define _QUADBUILDER_H_
 
-class GL
-{
+class GL {
 public:
-    GL(int bufferSize)
-    {
+    GL(int bufferSize) {
         maxVertex = bufferSize;
-        mRawVertex = new double[maxVertex*3];
-        mRawColor = new double[maxVertex*4];
-        mRawNormal = new double[maxVertex*3];
-        mRawTexCoord = new double[maxVertex*2];
+        mRawVertex = new double[maxVertex * 3];
+        mRawColor = new double[maxVertex * 4];
+        mRawNormal = new double[maxVertex * 3];
+        mRawTexCoord = new double[maxVertex * 2];
         reset();
     }
 
-    virtual ~GL()
-    {
-        delete [] mRawVertex;
-        delete [] mRawColor;
-        delete [] mRawNormal;
-        delete [] mRawTexCoord;
+    virtual ~GL() {
+        delete[] mRawVertex;
+        delete[] mRawColor;
+        delete[] mRawNormal;
+        delete[] mRawTexCoord;
     }
 
-    void begin()
-    {
-        begin(GL_QUADS,0);
+    void begin() {
+        begin(GL_QUADS, 0);
     }
 
-    void begin(int mode,int resetflag=0)
-    {
+    void begin(int mode, int resetflag = 0) {
         reset(resetflag);
         mMode = mode;
     }
 
-    void render()
-    {
+    void render() {
         glEnableClientState(GL_VERTEX_ARRAY);
-        glVertexPointer(3,GL_DOUBLE,0,mRawVertex);
-        if(hasColor)
-        {
+        glVertexPointer(3, GL_DOUBLE, 0, mRawVertex);
+        if (hasColor) {
             glEnableClientState(GL_COLOR_ARRAY);
-            glColorPointer(4,GL_DOUBLE,0,mRawColor);
+            glColorPointer(4, GL_DOUBLE, 0, mRawColor);
         }
-        if(hasTexture)
-        {
+        if (hasTexture) {
             glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-            glTexCoordPointer(2,GL_DOUBLE,0,mRawTexCoord);
+            glTexCoordPointer(2, GL_DOUBLE, 0, mRawTexCoord);
         }
-        if(hasNormal)
-        {
+        if (hasNormal) {
             glEnableClientState(GL_NORMAL_ARRAY);
-            glNormalPointer(GL_DOUBLE,0,mRawNormal);
+            glNormalPointer(GL_DOUBLE, 0, mRawNormal);
         }
 
         glDrawArrays(mMode, 0, mNumVertex);
 
         glDisableClientState(GL_VERTEX_ARRAY);
-        if(hasColor)
+        if (hasColor)
             glDisableClientState(GL_COLOR_ARRAY);
-        if(hasTexture)
+        if (hasTexture)
             glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-        if(hasNormal)
+        if (hasNormal)
             glDisableClientState(GL_NORMAL_ARRAY);
     }
 
-    void reset(int resetflag=0)
-    {
+    void reset(int resetflag = 0) {
         mNumVertex = 0;
-        if(!resetflag)
-        {
+        if (!resetflag) {
             hasColor = false;
             hasNormal = false;
             hasTexture = false;
         }
     }
 
-    void setColor(double _r,double _g,double _b,double _a= 0)
-    {
+    void setColor(double _r, double _g, double _b, double _a = 0) {
         hasColor = true;
         r = _r;
         g = _g;
@@ -84,24 +72,26 @@ public:
         a = _a;
     }
 
-    void setColori(int _r,int _g,int _b,int _a = 255)
-    {
-        setColor(_r/255.0,_g/255.0,_b/255.0,_a/255.0);
+    void setColori(int _r, int _g, int _b, int _a = 255) {
+        setColor(_r / 255.0, _g / 255.0, _b / 255.0, _a / 255.0);
     }
 
-    void setNormal(double x,double y, double z)
-    {
+    void setNormal(double x, double y, double z) {
         hasNormal = true;
         nx = x;
         ny = y;
         nz = z;
     }
 
-    void setTexCoord(double _u,double _v)
-    {
+    void setTexCoord(double _u, double _v) {
         hasTexture = true;
         u = _u;
         v = _v;
+    }
+
+    void deleteVertex(double x, double y, double z)
+    {
+
     }
 
     void addVertex(double x,double y, double z)

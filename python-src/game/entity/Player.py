@@ -15,7 +15,7 @@ class Player:
         debug_module._gl_engine_info("_Player_python", "Init Player class...")
 
         self.position, self.rotation = [x, y, z], rotation
-        self.speed = 0.02 * gl.clock.get_fps() / 1000  # 0.02
+        self.speed = 0.04
         self.gl = gl
         self.gravity = 5.8
         self.tVel = 50
@@ -30,7 +30,7 @@ class Player:
         self.bInAir = False
         self.playerDead = False
         self.inventory = None
-        self.sensitivity = 2
+        self.sensitivity = 8
 
         self.lastPlayerPosOnGround = [0, 0, 0]
         self.playerFallY = 0
@@ -60,18 +60,16 @@ class Player:
 
     def updatePosition(self):
         if self.gl.allowEvents["movePlayer"]:
-            self.speed = 1 * self.gl.clock.get_fps() / 1000
-
             rdx, rdy = pygame.mouse.get_pos()
             rdx, rdy = rdx - self.gl.WIDTH // 2, rdy - self.gl.HEIGHT // 2
             rdx /= self.sensitivity
             rdy /= self.sensitivity
-            self.rotation[0] += rdy * self.gl.clock.get_fps() / 1000
-            self.rotation[1] += rdx * self.gl.clock.get_fps() / 1000
-            if self.rotation[0] > 88:
-                self.rotation[0] = 88
-            elif self.rotation[0] < -88:
-                self.rotation[0] = -88
+            self.rotation[0] += rdy  # * self.gl.clock.get_fps() / 1000
+            self.rotation[1] += rdx  # * self.gl.clock.get_fps() / 1000
+            if self.rotation[0] > 90:
+                self.rotation[0] = 90
+            elif self.rotation[0] < -90:
+                self.rotation[0] = -90
 
             if self.rotation[1] > 360:
                 self.rotation[1] = 0
@@ -175,7 +173,7 @@ class Player:
         blockByVec = self.hitTest(self.position, self.get_sight_vector())
 
         if button == 1 and blockByVec[0]:
-            self.gl.chunks.removeBlock(blockByVec[0][0], blockByVec[0][1], blockByVec[0][2])
+            opengl_main_cpp.removeBlock(blockByVec[0][0], blockByVec[0][1], blockByVec[0][2])
             # self.gl.destroy.destroy(self.gl.cubes.cubes[blockByVec[0]].name, blockByVec)
         elif button == 3 and blockByVec[1]:
             pass  # if blockByVec[2] == -342:
@@ -239,7 +237,7 @@ class Player:
 
     def hitTest(self, p, vec, dist=32):
         m = 8
-        x, y, z = self.getPositionInChunk(p[0], p[1], p[2])
+        x, y, z = p
         dx, dy, dz = vec
         dx /= m
         dy /= m
@@ -247,7 +245,7 @@ class Player:
         prev = None
         for i in range(dist * m):
             key = roundPos((x, y, z))
-            block = self.gl.chunks.getBlock(key[0], key[1], key[2])
+            block = opengl_main_cpp.getBlockExist(key[0], key[1], key[2])
             if block != -1:
                 return key, prev, block
             prev = key

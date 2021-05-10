@@ -44,7 +44,7 @@ private:
         glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
         if (!success) {
             glGetShaderInfoLog(shader, 512, NULL, infoLog);
-            _gl_engine_handle_error("_gl_engine_init", "ERROR::SHADER::COMPILATION_FAILED", infoLog);
+            _gl_engine_handle_error("engineInit", "ERROR::SHADER::COMPILATION_FAILED", infoLog);
         }
 
         return shader;
@@ -66,7 +66,7 @@ private:
         glGetProgramiv(this->id, GL_LINK_STATUS, &success);
         if (!success) {
             glGetProgramInfoLog(this->id, 512, NULL, infoLog);
-            _gl_engine_handle_error("_gl_engine_init", "ERROR::SHADER::LINK_FAILED", infoLog);
+            _gl_engine_handle_error("engineInit", "ERROR::SHADER::LINK_FAILED", infoLog);
         }
 
         glDeleteShader(geometryShader);

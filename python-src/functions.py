@@ -33,7 +33,11 @@ def load_textures(self):
     cnt = 0
     while dirs:
         d = dirs.pop(0)
-        textures = os.listdir(d)
+        textures = list(os.listdir(d))
+        for e, file in enumerate(textures):
+            if file == "invalid.png":
+                textures[0], textures[e] = textures[e], textures[0]
+                break
         for file in textures:
             if os.path.isdir(d + '/' + file):
                 dirs += [d + '/' + file]
@@ -86,7 +90,6 @@ def load_textures(self):
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST)
     glGenerateMipmap(GL_TEXTURE_2D)
     self.texture["world"] = bgImgGL
-
     debug_module._gl_engine_info("_functions_python", "Successful loaded " + str(cnt) + " textures!")
 
 

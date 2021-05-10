@@ -40,7 +40,7 @@ class Scene:
         self.renderDistance = RENDER_DISTANCE
         self.updateEvents = []
         self.entity = []
-        self.skyColor = [180, 208, 255]  # [64, 89, 150]
+        self.skyColor = [137, 177, 255]  # [64, 89, 150]
         self.panorama = {}
         self.in_water = False
 
@@ -59,7 +59,7 @@ class Scene:
         self.particles = Particles(self)
         self.destroy = DestroyBlock(self)
         self.light = Light(self)
-        self.chunks = Chunks(self)
+        # self.chunks = Chunks(self)
 
         self.drawCounter = 0
 
@@ -89,7 +89,6 @@ class Scene:
         glEnable(GL_FOG)
         glHint(GL_FOG_HINT, GL_DONT_CARE)
         glFogi(GL_FOG_MODE, GL_LINEAR)
-        opengl_main_cpp._gl_engine_init(self.renderDistance)
 
         glLoadIdentity()
         load_textures(self)
@@ -104,6 +103,7 @@ class Scene:
         self.zombie.position = [0, 53, 0]
         self.entity.append(self.zombie)
 
+        opengl_main_cpp.engineInit(self.renderDistance, int(self.texture["world"]), self.block)
         self.set3d()
 
     def set2d(self):
@@ -162,20 +162,16 @@ class Scene:
         # glCopyTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, 0, 0, 256, 256)
         # self.resizeCGL(self.WIDTH, self.HEIGHT, changeRes=False)
 
-    def genWorld(self):
-        self.chunks.generateChunks()
-        self.chunks.checkPrepare()
-
     def updateScene(self):
-        if self.in_water:
-            glFogfv(GL_FOG_COLOR, (GLfloat * 4)(0, 0, 0, 1))
-            glFogf(GL_FOG_START, 10)
-            glFogf(GL_FOG_END, 35)
-        else:
-            glFogfv(GL_FOG_COLOR, (GLfloat * 4)
-                (self.skyColor[0] / 255, self.skyColor[1] / 255, self.skyColor[2] / 255, 1))
-            glFogf(GL_FOG_START, 10)
-            glFogf(GL_FOG_END, self.renderDistance * 16 - 32)
+        # if self.in_water:
+        #     glFogfv(GL_FOG_COLOR, (GLfloat * 4)(0, 0, 0, 1))
+        #     glFogf(GL_FOG_START, 10)
+        #     glFogf(GL_FOG_END, 35)
+        # else:
+        #     glFogfv(GL_FOG_COLOR, (GLfloat * 4)
+        #         (self.skyColor[0] / 255, self.skyColor[1] / 255, self.skyColor[2] / 255, 1))
+        #     glFogf(GL_FOG_START, 10)
+        #     glFogf(GL_FOG_END, self.renderDistance * 16 - 32)
 
         self.set3d()
         glClearColor(self.skyColor[0] / 255, self.skyColor[1] / 255, self.skyColor[2] / 255, 1)
@@ -185,12 +181,12 @@ class Scene:
 
         glPushMatrix()
         self.player.update()
-        self.chunks.update()
+        opengl_main_cpp.updateWorld(self.player.x(), self.player.y(), self.player.z())
 
-        self.stuffBatch.draw()
-        self.stuffBatch = pyglet.graphics.Batch()
+        # self.stuffBatch.draw()
+        # self.stuffBatch = pyglet.graphics.Batch()
 
-        self.clouds.update()
+        # self.clouds.update()
         # self.droppedBlock.update()
 
         # for i in self.entity:
@@ -203,7 +199,7 @@ class Scene:
         if blockByVec[0]:
             # self.destroy.drawDestroy(*blockByVec[0])
 
-            glPolygonMode(GL_FRONT_AND_BACK, GL_FILL)
+            glPolygonMode(GL_FRONT_AND_BACK, GL_LINE)
             glColor3d(0, 0, 0)
             pyglet.graphics.draw(24, GL_QUADS, ('v3f/static', flatten(cube_vertices(blockByVec[0], 0.51))))
             glPolygonMode(GL_FRONT_AND_BACK, GL_FILL)

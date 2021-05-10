@@ -20,7 +20,7 @@ import opengl_main_cpp
 
 
 def quitTheGame():
-    opengl_main_cpp._gl_engine_quit()
+    opengl_main_cpp.engineQuit()
     exit(0)
 
 
@@ -214,10 +214,11 @@ def genWorld(mc):
             tex.blit(ix, iy)
             tex2.blit(ix, iy)
 
-    scene.genWorld()
-    if scene.chunks.worldGen_chunkPosition[1] >= RENDER_DISTANCE * 2:
-        IN_MENU = False
-        PAUSE = False
+    # scene.genWorld()
+    # if scene.chunks.worldGen_chunkPosition[1] >= RENDER_DISTANCE * 2:
+    IN_MENU = False
+    PAUSE = False
+    return
 
     proc = round((scene.chunks.worldGen_chunkPosition[1]) * 100 / (RENDER_DISTANCE * 2))
     debug_module._gl_engine_info("INFO_PYTHON_MAIN_WORLD_GENERATOR", f"{proc}%/100%")
@@ -334,7 +335,7 @@ blockSound = BlockSound(scene)
 player = Player(gl=scene)
 
 # player.position = [0, -9000, 0]
-player.position = [0, 90, 0]
+player.position = [0, 66, 0]
 
 scene.blockSound = blockSound
 scene.gui = gui
@@ -556,9 +557,9 @@ mainMenuRotation = [50, 180, True]
 mainFunction = drawMainMenu
 
 while True:
-    if scene.allowEvents["keyboardAndMouse"] and not PAUSE:
-        if pygame.mouse.get_pressed(3)[0]:
-            player.mouseEvent(1)
+    # if scene.allowEvents["keyboardAndMouse"] and not PAUSE:
+    #     if pygame.mouse.get_pressed(3)[0]:
+    #         player.mouseEvent(1)
     mbclicked = None
     keys = []
 
@@ -638,11 +639,11 @@ while True:
                             player.inventory.activeInventory = 0
                         if player.inventory.inventory[player.inventory.activeInventory][1]:
                             gui.showText(player.inventory.inventory[player.inventory.activeInventory][0])
-                else:
-                    if pygame.mouse.get_pressed(3)[0]:
-                        player.mouseEvent(1)
-                    else:
-                        player.mouseEvent(-1)
+                # else:
+                #     if pygame.mouse.get_pressed(3)[0]:
+                #         player.mouseEvent(1)
+                #     else:
+                #         player.mouseEvent(-1)
     if scene.allowEvents["grabMouse"]:
         pygame.mouse.set_visible(PAUSE)
     else:
@@ -671,12 +672,10 @@ while True:
                                  f"\n"
                                  f"XYZ: {round(player.x(), 3)} / {round(player.y(), 5)} / {round(player.z(), 3)}\n"
                                  f"Block: {round(player.x())} / {round(player.y())} / {round(player.z())}\n"
-                                 f"Facing: {player.rotation[1]} / {player.rotation[0]}\n"
+                                 f"Facing: {round(player.rotation[1], 3)} / {round(player.rotation[0], 3)}\n"
                                  # f"Biome: {getBiomeByTemp(scene.worldGen.perlinBiomes(player.x(), player.z()) * 3)}\n"
-                                 f"Looking at: {scene.lookingAt}\n"
-                                 f"Loaded chunks: {len(scene.chunks.chunks)}",
+                                 f"Looking at: {scene.lookingAt}\n",
                           shadow=False, label_color=(224, 224, 224), xx=3)
-
         pygame.display.flip()
         clock.tick(MAX_FPS)
     elif PAUSE and not IN_MENU:
