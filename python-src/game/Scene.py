@@ -60,6 +60,7 @@ class Scene:
         self.light = Light(self)
         # self.chunks = Chunks(self)
 
+        self.saveCnt = 0
         self.drawCounter = 0
 
     def loadPanoramaTextures(self):
@@ -173,6 +174,12 @@ class Scene:
             glFogf(GL_FOG_START, 10)
             glFogf(GL_FOG_END, self.renderDistance * 16)
 
+        if self.saveCnt > 20:
+            opengl_main_cpp.saveWorld()
+            debug_module._gl_engine_info("_Scene_python", "Saving world...")
+            self.saveCnt = 0
+        self.saveCnt += 0.1 * self.clock.get_fps() / 1000
+
         self.set3d()
         glClearColor(self.skyColor[0] / 255, self.skyColor[1] / 255, self.skyColor[2] / 255, 1)
 
@@ -183,21 +190,21 @@ class Scene:
         self.player.update()
         opengl_main_cpp.updateWorld(self.player.x(), self.player.y(), self.player.z())
 
-        # self.stuffBatch.draw()
-        # self.stuffBatch = pyglet.graphics.Batch()
+        self.stuffBatch.draw()
+        self.stuffBatch = pyglet.graphics.Batch()
 
         # self.clouds.update()
-        # self.droppedBlock.update()
+        self.droppedBlock.update()
 
         # for i in self.entity:
         #     i.update()
 
-        # self.particles.drawParticles()
+        self.particles.drawParticles()
         # self.light.update()
 
         blockByVec = self.player.hitTest()
         if blockByVec[0] and blockByVec[2] != 2:
-            # self.destroy.drawDestroy(*blockByVec[0])
+            self.destroy.drawDestroy(*blockByVec[0])
 
             glPolygonMode(GL_FRONT_AND_BACK, GL_LINE)
             glColor3d(0, 0, 0)

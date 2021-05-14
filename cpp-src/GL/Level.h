@@ -1,6 +1,8 @@
 #pragma once
 
 #include <glm/gtc/noise.hpp>
+#include <fstream>
+#include "Chunk.h"
 
 class Level
 {
@@ -28,7 +30,22 @@ public:
         this->seed = seed;
     }
 
-    float noise(float x, float y)
+    void erase()
+    {
+        _gl_engine_info("Level->erase", "Deleting level...");
+        std::map<std::pair<int, std::pair<int, int>>, Block>::iterator itr = blocks.begin();
+        //_gl_engine_info("test", itr->second.id);
+        printf("size:%d\n", ((&blocks))->size());
+        for (; itr != blocks.end(); itr++)
+        {
+            //printf("Deleting block (MEM_LOCATION:%d) -> ", &(itr->second));
+            (&itr->second)->erase();
+            printf("%s\n", itr->second.id);
+            blocks.erase(itr->first);
+        }
+    }
+
+    float simplex(float x, float y)
     {
         return glm::simplex(glm::vec2{x, y});
     }
@@ -43,7 +60,7 @@ public:
         //add successively smaller, higher-frequency terms
         for(int i = 0; i < num_iterations; ++i)
         {
-            noise += glm::simplex(glm::vec2 {x * freq, y * freq} ) * amp;
+            noise += simplex(x * freq, y * freq) * amp;
             maxAmp += amp;
             amp *= persistence;
             freq *= 2;
@@ -68,20 +85,24 @@ public:
         return Block();
     }
 
-    void setBlock(Block block)
+    void setBlock(Block block, bool blockCheck=true)
     {
         int x = block.x;
         int y = block.y;
         int z = block.z;
 
-        if (!blocks.count(std::make_pair(x, std::make_pair(y, z))))
+        if (y < 0 || y > 256) return;
+
+        if (!blocks.count(std::make_pair(x, std::make_pair(y, z))) || !blockCheck)
         {
-            blocks[std::make_pair(x, std::make_pair(y, z))] = block;
+          blocks[std::make_pair(x, std::make_pair(y, z))] = block;
         }
     }
 
     void removeBlock(int x, int y, int z)
     {
+        if (y < 0 || y > 256) return;
+
         if (blocks.count(std::make_pair(x, std::make_pair(y, z))))
         {
             blocks.erase(std::make_pair(x, std::make_pair(y, z)));

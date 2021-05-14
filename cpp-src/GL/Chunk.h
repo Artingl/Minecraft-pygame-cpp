@@ -24,6 +24,7 @@ public:
     int y{};
     int z{};
     int chunkList{};
+    bool updated = false;
     dict textures;
 
     Chunk(int x, int y, int z, Level *level, dict textures)
@@ -37,7 +38,7 @@ public:
         this->chunkList = 0;
     }
 
-    void erase()
+    void erase() const
     {
         delete qb;
         if(chunkList) glDeleteLists(chunkList, 1);
@@ -71,7 +72,7 @@ public:
                     BlockRender block = BlockRender::getBlock(this->textures,
                                                               Block(level_block.id, level_block.x - xcw, level_block.y - ycw, level_block.z - zcw));
                     float down = 0.0f;
-                    if (level_block.liquid)// && !this->level->getBlock(block_x, block_y + 1, block_z).liquid)
+                    if (level_block.liquid && !this->level->getBlock(block_x, block_y + 1, block_z).liquid)
                         down = 0.1f;
 
                     if (haveToRenderBlock(0, block_x, block_y, block_z))

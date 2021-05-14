@@ -45,6 +45,11 @@ void setBlock(int x, int y, int z, char* name)
     world->setBlock(x, y, z, name);
 }
 
+void setBlockWithoutBlockCheck(int x, int y, int z, char* name)
+{
+    world->setBlockWithoutBlockCheck(x, y, z, name);
+}
+
 void generateLevel(int x_from, int z_from, int x_to, int z_to, int height)
 {
     world->level.generateLevel(x_from, z_from, x_to, z_to, height);
@@ -53,6 +58,40 @@ void generateLevel(int x_from, int z_from, int x_to, int z_to, int height)
 void generateChunks(int x, int y, int z)
 {
     world->generateChunks(x, y, z);
+}
+
+void deleteWorld()
+{
+    world->deleteWorld();
+}
+
+void saveWorld()
+{
+    world->saveWorld();
+}
+
+void loadWorld(boost::python::list& chunks)
+{
+    world->loadWorld(chunks);
+}
+
+void setLevelName(char* name)
+{
+    world->setLevelName(name);
+}
+
+str getBlockName(int x, int y, int z)
+{
+    if (!getBlockExist(x, y, z))
+    {
+        return "";
+    }
+    return world->getBlockName(x, y, z);
+}
+
+list hitTest(float x, float y, float z, float dx, float dy, float dz, int dist, int m)
+{
+    return world->hitTest(x, y, z, dx, dy, dz, dist, m);
 }
 
 BOOST_PYTHON_MODULE(opengl_main_cpp)
@@ -68,6 +107,13 @@ BOOST_PYTHON_MODULE(opengl_main_cpp)
     def("isUnderWater", isUnderWater);
     def("generateLevel", generateLevel);
     def("generateChunks", generateChunks);
+    def("deleteWorld", deleteWorld);
+    def("hitTest", hitTest);
+    def("setLevelName", setLevelName);
+    def("loadWorld", loadWorld);
+    def("saveWorld", saveWorld);
+    def("getBlockName", getBlockName);
+    def("setBlockWithoutBlockCheck", setBlockWithoutBlockCheck);
 
     class_<AABB>("AABB", init<double, double, double, double, double, double>())
             .def("getMinX", &AABB::getMinX)

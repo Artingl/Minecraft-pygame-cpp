@@ -20,11 +20,25 @@ import opengl_main_cpp
 
 
 def getWorlds():
-    return [("New World", "New World (5) (4/26/21 7:39 PM)", 0, 1), ("New World", "New World (6) (1/26/21 7:39 PM)", 0, 0), ("New World", "New World (9) (4/26/20 7:21 PM)", 0, 1)]
+    result = []
+    for i in os.listdir("saves"):
+        result.append((i, "Nope", 0, 1))
+    return result
+
+    #       ("New World", "New World (5) (4/26/21 7:39 PM)", 0, 1)
     #         ^ Name        ^ Folder name and time           ^ game mode (0 - survival) and is cheats on
 
 
 def playSelected():
+    global haveToGenWorld, chunks
+    # haveToGenWorld = False
+    lvl_name = worlds[selectedWorld][0]
+    opengl_main_cpp.setLevelName(lvl_name)
+
+    chunks = []
+    for i in os.listdir("saves/" + lvl_name + "/chunks/"):
+        chunks.append(i)
+
     startNewGame()
 
 
@@ -74,6 +88,7 @@ def quitToMenu():
     player.hp = -1
     player.playerDead = False
 
+    opengl_main_cpp.deleteWorld()
     gc.collect()
     mainFunction = drawMainMenu
 
@@ -211,6 +226,7 @@ def pauseMenu(mc):
 
 def setCreateWorld():
     global mainFunction
+    worldNameEditArea.text = "New World"
     mainFunction = createWorld
 
 
@@ -242,9 +258,10 @@ def createWorld(mc):
     worldNameEditArea.update(mp, mc, keys)
     #
 
-    drawInfoLabel(scene, "Will be saved in: " + worldNameEditArea.text,
+    drawInfoLabel(scene, "Will be saved in: " + (worldNameEditArea.text if worldNameEditArea.text else "World"),
                   xx=worldNameEditArea.x, yy=scene.HEIGHT - worldNameEditArea.y - 64, style=[('', '')],
                   size=12, label_color=(199, 199, 199))
+    createNewWorldButton.active = bool(worldNameEditArea.text)
 
     # Game mode
     gameModeButton.x = scene.WIDTH // 2 - (gameModeButton.button.width // 2)
@@ -263,7 +280,8 @@ def createWorld(mc):
     #
 
     # Create new world button
-    createNewWorldButton.x = scene.WIDTH // 2 - (createNewWorldButton.button.width // 2) - (createNewWorldButton.button.width // 2) - 10
+    createNewWorldButton.x = scene.WIDTH // 2 - (createNewWorldButton.button.width // 2) - (
+                createNewWorldButton.button.width // 2) - 10
     createNewWorldButton.y = scene.HEIGHT - createNewWorldButton.button.height * 3 + 70
     createNewWorldButton.update(mp, mc)
     #
@@ -284,8 +302,18 @@ def createWorld(mc):
     clock.tick(MAX_FPS)
 
 
+def getNewLevelName():
+    cnt = 0
+    lvl_name = worldNameEditArea.text
+    while os.path.isdir("saves/" + lvl_name):
+        cnt += 1
+        lvl_name = worldNameEditArea.text + " " + str(cnt)
+
+    return lvl_name
+
+
 def genWorld(mc):
-    global IN_MENU, PAUSE, resizeEvent
+    global IN_MENU, PAUSE, resizeEvent, chunks
     chunkCnt = 1  # 220
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
@@ -313,13 +341,23 @@ def genWorld(mc):
     #               style=[('', '')], size=12, anchor_x='center')
 
     # TODO
-    drawInfoLabel(scene, "Loading world...", xx=scene.WIDTH // 2, yy=scene.HEIGHT // 2, style=[('', '')],
-                  size=12, anchor_x='center')
-    drawInfoLabel(scene, "Generating world...", xx=scene.WIDTH // 2, yy=scene.HEIGHT // 2 - 39,
-                  style=[('', '')], size=12, anchor_x='center')
-    pygame.display.flip()
-    clock.tick(MAX_FPS)
-    opengl_main_cpp.generateLevel(-128, -128, 128, 128, 64)
+    if haveToGenWorld:
+        lvl_name = getNewLevelName()
+        opengl_main_cpp.setLevelName(lvl_name)
+        os.mkdir("saves/" + lvl_name)
+        os.mkdir("saves/" + lvl_name + "/chunks")
+        open("saves/" + lvl_name + "/world.data", "w").close()
+        open("saves/" + lvl_name + "/blocks.data", "w").close()
+
+        drawInfoLabel(scene, "Loading world...", xx=scene.WIDTH // 2, yy=scene.HEIGHT // 2, style=[('', '')],
+                      size=12, anchor_x='center')
+        drawInfoLabel(scene, "Generating world...", xx=scene.WIDTH // 2, yy=scene.HEIGHT // 2 - 39,
+                      style=[('', '')], size=12, anchor_x='center')
+        pygame.display.flip()
+        clock.tick(MAX_FPS)
+        opengl_main_cpp.generateLevel(-128, -128, 128, 128, 64)
+    if chunks:
+        opengl_main_cpp.loadWorld(chunks)
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
     glLoadIdentity()
@@ -342,6 +380,7 @@ def genWorld(mc):
 
     IN_MENU = False
     PAUSE = False
+    chunks = []
     # TODO
 
 
@@ -385,8 +424,10 @@ def drawWorldsMenu(mc):
             sett += "Cheats"
 
         drawInfoLabel(scene, i[0], xx=scene.WIDTH // 2 - 150, yy=y, style=[('', '')], size=12)
-        drawInfoLabel(scene, i[1], xx=scene.WIDTH // 2 - 150, yy=y - 25, style=[('', '')], size=12, label_color=(199, 199, 199))
-        drawInfoLabel(scene, sett, xx=scene.WIDTH // 2 - 150, yy=y - 50, style=[('', '')], size=12, label_color=(199, 199, 199))
+        drawInfoLabel(scene, i[1], xx=scene.WIDTH // 2 - 150, yy=y - 25, style=[('', '')], size=12,
+                      label_color=(199, 199, 199))
+        drawInfoLabel(scene, sett, xx=scene.WIDTH // 2 - 150, yy=y - 50, style=[('', '')], size=12,
+                      label_color=(199, 199, 199))
 
         y -= 80
 
@@ -409,6 +450,7 @@ def drawWorldsMenu(mc):
 
     drawInfoLabel(scene, "Select world", xx=scene.WIDTH // 2, yy=scene.HEIGHT - 49, style=[('', '')],
                   size=12, anchor_x='center')
+    createNewWorldButton.active = True
 
     playSelectedWorldButton.active = selectedWorld != -1
     deleteWorldButton.active = selectedWorld != -1
@@ -417,13 +459,15 @@ def drawWorldsMenu(mc):
     cancelButton.setEvent(closeMenuWindows)
 
     # Play selected world button
-    playSelectedWorldButton.x = scene.WIDTH // 2 - (playSelectedWorldButton.button.width // 2) - (playSelectedWorldButton.button.width // 2) - 10
+    playSelectedWorldButton.x = scene.WIDTH // 2 - (playSelectedWorldButton.button.width // 2) - (
+                playSelectedWorldButton.button.width // 2) - 10
     playSelectedWorldButton.y = scene.HEIGHT - playSelectedWorldButton.button.height * 3 + 15
     playSelectedWorldButton.update(mp, mc)
     #
 
     # Create new world button
-    createNewWorldButton.x = scene.WIDTH // 2 - (createNewWorldButton.button.width // 2) + (createNewWorldButton.button.width // 2) + 10
+    createNewWorldButton.x = scene.WIDTH // 2 - (createNewWorldButton.button.width // 2) + (
+                createNewWorldButton.button.width // 2) + 10
     createNewWorldButton.y = scene.HEIGHT - createNewWorldButton.button.height * 3 + 15
     createNewWorldButton.update(mp, mc)
     #
@@ -435,7 +479,8 @@ def drawWorldsMenu(mc):
     #
 
     # Delete world button
-    deleteWorldButton.x = scene.WIDTH // 2 - (deleteWorldButton.button.width // 2) - (deleteWorldButton.button.width // 2) - 10
+    deleteWorldButton.x = scene.WIDTH // 2 - (deleteWorldButton.button.width // 2) - (
+                deleteWorldButton.button.width // 2) - 10
     deleteWorldButton.y = scene.HEIGHT - deleteWorldButton.button.height * 3 + 70
     deleteWorldButton.update(mp, mc)
     #
@@ -519,6 +564,8 @@ def drawMainMenu(mc):
 
 debug_module._gl_engine_info("_main_python", "Loading the game...")
 
+chunks = []
+haveToGenWorld = True
 resizeEvent = False
 LAST_SAVED_RESOLUTION = [WIDTH, HEIGHT]
 worlds = []
@@ -762,9 +809,9 @@ if not os.path.isdir("saves"):
     os.mkdir("saves")
 
 while True:
-    # if scene.allowEvents["keyboardAndMouse"] and not PAUSE:
-    #     if pygame.mouse.get_pressed(3)[0]:
-    #         player.mouseEvent(1)
+    if scene.allowEvents["keyboardAndMouse"] and not PAUSE:
+        if pygame.mouse.get_pressed(3)[0]:
+            player.mouseEvent(1)
     mbclicked = None
     keys = []
 
@@ -844,11 +891,11 @@ while True:
                             player.inventory.activeInventory = 0
                         if player.inventory.inventory[player.inventory.activeInventory][1]:
                             gui.showText(player.inventory.inventory[player.inventory.activeInventory][0])
-                # else:
-                #     if pygame.mouse.get_pressed(3)[0]:
-                #         player.mouseEvent(1)
-                #     else:
-                #         player.mouseEvent(-1)
+                else:
+                    if pygame.mouse.get_pressed(3)[0]:
+                        player.mouseEvent(1)
+                    else:
+                        player.mouseEvent(-1)
         else:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:

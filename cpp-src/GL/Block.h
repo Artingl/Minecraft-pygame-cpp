@@ -24,6 +24,15 @@ public:
         if (id == "water" || id == "lava") this->liquid = true;
     }
 
+    void erase() const {
+        delete &id;
+        delete &x;
+        delete &y;
+        delete &z;
+        delete &liquid;
+        delete &exist;
+    }
+
     int getXByChunk(int chunk_x)
     {
         return x - (chunk_x * 16);

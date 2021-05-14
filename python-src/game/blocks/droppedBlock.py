@@ -2,6 +2,7 @@ from random import randint
 from OpenGL.GL import *
 import numpy as np
 import math
+import opengl_main_cpp
 from functions import roundPos
 
 
@@ -15,14 +16,21 @@ class droppedBlock:
 
     def update(self):
         cpy = self.blocks.copy().items()
-        for i in cpy:
-
-            pp = list(self.gl.player.position)
+        pp = list(self.gl.player.position)
+        cnt = 0
+        for e, i in enumerate(cpy):
+            kx, ky, kz = i[1][0][0] - i[1][2], i[1][0][1] + 0.1 + i[1][3][0], i[1][0][2] + i[1][2]
+            if pp[0] - (self.gl.renderDistance + 1) > kx or kx > pp[0] + (self.gl.renderDistance + 1) or \
+                    pp[1] - (self.gl.renderDistance + 1) > ky or ky > pp[1] + (self.gl.renderDistance + 1) or \
+                    pp[2] - (self.gl.renderDistance + 1) > kz or kz > pp[2] + (self.gl.renderDistance + 1):
+                continue
+            cnt += 1
+            if cnt > 10:
+                continue
             sx, sy, sz = 0.25, 0.25, 0.25
 
             x, y, z = 0, 0, 0
             X, Y, Z = x + sx, y + sy, z + sz
-            kx, ky, kz = i[1][0][0] - i[1][2], i[1][0][1] + 0.1 + i[1][3][0], i[1][0][2] + i[1][2]
 
             br = False
             for xs in (1, 0, -1):
@@ -70,22 +78,22 @@ class droppedBlock:
                                r1[2][0] + kx, r1[2][1] + ky, r1[2][2] + kz,
                                r1[3][0] + kx, r1[3][1] + ky, r1[3][2] + kz)
 
-            block = self.gl.block[i[1][1]]
+            block = self.gl.texture[i[1][1]]
             tex_coords = ('t2f', (0, 0, 1, 0, 1, 1, 0, 1))
-            self.gl.stuffBatch.add(4, GL_QUADS, block[4], ('v3f', vertexes[0]),
+            self.gl.stuffBatch.add(4, GL_QUADS, block[2], ('v3f', vertexes[0]),
                                    tex_coords)  # back
             if i[1][5]:
-                self.gl.stuffBatch.add(4, GL_QUADS, block[5], ('v3f', vertexes[1]),
+                self.gl.stuffBatch.add(4, GL_QUADS, block[2], ('v3f', vertexes[1]),
                                        tex_coords)  # front
 
-                self.gl.stuffBatch.add(4, GL_QUADS, block[0], ('v3f', vertexes[2]),
+                self.gl.stuffBatch.add(4, GL_QUADS, block[2], ('v3f', vertexes[2]),
                                        tex_coords)  # left
-                self.gl.stuffBatch.add(4, GL_QUADS, block[1], ('v3f', vertexes[3]),
+                self.gl.stuffBatch.add(4, GL_QUADS, block[2], ('v3f', vertexes[3]),
                                        tex_coords)  # right
 
-                self.gl.stuffBatch.add(4, GL_QUADS, block[2], ('v3f', vertexes[4]),
+                self.gl.stuffBatch.add(4, GL_QUADS, block[1], ('v3f', vertexes[4]),
                                        tex_coords)  # bottom
-                self.gl.stuffBatch.add(4, GL_QUADS, block[3], ('v3f', vertexes[5]),
+                self.gl.stuffBatch.add(4, GL_QUADS, block[0], ('v3f', vertexes[5]),
                                        tex_coords)  # top
 
             if i[1][3][1] == "-":
@@ -102,7 +110,7 @@ class droppedBlock:
                 self.blocks.pop(i[0])
                 continue
             yy = i[1][0][1]
-            if roundPos((i[1][0][0], i[1][0][1], i[1][0][2])) not in self.gl.cubes.cubes:
+            if opengl_main_cpp.getBlockExist(int(i[1][0][0]), int(i[1][0][1]), int(i[1][0][2])) != 1:
                 yy -= 0.1
             self.blocks[i[0]][0] = (i[1][0][0], yy, i[1][0][2])
             self.blocks[i[0]][4] = i[1][4]

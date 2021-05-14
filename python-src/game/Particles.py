@@ -1,5 +1,6 @@
 from random import choice
 from OpenGL.GL import *
+import opengl_main_cpp
 from functions import *
 
 
@@ -10,7 +11,7 @@ class Particles:
         self.texture = pyglet.graphics.TextureGroup(pyglet.image.load("particles/particle.png").get_mipmapped_texture())
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST)
 
-    def addParticle(self, p, cubeClass, direction=None, numbers=None, count=30):
+    def addParticle(self, p, cubeName, direction=None, numbers=None, count=30):
         if numbers is None:
             numbers = range(-5, 5)
 
@@ -20,7 +21,7 @@ class Particles:
         for i in range(count):
             dx, dy, dz = choice(numbers), choice(numbers), choice(numbers)
             ps = randint(4, 8) / 1000  # 0.005
-            self.particles.append([list(p), cubeClass, randint(1, 4) / 10, [dx, dy, dz], .001, direction, 0.02, ps])
+            self.particles.append([list(p), cubeName, randint(1, 4) / 10, [dx, dy, dz], .001, direction, 0.02, ps])
 
     def drawParticles(self):
         if not self.particles:
@@ -33,28 +34,28 @@ class Particles:
 
             if i[5] != "no":
                 if i[5] == "down":
-                    if roundPos((i[0][0], i[0][1], i[0][2])) not in self.gl.cubes.cubes:
+                    if opengl_main_cpp.getBlockExist(int(i[0][0]), int(i[0][1]), int(i[0][2])) == -1:
                         i[0][1] += i[6]
                         i[0][0] += i[3][0] / 100
                         i[0][2] += i[3][2] / 100
 
                         i[6] -= i[7]
                 elif i[5] == "up":
-                    if roundPos((i[0][0], i[0][1], i[0][2])) not in self.gl.cubes.cubes:
+                    if opengl_main_cpp.getBlockExist(int(i[0][0]), int(i[0][1]), int(i[0][2])) == -1:
                         i[0][1] += i[6]
                         i[0][0] += i[3][0] / 100
                         i[0][2] += i[3][2] / 100
 
                         i[6] += i[7]
                 elif i[5] == "left":
-                    if roundPos((i[0][0], i[0][1], i[0][2])) not in self.gl.cubes.cubes:
+                    if opengl_main_cpp.getBlockExist(int(i[0][0]), int(i[0][1]), int(i[0][2])) == -1:
                         i[0][0] += i[6]
                         i[0][1] += i[3][1] / 100
                         i[0][2] += i[6]
 
                         i[6] -= i[7]
                 elif i[5] == "right":
-                    if roundPos((i[0][0], i[0][1], i[0][2])) not in self.gl.cubes.cubes:
+                    if opengl_main_cpp.getBlockExist(int(i[0][0]), int(i[0][1]), int(i[0][2])) == -1:
                         i[0][0] += i[6]
                         i[0][1] += i[3][1] / 100
                         i[0][2] += i[6]
@@ -72,19 +73,19 @@ class Particles:
             X, Y, Z = x + i[2], y + i[2], z + i[2]
 
             tex_coords = ('t2f', (0, 0, 1, 0, 1, 1, 0, 1))
-            self.gl.stuffBatch.add(4, GL_QUADS, i[1].t[4], ('v3f', (X, y, z, x, y, z, x, Y, z, X, Y, z)),
+            self.gl.stuffBatch.add(4, GL_QUADS, self.gl.texture[i[1]][2], ('v3f', (X, y, z, x, y, z, x, Y, z, X, Y, z)),
                                    tex_coords)  # back
-            self.gl.stuffBatch.add(4, GL_QUADS, i[1].t[5], ('v3f', (x, y, Z, X, y, Z, X, Y, Z, x, Y, Z)),
+            self.gl.stuffBatch.add(4, GL_QUADS, self.gl.texture[i[1]][2], ('v3f', (x, y, Z, X, y, Z, X, Y, Z, x, Y, Z)),
                                    tex_coords)  # front
 
-            self.gl.stuffBatch.add(4, GL_QUADS, i[1].t[0], ('v3f', (x, y, z, x, y, Z, x, Y, Z, x, Y, z)),
+            self.gl.stuffBatch.add(4, GL_QUADS, self.gl.texture[i[1]][2], ('v3f', (x, y, z, x, y, Z, x, Y, Z, x, Y, z)),
                                    tex_coords)  # left
-            self.gl.stuffBatch.add(4, GL_QUADS, i[1].t[1], ('v3f', (X, y, Z, X, y, z, X, Y, z, X, Y, Z)),
+            self.gl.stuffBatch.add(4, GL_QUADS, self.gl.texture[i[1]][2], ('v3f', (X, y, Z, X, y, z, X, Y, z, X, Y, Z)),
                                    tex_coords)  # right
 
-            self.gl.stuffBatch.add(4, GL_QUADS, i[1].t[2], ('v3f', (x, y, z, X, y, z, X, y, Z, x, y, Z)),
+            self.gl.stuffBatch.add(4, GL_QUADS, self.gl.texture[i[1]][1], ('v3f', (x, y, z, X, y, z, X, y, Z, x, y, Z)),
                                    tex_coords)  # bottom
-            self.gl.stuffBatch.add(4, GL_QUADS, i[1].t[3], ('v3f', (x, Y, Z, X, Y, Z, X, Y, z, x, Y, z)),
+            self.gl.stuffBatch.add(4, GL_QUADS, self.gl.texture[i[1]][2], ('v3f', (x, Y, Z, X, Y, Z, X, Y, z, x, Y, z)),
                                    tex_coords)  # top
 
             i[2] -= 0.009

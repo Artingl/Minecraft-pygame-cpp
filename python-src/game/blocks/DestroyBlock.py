@@ -1,6 +1,7 @@
 import os
 import debug_module
 import pyglet
+import opengl_main_cpp
 from OpenGL.GL import *
 
 
@@ -67,10 +68,8 @@ class DestroyBlock:
 
         if self.destroyStage > 9:
             self.destroyStage = -1
-            if blockByVec[0] in self.gl.cubes.cubes:
-                self.gl.droppedBlock.addBlock(blockByVec[0], self.gl.cubes.cubes[blockByVec[0]].name)
+            self.gl.droppedBlock.addBlock(blockByVec[0], blockName)
 
-            self.gl.blockSound.playBlockSound(self.gl.cubes.cubes[blockByVec[0]].name)
-            self.gl.particles.addParticle(self.gl.cubes.cubes[blockByVec[0]].p, self.gl.cubes.cubes[blockByVec[0]],
-                                          direction="down")
-            self.gl.cubes.remove(blockByVec[0])
+            self.gl.blockSound.playBlockSound(blockName)
+            self.gl.particles.addParticle(blockByVec[0], blockName, direction="down")
+            opengl_main_cpp.removeBlock(blockByVec[0][0], blockByVec[0][1], blockByVec[0][2])

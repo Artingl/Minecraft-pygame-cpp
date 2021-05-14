@@ -56,28 +56,52 @@ def load_textures(self):
                     continue
                 img = pygame.image.load(path)
                 allTextures.blit(img, genPos(cnt, *size))
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST)
 
                 if d == "textures/blocks/tbs":
                     if n[0:-1].strip() not in self.block:
                         self.block[n[0:-1].strip()] = {}
-
+                        self.texture[n[0:-1].strip()] = {}
                     if n.endswith('t'):
                         self.block[n[0:-1].strip()][0] = cnt
+                        self.texture[n[0:-1].strip()][0] = \
+                            pyglet.graphics.TextureGroup(pyglet.image.load(path).get_mipmapped_texture())
                     if n.endswith('b'):
                         self.block[n[0:-1].strip()][1] = cnt
+                        self.texture[n[0:-1].strip()][1] = \
+                            pyglet.graphics.TextureGroup(pyglet.image.load(path).get_mipmapped_texture())
                     if n.endswith('s'):
+                        self.inventory_textures[n[0:-1].strip()] = pyglet.resource.image(path)
+                        self.inventory_textures[n[0:-1].strip()].width = 22
+                        self.inventory_textures[n[0:-1].strip()].height = 22
                         self.block[n[0:-1].strip()][2] = cnt
+                        self.texture[n[0:-1].strip()][2] = \
+                            pyglet.graphics.TextureGroup(pyglet.image.load(path).get_mipmapped_texture())
                 elif d == "textures/blocks/ts":
                     if n[0:-1].strip() not in self.block:
                         self.block[n[0:-1].strip()] = {}
-
+                        self.texture[n[0:-1].strip()] = {}
                     if n.endswith('t'):
                         self.block[n[0:-1].strip()][0] = cnt
                         self.block[n[0:-1].strip()][1] = cnt
+                        self.texture[n[0:-1].strip()][0] = \
+                            pyglet.graphics.TextureGroup(pyglet.image.load(path).get_mipmapped_texture())
+                        self.texture[n[0:-1].strip()][1] = \
+                            pyglet.graphics.TextureGroup(pyglet.image.load(path).get_mipmapped_texture())
                     if n.endswith('s'):
+                        self.inventory_textures[n[0:-1].strip()] = pyglet.resource.image(path)
+                        self.inventory_textures[n[0:-1].strip()].width = 22
+                        self.inventory_textures[n[0:-1].strip()].height = 22
                         self.block[n[0:-1].strip()][2] = cnt
+                        self.texture[n[0:-1].strip()][2] = \
+                            pyglet.graphics.TextureGroup(pyglet.image.load(path).get_mipmapped_texture())
                 else:
+                    self.inventory_textures[n] = pyglet.resource.image(path)
+                    self.inventory_textures[n].width = 22
+                    self.inventory_textures[n].height = 22
+                    t = pyglet.graphics.TextureGroup(pyglet.image.load(path).get_mipmapped_texture())
                     self.block[n] = (cnt, cnt, cnt)
+                    self.texture[n] = (t, t, t)
 
                 debug_module._gl_engine_info("_functions_python", "Successful loaded " + n + " texture!")
                 cnt += 1
