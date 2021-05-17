@@ -105,7 +105,6 @@ def load_textures(self):
 
                 debug_module._gl_engine_info("_functions_python", "Successful loaded " + n + " texture!")
                 cnt += 1
-    pygame.image.save(allTextures, "test.png")
     width = allTextures.get_width()
     height = allTextures.get_height()
     bgImgGL = glGenTextures(1)
