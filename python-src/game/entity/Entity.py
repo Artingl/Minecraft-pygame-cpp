@@ -1,5 +1,7 @@
 import math
 import time
+from random import randint
+
 import debug_module
 import opengl_main_cpp
 from functions import roundPos
@@ -19,12 +21,16 @@ class Entity:
         self.jump_speed = (2 * self.gravity) ** .5
         self.gl = gl
 
+        self.isEntityDead = False
+        self.lastFallPosition = []
+        self.inventory = None
+
     def jump(self):
         if opengl_main_cpp.isUnderWater(int(self.x()), int(self.y()), int(self.z())):
             self.dy = self.jump_speed / 2
         else:
             if not self.dy:
-                self.dy = 1.9
+                self.dy = 13 / 1000 * self.gl.clock.get_fps()
 
     def move(self, dt, dx, dy, dz):
         self.dy -= dt * self.gravity
@@ -38,18 +44,37 @@ class Entity:
         col = self.collide((x + dx, y + dy, z + dz))
         self.position = list(col)
 
-        if opengl_main_cpp.getBlockExist(int(self.x()), int(self.y() - 1), int(self.z())) != 1:
-            cnt = -1
-            for i in range(2, 20):
-                if opengl_main_cpp.getBlockExist(int(self.x()), int(self.y() - i + 2), int(self.z())) == 1:
-                    cnt = i - 2
-                    break
-            if cnt != -1:
-                if self.lastHeight < cnt:
-                    self.lastHeight = cnt
-            elif self.lastHeight != -1:
-                print(self.lastHeight)
-                self.lastHeight = -1
+        if not self.lastFallPosition and self.dy != 0:
+            self.lastFallPosition = self.position
+        if self.lastFallPosition and self.dy == 0 and not \
+                (opengl_main_cpp.isUnderWater(int(self.x()), int(self.y()) - 1, int(self.z())) or
+                 opengl_main_cpp.isUnderWater(int(self.x()), int(self.y()), int(self.z()))):
+            h = int(self.lastFallPosition[1] - self.position[1])
+            if h > 4:
+                self.gl.sound.playDamageSound("hit", 0, 0.8)
+                self.inventory.heartAnimationWhenHpComesDown = 6
+                self.hp -= 5
+                if h > 10:
+                    self.hp -= 7
+                elif h > 16:
+                    self.hp -= 9
+                elif h > 23:
+                    self.hp -= 13
+                elif h > 30:
+                    self.hp -= 17
+                elif h > 45:
+                    self.hp = 0
+            self.lastFallPosition = []
+
+    def dead(self):
+        self.isEntityDead = True
+        self.gl.deathScreen()
+        for i in self.inventory.inventory.items():
+            for j in range(i[1][1]):
+                self.gl.droppedBlock.addBlock((
+                    self.position[0] + randint(-2, 2), self.position[1], self.position[2] + randint(-2, 2)
+                ), i[1][0])
+            self.inventory.inventory[i[0]] = [i[1][0], 0]
 
     def collide(self, pos):
         p = list(pos)
@@ -64,7 +89,7 @@ class Entity:
                     continue
                 for dy in (0, 1):
                     op = list(np)
-                    op[1] -= dy
+                    op[1] -= int(dy)
                     op[i] += face[i]
                     if opengl_main_cpp.getBlockExist(op[0], op[1], op[2]) == 1:  # tuple(op) in self.cubes.collidable:
                         p[i] -= (d - pad) * face[i]
@@ -76,13 +101,21 @@ class Entity:
     def update(self):
         # self.gravity = 9.8 * self.gl.clock.get_fps() / 1000
         # self.speed = 0.1 * self.gl.clock.get_fps() / 1000
+        if self.inventory.heartAnimationWhenHpComesDown > 0:
+            self.inventory.heartAnimationWhenHpComesDown -= 0.07
+        if self.inventory.heartAnimationWhenHpComesDown < 0:
+            self.inventory.heartAnimationWhenHpComesDown = 0
+
         if opengl_main_cpp.isUnderWater(int(self.x()), int(self.y()), int(self.z())):
-            self.gravity = 6.8 * self.gl.clock.get_fps() / 1000
+            self.gravity = 6.8 / 1000 * self.gl.clock.get_fps()
             self.speed = 0.02
         else:
-            self.gravity = 9.8 * self.gl.clock.get_fps() / 1000
+            self.gravity = 9.8 / 1000 * self.gl.clock.get_fps()
             self.speed = 0.03
         self.jump_speed = (2 * self.gravity) ** .5
+
+        if self.hp <= 0 and not self.isEntityDead:
+            self.dead()
 
         if self.position[0] > 128:
             self.position[0] = 128

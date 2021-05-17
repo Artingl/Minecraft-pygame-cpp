@@ -18,6 +18,8 @@ class Inventory:
         self.heartAnimation = []
         self.draggingItem = []
 
+        self.heartAnimationWhenHpComesDown = 0
+
         ls = list(self.gl.inventory_textures.items())
         old = False
         for i in range(10):
@@ -163,6 +165,8 @@ class Inventory:
         fullheart = self.gl.gui.GUI_TEXTURES["fullheart"]
         halfheart = self.gl.gui.GUI_TEXTURES["halfheart"]
         heartbg = self.gl.gui.GUI_TEXTURES["heartbg"]
+        if int(self.heartAnimationWhenHpComesDown) % 2 != 0:
+            heartbg = self.gl.gui.GUI_TEXTURES["strokeheartbg2"]
 
         inventory.blit(self.gl.WIDTH // 2 - (inventory.width // 2), 0)
         sel_inventory.blit((self.gl.WIDTH // 2 - (inventory.width // 2)) +

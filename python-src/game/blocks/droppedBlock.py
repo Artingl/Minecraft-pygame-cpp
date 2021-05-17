@@ -25,7 +25,7 @@ class droppedBlock:
                     pp[2] - (self.gl.renderDistance + 1) > kz or kz > pp[2] + (self.gl.renderDistance + 1):
                 continue
             cnt += 1
-            if cnt > 10:
+            if cnt > 7:
                 continue
             sx, sy, sz = 0.25, 0.25, 0.25
 

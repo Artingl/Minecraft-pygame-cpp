@@ -73,19 +73,19 @@ class Particles:
             X, Y, Z = x + i[2], y + i[2], z + i[2]
 
             tex_coords = ('t2f', (0, 0, 1, 0, 1, 1, 0, 1))
-            self.gl.stuffBatch.add(4, GL_QUADS, self.gl.texture[i[1]][2], ('v3f', (X, y, z, x, y, z, x, Y, z, X, Y, z)),
+            self.gl.stuffBatch.add(4, GL_QUADS, self.gl.texture[i[1]][0], ('v3f', (X, y, z, x, y, z, x, Y, z, X, Y, z)),
                                    tex_coords)  # back
-            self.gl.stuffBatch.add(4, GL_QUADS, self.gl.texture[i[1]][2], ('v3f', (x, y, Z, X, y, Z, X, Y, Z, x, Y, Z)),
+            self.gl.stuffBatch.add(4, GL_QUADS, self.gl.texture[i[1]][0], ('v3f', (x, y, Z, X, y, Z, X, Y, Z, x, Y, Z)),
                                    tex_coords)  # front
 
-            self.gl.stuffBatch.add(4, GL_QUADS, self.gl.texture[i[1]][2], ('v3f', (x, y, z, x, y, Z, x, Y, Z, x, Y, z)),
+            self.gl.stuffBatch.add(4, GL_QUADS, self.gl.texture[i[1]][0], ('v3f', (x, y, z, x, y, Z, x, Y, Z, x, Y, z)),
                                    tex_coords)  # left
-            self.gl.stuffBatch.add(4, GL_QUADS, self.gl.texture[i[1]][2], ('v3f', (X, y, Z, X, y, z, X, Y, z, X, Y, Z)),
+            self.gl.stuffBatch.add(4, GL_QUADS, self.gl.texture[i[1]][0], ('v3f', (X, y, Z, X, y, z, X, Y, z, X, Y, Z)),
                                    tex_coords)  # right
 
-            self.gl.stuffBatch.add(4, GL_QUADS, self.gl.texture[i[1]][1], ('v3f', (x, y, z, X, y, z, X, y, Z, x, y, Z)),
+            self.gl.stuffBatch.add(4, GL_QUADS, self.gl.texture[i[1]][0], ('v3f', (x, y, z, X, y, z, X, y, Z, x, y, Z)),
                                    tex_coords)  # bottom
-            self.gl.stuffBatch.add(4, GL_QUADS, self.gl.texture[i[1]][2], ('v3f', (x, Y, Z, X, Y, Z, X, Y, z, x, Y, z)),
+            self.gl.stuffBatch.add(4, GL_QUADS, self.gl.texture[i[1]][0], ('v3f', (x, Y, Z, X, Y, Z, X, Y, z, x, Y, z)),
                                    tex_coords)  # top
 
             i[2] -= 0.009

@@ -1,6 +1,7 @@
 import gc
 import math
 import os
+import time
 from random import randint
 import pyglet
 from OpenGL.GL import *
@@ -37,8 +38,17 @@ def playSelected():
 
     chunks = []
     for i in os.listdir("saves/" + lvl_name + "/chunks/"):
-        chunks.append(i)
-
+        with open("saves/" + lvl_name + "/chunks/" + i, "r") as file:
+            content = file.read(os.path.getsize("saves/" + lvl_name + "/chunks/" + i))
+        coords = content.split("\n")[0].split(" ")
+        blocks = []
+        for j in content.split("\n")[1].split(";"):
+            if j:
+                k = j.split(",")
+                blocks.append([str(k[0]), int(k[1]), int(k[2]), int(k[3])])
+        chunks.append(list(blocks))
+    opengl_main_cpp.loadWorld(chunks)
+    debug_module._gl_engine_info("mainInfoTest", "Yup!")
     startNewGame()
 
 
@@ -50,9 +60,12 @@ def quitTheGame():
 def respawn():
     pause()
     player.hp = 20
-    player.playerDead = False
-    player.position = scene.startPlayerPos
-    player.lastPlayerPosOnGround = scene.startPlayerPos
+    player.isEntityDead = False
+    scene.player.position = [
+        opengl_main_cpp.getPlayerStartX(),
+        opengl_main_cpp.getPlayerStartY(),
+        opengl_main_cpp.getPlayerStartZ()
+    ]
 
 
 def quitToMenu():
@@ -76,6 +89,8 @@ def quitToMenu():
     PAUSE = True
     IN_MENU = True
 
+    opengl_main_cpp.deleteWorld()
+    time.sleep(1)
     sound.initMusic(False)
 
     sound.musicPlayer.play()
@@ -85,11 +100,9 @@ def quitToMenu():
     scene.initScene()
 
     player.position = [0, -90, 0]
-    player.hp = -1
-    player.playerDead = False
+    player.hp = 20
+    player.isEntityDead = False
 
-    opengl_main_cpp.deleteWorld()
-    gc.collect()
     mainFunction = drawMainMenu
 
 
@@ -107,7 +120,7 @@ def startNewGame():
     global mainFunction
     sound.musicPlayer.stop()
     sound.initMusic(True)
-    # scene.worldGen = worldGenerator(scene, translateSeed(seedEditArea.text))
+    opengl_main_cpp.setSeed(int(translateSeed(seedEditArea.text)))
     mainFunction = genWorld
 
 
@@ -153,6 +166,21 @@ def drawSettingsMenu(mc):
     soundVolumeSliderBox.x = scene.WIDTH // 2 - (soundVolumeSliderBox.bg.width // 2)
     soundVolumeSliderBox.y = scene.HEIGHT // 2 - (soundVolumeSliderBox.bg.height // 2) - 80
     soundVolumeSliderBox.update(mp)
+    #
+
+    # Render distance
+    renderDistanceSliderBox.text = "Render Distance: " + str(renderDistanceSliderBox.val)
+    renderDistanceSliderBox.x = scene.WIDTH // 2 - (renderDistanceSliderBox.bg.width // 2)
+    renderDistanceSliderBox.y = scene.HEIGHT // 2 - (renderDistanceSliderBox.bg.height // 2)
+    renderDistanceSliderBox.update(mp)
+    scene.renderDistance = renderDistanceSliderBox.val
+    opengl_main_cpp.setRenderDistance(int(renderDistanceSliderBox.val))
+    #
+
+    # Seed edit area
+    seedEditArea.x = scene.WIDTH // 2 - (seedEditArea.bg.width // 2)
+    seedEditArea.y = scene.HEIGHT // 2 - (seedEditArea.bg.height // 2) + 80
+    seedEditArea.update(mp, mc, keys)
     #
 
     # Close
@@ -342,12 +370,12 @@ def genWorld(mc):
 
     # TODO
     if haveToGenWorld:
-        lvl_name = getNewLevelName()
-        opengl_main_cpp.setLevelName(lvl_name)
-        os.mkdir("saves/" + lvl_name)
-        os.mkdir("saves/" + lvl_name + "/chunks")
-        open("saves/" + lvl_name + "/world.data", "w").close()
-        open("saves/" + lvl_name + "/blocks.data", "w").close()
+        # lvl_name = getNewLevelName()
+        # opengl_main_cpp.setLevelName(lvl_name)
+        # os.mkdir("saves/" + lvl_name)
+        # os.mkdir("saves/" + lvl_name + "/chunks")
+        # open("saves/" + lvl_name + "/world.data", "w").close()
+        # open("saves/" + lvl_name + "/blocks.data", "w").close()
 
         drawInfoLabel(scene, "Loading world...", xx=scene.WIDTH // 2, yy=scene.HEIGHT // 2, style=[('', '')],
                       size=12, anchor_x='center')
@@ -356,8 +384,6 @@ def genWorld(mc):
         pygame.display.flip()
         clock.tick(MAX_FPS)
         opengl_main_cpp.generateLevel(-128, -128, 128, 128, 64)
-    if chunks:
-        opengl_main_cpp.loadWorld(chunks)
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
     glLoadIdentity()
@@ -381,6 +407,12 @@ def genWorld(mc):
     IN_MENU = False
     PAUSE = False
     chunks = []
+
+    scene.player.position = [
+        opengl_main_cpp.getPlayerStartX(),
+        opengl_main_cpp.getPlayerStartY(),
+        opengl_main_cpp.getPlayerStartZ()
+    ]
     # TODO
 
 
@@ -584,6 +616,9 @@ glLoadIdentity()
 gluOrtho2D(0, WIDTH, 0, HEIGHT)
 
 logo = pyglet.resource.image("gui/logo.png")
+glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST)
+logo.width = 318
+logo.height = 318
 logo.blit(WIDTH // 2 - (logo.width // 2), HEIGHT // 2 - (logo.height // 2))
 pygame.display.flip()
 #
@@ -689,6 +724,8 @@ gui.GUI_TEXTURES = {
     "fullheart": pyglet.resource.image("gui/fullheart.png"),
     "halfheart": pyglet.resource.image("gui/halfheart.png"),
     "heartbg": pyglet.resource.image("gui/heartbg.png"),
+    "strokeheartbg1": pyglet.resource.image("gui/strokeheartbg1.png"),
+    "strokeheartbg2": pyglet.resource.image("gui/strokeheartbg2.png"),
     "game_logo": pyglet.resource.image("gui/game_logo.png"),
     "button_bg": pyglet.resource.image("gui/gui_elements/button_bg.png"),
     "button_bg_hover": pyglet.resource.image("gui/gui_elements/button_bg_hover.png"),
@@ -735,8 +772,7 @@ texture.width *= 6
 texture.height *= 6
 
 gui.addGuiElement("crosshair", (scene.WIDTH // 2 - 9, scene.HEIGHT // 2 - 9))
-
-# player.inventory.initWindow()
+player.inventory.initWindow()
 
 showInfoLabel = False
 selectedWorld = -1
@@ -755,7 +791,7 @@ singleplayerButton = Button(scene, "Singleplayer", 0, 0)
 optionsButton = Button(scene, "Options", 0, 0)
 quitButton = Button(scene, "Quit game", 0, 0)
 
-singleplayerButton.setEvent(setWorldsMenu)
+singleplayerButton.setEvent(startNewGame)  # setWorldsMenu)
 optionsButton.setEvent(showSettings)
 quitButton.setEvent(quitTheGame)
 #
@@ -763,8 +799,11 @@ quitButton.setEvent(quitTheGame)
 # Settings objects
 closeSettingsButton = Button(scene, "Done", 0, 0)
 soundVolumeSliderBox = Sliderbox(scene, "Sound volume:", 100, 0, 0)
+renderDistanceSliderBox = Sliderbox(scene, "Render Distance: 6", 12, 0, 0)
 seedEditArea = Editarea(scene, "World seed", 0, 0)
 
+renderDistanceSliderBox.minval = 2
+renderDistanceSliderBox.val = RENDER_DISTANCE
 closeSettingsButton.setEvent(closeMenuWindows)
 #
 
@@ -923,16 +962,16 @@ while True:
         player.inventory.draw()
         gui.update()
 
-        if showInfoLabel:
-            drawInfoLabel(scene, f"Minecraft {MC_VERSION} ({MC_VERSION}/vanilla)\n"
-                                 f"{round(clock.get_fps())} fps\n"
-                                 f"\n"
-                                 f"XYZ: {round(player.x(), 3)} / {round(player.y(), 5)} / {round(player.z(), 3)}\n"
-                                 f"Block: {round(player.x())} / {round(player.y())} / {round(player.z())}\n"
-                                 f"Facing: {round(player.rotation[1], 3)} / {round(player.rotation[0], 3)}\n"
-            # f"Biome: {getBiomeByTemp(scene.worldGen.perlinBiomes(player.x(), player.z()) * 3)}\n"
-                                 f"Looking at: {scene.lookingAt}\n",
-                          shadow=False, label_color=(224, 224, 224), xx=3)
+        # if showInfoLabel:
+        #     drawInfoLabel(scene, f"Minecraft {MC_VERSION} ({MC_VERSION}/vanilla)\n"
+        #                          f"{round(clock.get_fps())} fps\n"
+        #                          f"\n"
+        #                          f"XYZ: {round(player.x(), 3)} / {round(player.y(), 5)} / {round(player.z(), 3)}\n"
+        #                          f"Block: {round(player.x())} / {round(player.y())} / {round(player.z())}\n"
+        #                          f"Facing: {round(player.rotation[1], 3)} / {round(player.rotation[0], 3)}\n"
+        #     # f"Biome: {getBiomeByTemp(scene.worldGen.perlinBiomes(player.x(), player.z()) * 3)}\n"
+        #                          f"Looking at: {scene.lookingAt}\n",
+        #                   shadow=False, label_color=(224, 224, 224), xx=3)
         pygame.display.flip()
         clock.tick(MAX_FPS)
     elif PAUSE and not IN_MENU:

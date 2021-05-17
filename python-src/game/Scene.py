@@ -12,7 +12,6 @@ from game.blocks.DestroyBlock import DestroyBlock
 from game.blocks.droppedBlock import droppedBlock
 from game.entity.Inventory import Inventory
 from game.entity.Zombie import Zombie
-from game.world.Chunks import Chunks
 from game.world.Clouds import Clouds
 
 
@@ -58,20 +57,19 @@ class Scene:
         self.particles = Particles(self)
         self.destroy = DestroyBlock(self)
         self.light = Light(self)
-        # self.chunks = Chunks(self)
 
         self.saveCnt = 0
-        self.drawCounter = 0
 
     def loadPanoramaTextures(self):
         debug_module._gl_engine_info("_Scene_python", "Loading panorama textures...")
         for e, i in enumerate(os.listdir("gui/bg/")):
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST)
             self.panorama[e] = \
-                pyglet.graphics.TextureGroup(pyglet.image.load("gui/bg/" + i).get_mipmapped_texture())
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR)
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR)
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE)
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE)
+                pyglet.graphics.TextureGroup(pyglet.image.load("gui/bg/" + i).get_mipmapped_texture())  # .texture.id
+            # glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR)
+            # glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR)
+            # glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE)
+            # glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE)
 
     def initScene(self):
         debug_module._gl_engine_info("_Scene_python", "Init OpenGL scene...")
@@ -174,10 +172,10 @@ class Scene:
             glFogf(GL_FOG_START, 10)
             glFogf(GL_FOG_END, self.renderDistance * 16)
 
-        if self.saveCnt > 20:
-            opengl_main_cpp.saveWorld()
-            debug_module._gl_engine_info("_Scene_python", "Saving world...")
-            self.saveCnt = 0
+        # if self.saveCnt > 20:
+        #     opengl_main_cpp.saveWorld()
+        #     debug_module._gl_engine_info("_Scene_python", "Saving world...")
+        #     self.saveCnt = 0
         self.saveCnt += 0.1 * self.clock.get_fps() / 1000
 
         self.set3d()

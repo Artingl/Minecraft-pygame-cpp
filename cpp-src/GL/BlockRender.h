@@ -165,14 +165,14 @@ public:
     {
         extract<int> _invalid_texture(textures["invalid"][0]);
 
-        if (!block.id || block.id == NULL || block.id == "")
-        {
-            return BlockRender(_invalid_texture, _invalid_texture, _invalid_texture, block.x, block.y , block.z);
-        }
-        if (!is_utf8(block.id))
-        {
-            return BlockRender(_invalid_texture, _invalid_texture, _invalid_texture, block.x, block.y , block.z);
-        }
+        //if (!block.id || block.id == NULL || block.id == "")
+        //{
+        //    return BlockRender(_invalid_texture, _invalid_texture, _invalid_texture, block.x, block.y , block.z);
+        //}
+        //if (!is_utf8(block.id))
+        //{
+        //    return BlockRender(_invalid_texture, _invalid_texture, _invalid_texture, block.x, block.y , block.z);
+        //}
         if (!textures.contains(block.id))
         {
             return BlockRender(_invalid_texture, _invalid_texture, _invalid_texture, block.x, block.y , block.z);

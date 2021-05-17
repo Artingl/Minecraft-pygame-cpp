@@ -18,6 +18,12 @@ public:
         return min + rand() % (( max + 1 ) - min);
     }
 
+    int player_start_x;
+    int player_start_y;
+    int player_start_z;
+    bool isPlayerStartPosSet = false;
+    std::map<std::pair<int, std::pair<int, int>>, Block> worldLoad_removeBlock;
+
     int seed;
     std::map<std::pair<int, std::pair<int, int>>, Block> blocks;
 
@@ -28,21 +34,6 @@ public:
     Level(int seed)
     {
         this->seed = seed;
-    }
-
-    void erase()
-    {
-        _gl_engine_info("Level->erase", "Deleting level...");
-        std::map<std::pair<int, std::pair<int, int>>, Block>::iterator itr = blocks.begin();
-        //_gl_engine_info("test", itr->second.id);
-        printf("size:%d\n", ((&blocks))->size());
-        for (; itr != blocks.end(); itr++)
-        {
-            //printf("Deleting block (MEM_LOCATION:%d) -> ", &(itr->second));
-            (&itr->second)->erase();
-            printf("%s\n", itr->second.id);
-            blocks.erase(itr->first);
-        }
     }
 
     float simplex(float x, float y)
@@ -56,6 +47,18 @@ public:
         float amp = 1;
         float freq = scale;
         float noise = 0;
+
+        if (this->seed > 10000)
+        {
+            for(int i = this->seed; i > 60000;)
+            {
+                i /= 100.f;
+                this->seed = i;
+            }
+        }
+
+        x += (this->seed / 4.f);
+        y += (this->seed / 4.f);
 
         //add successively smaller, higher-frequency terms
         for(int i = 0; i < num_iterations; ++i)
@@ -181,6 +184,12 @@ public:
                 {
                     this->generateTree(x, y, z);
                 }
+                else if (y > height - 3 && !isPlayerStartPosSet && x > -10 && z > -10) {
+                    player_start_x = x;
+                    player_start_y = y + 2;
+                    player_start_z = z;
+                    isPlayerStartPosSet = true;
+                }
 
                 for (int i = 1; i < y; i++)
                 {
@@ -216,6 +225,15 @@ public:
                     }
                 }
 
+                if (worldLoad_removeBlock.count(std::make_pair(x, std::make_pair(y, z))))
+                {
+                    removeBlock(x, y, z);
+                    if (worldLoad_removeBlock[std::make_pair(x, std::make_pair(y, z))].exist)
+                    {
+                        setBlock(worldLoad_removeBlock[std::make_pair(x, std::make_pair(y, z))]);
+                    }
+
+                }
             }
         }
     }

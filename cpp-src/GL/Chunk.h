@@ -27,6 +27,8 @@ public:
     bool updated = false;
     dict textures;
 
+    Chunk() {}
+
     Chunk(int x, int y, int z, Level *level, dict textures)
     {
         this->x = x;
@@ -38,13 +40,14 @@ public:
         this->chunkList = 0;
     }
 
-    void erase() const
+    void erase()
     {
-        delete qb;
-        if(chunkList) glDeleteLists(chunkList, 1);
+        //glDeleteLists(chunkList, 1);
+        //delete &textures;
+        if (qb) delete qb;
     }
 
-    void update()
+    void update(bool renderBlocks=true)
     {
         if(chunkList) glDeleteLists(chunkList, 1);
         if (qb) delete qb;
@@ -57,54 +60,57 @@ public:
         qb = new GL(chunk_width * chunk_height * chunk_depth);
         qb->begin();
 
-        int xcw = this->x * chunk_width;
-        int ycw = this->y * chunk_height;
-        int zcw = this->z * chunk_depth;
-
-        for (int block_x = xcw; block_x <= chunk_width + xcw; ++block_x)
+        if (renderBlocks)
         {
-            for (int block_y = ycw; block_y <= chunk_height + ycw; ++block_y)
+            int xcw = this->x * chunk_width;
+            int ycw = this->y * chunk_height;
+            int zcw = this->z * chunk_depth;
+
+            for (int block_x = xcw; block_x <= chunk_width + xcw; ++block_x)
             {
-                for (int block_z = zcw; block_z <= chunk_depth + zcw; ++block_z)
+                for (int block_y = ycw; block_y <= chunk_height + ycw; ++block_y)
                 {
-                    Block level_block = this->level->getBlock(block_x, block_y, block_z);
-                    if (!level_block.exist) continue;
-                    BlockRender block = BlockRender::getBlock(this->textures,
-                                                              Block(level_block.id, level_block.x - xcw, level_block.y - ycw, level_block.z - zcw));
-                    float down = 0.0f;
-                    if (level_block.liquid && !this->level->getBlock(block_x, block_y + 1, block_z).liquid)
-                        down = 0.1f;
-
-                    if (haveToRenderBlock(0, block_x, block_y, block_z))
+                    for (int block_z = zcw; block_z <= chunk_depth + zcw; ++block_z)
                     {
-                        block.renderTopSide(qb, down);
-                    }
+                        Block level_block = this->level->getBlock(block_x, block_y, block_z);
+                        if (!level_block.exist) continue;
+                        BlockRender block = BlockRender::getBlock(this->textures,
+                                                                  Block(level_block.id, level_block.x - xcw, level_block.y - ycw, level_block.z - zcw));
+                        float down = 0.0f;
+                        if (level_block.liquid && !this->level->getBlock(block_x, block_y + 1, block_z).liquid)
+                            down = 0.1f;
 
-                    if (haveToRenderBlock(1, block_x, block_y, block_z))
-                    {
-                        block.renderBottomSide(qb, down);
-                    }
+                        if (haveToRenderBlock(0, block_x, block_y, block_z))
+                        {
+                            block.renderTopSide(qb, down);
+                        }
 
-                    if (haveToRenderBlock(2, block_x, block_y, block_z))
-                    {
-                        block.renderBackSide(qb, down);
-                    }
+                        if (haveToRenderBlock(1, block_x, block_y, block_z))
+                        {
+                            block.renderBottomSide(qb, down);
+                        }
 
-                    if (haveToRenderBlock(3, block_x, block_y, block_z))
-                    {
-                        block.renderRightSide(qb, down);
-                    }
+                        if (haveToRenderBlock(2, block_x, block_y, block_z))
+                        {
+                            block.renderBackSide(qb, down);
+                        }
 
-                    if (haveToRenderBlock(4, block_x, block_y, block_z))
-                    {
-                        block.renderFrontSide(qb, down);
-                    }
+                        if (haveToRenderBlock(3, block_x, block_y, block_z))
+                        {
+                            block.renderRightSide(qb, down);
+                        }
 
-                    if (haveToRenderBlock(5, block_x, block_y, block_z))
-                    {
-                        block.renderLeftSide(qb, down);
-                    }
+                        if (haveToRenderBlock(4, block_x, block_y, block_z))
+                        {
+                            block.renderFrontSide(qb, down);
+                        }
 
+                        if (haveToRenderBlock(5, block_x, block_y, block_z))
+                        {
+                            block.renderLeftSide(qb, down);
+                        }
+
+                    }
                 }
             }
         }

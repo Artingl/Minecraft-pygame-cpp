@@ -8,13 +8,12 @@ from game.entity.Entity import Entity
 
 
 class Player(Entity):
-    def __init__(self, x=0, y=0, z=0, rotation=[0, 0], gl=None):
+    def __init__(self, x=0, y=0, z=0, rotation=[0, 0, 0], gl=None):
         super(Player, self).__init__(gl)
         self.position = [x, y, z]
         self.rotation = rotation
 
         self.cameraShake = [0, False]
-        self.inventory = None
 
     def update(self):
         super().update()
@@ -74,6 +73,7 @@ class Player(Entity):
 
         glRotatef(self.rotation[0], 1, 0, 0)
         glRotatef(self.rotation[1], 0, 1, 0)
+        glRotatef(self.rotation[2], 0, 0, 1)
         glTranslatef(-self.position[0], -self.position[1] + self.cameraShake[0], -self.position[2])
 
     def setCameraShake(self):

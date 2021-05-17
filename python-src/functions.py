@@ -123,9 +123,9 @@ def translateSeed(seed):
         seed = str(randint(998, 43433))
     for i in seed:
         res += str(ord(i))
-    while len(res) < 10:
+    while len(res) < 6:
         res += res[:-1]
-    return int(res[0:10])
+    return int(res[0:6])
 
 
 def cube_vertices(pos, n=0.5):

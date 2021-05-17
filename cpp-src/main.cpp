@@ -80,11 +80,22 @@ void setLevelName(char* name)
     world->setLevelName(name);
 }
 
+void setSeed(int seed)
+{
+    world->seed = seed;
+    world->level.seed = seed;
+}
+
+void setRenderDistance(int r)
+{
+    world->renderDistance = r;
+}
+
 str getBlockName(int x, int y, int z)
 {
     if (!getBlockExist(x, y, z))
     {
-        return "";
+        return "invalid";
     }
     return world->getBlockName(x, y, z);
 }
@@ -92,6 +103,21 @@ str getBlockName(int x, int y, int z)
 list hitTest(float x, float y, float z, float dx, float dy, float dz, int dist, int m)
 {
     return world->hitTest(x, y, z, dx, dy, dz, dist, m);
+}
+
+int getPlayerStartX()
+{
+    return world->level.player_start_x;
+}
+
+int getPlayerStartY()
+{
+    return world->level.player_start_y;
+}
+
+int getPlayerStartZ()
+{
+    return world->level.player_start_z;
 }
 
 BOOST_PYTHON_MODULE(opengl_main_cpp)
@@ -113,6 +139,11 @@ BOOST_PYTHON_MODULE(opengl_main_cpp)
     def("loadWorld", loadWorld);
     def("saveWorld", saveWorld);
     def("getBlockName", getBlockName);
+    def("getPlayerStartX", getPlayerStartX);
+    def("getPlayerStartY", getPlayerStartY);
+    def("getPlayerStartZ", getPlayerStartZ);
+    def("setSeed", setSeed);
+    def("setRenderDistance", setRenderDistance);
     def("setBlockWithoutBlockCheck", setBlockWithoutBlockCheck);
 
     class_<AABB>("AABB", init<double, double, double, double, double, double>())

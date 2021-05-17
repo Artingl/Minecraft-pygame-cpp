@@ -6,6 +6,7 @@ class Sliderbox:
     def __init__(self, gl, text, maxval, x, y):
         self.text = text
         self.maxval = maxval
+        self.minval = 0
         self.x = x
         self.y = y
         self.gl = gl
@@ -17,7 +18,7 @@ class Sliderbox:
         self.slider = gl.gui.GUI_TEXTURES["slider"]
 
     def update(self, mp):
-        pos = (self.bg.width / self.maxval) * self.val
+        pos = (self.bg.width / self.maxval) * self.val - self.minval
         if pos > self.bg.width - self.slider.width:
             pos = self.bg.width - self.slider.width
         self.slider.x = self.x + pos
@@ -27,6 +28,8 @@ class Sliderbox:
                       mp[0], mp[1]):
             if pygame.mouse.get_pressed(3)[0]:
                 self.val = round((mp[0] - self.x) * self.maxval / self.bg.width)
+                if self.val < self.minval:
+                    self.val = self.minval
                 pos = mp[0]
                 if pos > self.x + self.bg.width - self.slider.width:
                     pos = self.x + self.bg.width - self.slider.width

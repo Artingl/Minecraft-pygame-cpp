@@ -18,13 +18,13 @@ public:
     int renderDistance;
     int seed;
 
-    void updateChunkByPos(int x, int y, int z)
+    void updateChunkByPos(int x, int y, int z, int sclx=1, int scly=1, int sclz=1)
     {
-        for (int chunk_x = (x / 16) - 1; chunk_x < (x / 16) + 1; chunk_x++)
+        for (int chunk_x = (x / 16) - sclx; chunk_x < (x / 16) + sclx; chunk_x++)
         {
-            for (int chunk_y = (y / 16) - 1; chunk_y < (y / 16) + 1; chunk_y++)
+            for (int chunk_y = (y / 16) - scly; chunk_y < (y / 16) + scly; chunk_y++)
             {
-                for (int chunk_z = (z / 16) - 1; chunk_z < (z / 16) + 1; chunk_z++)
+                for (int chunk_z = (z / 16) - sclz; chunk_z < (z / 16) + sclz; chunk_z++)
                 {
                     if (this->chunks.count(std::make_pair(chunk_x, std::make_pair(chunk_y, chunk_z))))
                     {
@@ -69,19 +69,16 @@ public:
 
     void deleteWorld()
     {
-        //for (const auto& [position, chunk] : chunks)
-        //{
-        //    chunk->erase();
-        //    chunks.erase(position);
-        //}
-        //for (const auto& [position, block] : level.blocks)
-        //{
-        //    level.blocks.erase(position);
-        //}
-        level.erase();
+        for (const auto& [position, chunk] : chunks)
+        {
+            chunk->erase();
+            //delete chunk;
+            chunks.erase(position);
+        }
+        level.blocks.clear();
+        //Level *lvl = &this->level;
+        //delete lvl;
         this->level = Level(this->seed);
-
-        //chunks.clear();
     }
 
     World(int renderDistance, int texturesId, dict textures)
@@ -195,7 +192,7 @@ public:
                             id = level_block.id;
                             if (!id || id == NULL || id == "") id = "invalid";
                         }
-                        blocks += std::string(id) + ";";
+                        blocks += std::string(id) + "," + std::to_string(block_x) + "," + std::to_string(block_y) + "," + std::to_string(block_z) + ";";
                     }
                 }
             }
@@ -205,45 +202,45 @@ public:
         }
     }
 
-    void loadWorld(boost::python::list& chunk_files)
+    void loadWorld(boost::python::list& chunksList)
     {
-        boost::python::ssize_t n = boost::python::len(chunk_files);
-        for(boost::python::ssize_t i=0;i<n;i++) {
-            boost::python::extract<char*> elem (chunk_files[i]);
-            std::string chunk(this->readFile("saves/" + std::string(this->worldName) + "/chunks/" + std::string((char*)elem)));
-            if (chunk == "") continue;
-            std::vector <std::string> splt = this->split(chunk, '\n');
-            std::string positions = splt[0];
-            std::string blocks = splt[1];
-            std::vector <std::string> posss = this->split(blocks, ';');
+        boost::python::ssize_t n = boost::python::len(chunksList[0]);
+        for(boost::python::ssize_t i=0;i<n;i++)
+        {
+            printf("Chunk %d\n", (int)i);
+            char* block = boost::python::extract<char*> (chunksList[0][i][0]);
+            int x = boost::python::extract<int> (chunksList[0][i][1]);
+            int y = boost::python::extract<int> (chunksList[0][i][2]);
+            int z = boost::python::extract<int> (chunksList[0][i][3]);
+            Block b = Block(block, x, y, z);
+            b.exist = false;
 
-            int c_x = std::stoi(this->split(positions, ' ')[0]) * chunk_width;
-            int c_y = std::stoi(this->split(positions, ' ')[1]) * chunk_height;
-            int c_z = std::stoi(this->split(positions, ' ')[2]) * chunk_depth;
+            level.worldLoad_removeBlock[std::make_pair(x, std::make_pair(y, z))] = b;
+            printf("%d %d %d %s\n", x, y, z, block);
+            //removeBlock(x + x_pos, y + y_pos, z + z_pos);
+            //if (block != "air") level.setBlock(Block(block, x + x_pos, y + y_pos, z + z_pos));
 
-            printf("Chunk: %s\n", (char*)elem);
-
-            int j = 0;
-            for (int x = 0; x <= 16; x++)
-            {
-                for (int y = 0; y <= 16; y++)
-                {
-                    for (int z = 0; z <= 16; z++)
-                    {
-                        if (j > posss.size()) break;
-                        const char* id = posss[j].c_str();
-                        if (!id || id == NULL || id == "") continue;
-                        removeBlock(x + c_x, y + c_y, z + c_z);
-                        if (id != "air") level.setBlock(Block(id, x + c_x, y + c_y, z + c_z));
-                        //else printf("AIR!\n");
-                        j++;
-                    }
-                    if (j > posss.size()) break;
-                    j++;
-                }
-                if (j > posss.size()) break;
-                j++;
-            }
+            //int j = 0;
+            //for (int x = 0; x <= 16; x++)
+            //{
+            //    for (int y = 0; y <= 16; y++)
+            //    {
+            //        for (int z = 0; z <= 16; z++)
+            //        {
+            //            if (j > posss.size()) break;
+            //            const char* id = posss[j].c_str();
+            //            if (!id || id == NULL || id == "") continue;
+            //            removeBlock(x + c_x, y + c_y, z + c_z);
+            //            if (id != "air") level.setBlock(Block(id, x + c_x, y + c_y, z + c_z));
+            //            //else printf("AIR!\n");
+            //            j++;
+            //        }
+            //        if (j > posss.size()) break;
+            //        j++;
+            //    }
+            //    if (j > posss.size()) break;
+            //    j++;
+            //}
         }
     }
 
@@ -278,37 +275,6 @@ public:
         glBindTexture(GL_TEXTURE_2D, 0);
         glDisable(GL_ALPHA_TEST);
 
-    }
-
-    std::string readFile(std::string path)
-    {
-        std::stringstream str;
-        std::ifstream stream(path);
-        if(stream.is_open())
-        {
-            while(stream.peek() != EOF)
-            {
-                str << (char) stream.get();
-            }
-            stream.close();
-            return str.str();
-        }
-    }
-
-    std::vector <std::string> split(std::string str, char delim)
-    {
-
-        std::vector <std::string> tokens;
-        std::stringstream check1(str);
-        std::string intermediate;
-
-
-        while(getline(check1, intermediate, delim))
-        {
-            tokens.push_back(intermediate);
-        }
-
-        return tokens;
     }
 
 };
